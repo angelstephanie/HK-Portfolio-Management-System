@@ -1,0 +1,7 @@
+{
+    "stock": ["AAPL", "MSFT", "GOOG", "TSLA", "AMZN"],
+    "etf": ["SPY", "QQQ", "VTI", "ARKK", "DIA"],
+    "crypto": ["BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD", "DOGE-USD"],
+    "bond": ["TLT", "IEF", "BND", "AGG"]
+  }
+  
