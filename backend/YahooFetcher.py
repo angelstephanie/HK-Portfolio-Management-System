@@ -2,36 +2,36 @@ import yfinance as yf
 import pandas as pd
 import json
 from datetime import datetime
+from sqlalchemy import create_engine, text
 
 class YahooFetcher:
-    def __init__(self, symbols: list[str], start_date: str, end_date: str):        
+    def __init__(self, symbols: str, username: str, password: str, schema: str):        
         """
-        symbols: list of stock symbols (e.g., ['GOOG', 'AAPL'])
-        start_date: string format 'YYYY-MM-DD'
-        end_date: string format 'YYYY-MM-DD'
+        symbols: json file name
+        username: MySQL username (e.g., 'root')
+        password: MySQL password
+        schema: MySQL schema/database name (e.g., 'HongKongHackathon')
         """
-        self.symbols = symbols
-        self.start_date = start_date
-        self.end_date = end_date
-        with open("asset_info.json", "r") as f:
+        self.username = username
+        self.password = password
+        self.schema = schema
+        with open(symbols, "r") as f:
             self.asset_dict = json.load(f)
 
-        self.dataframes = {}
     
     def fetchByAssetType(self, asset_type: str = None) -> pd.DataFrame:
         """
-        Download current information for given asset type or all types.
+        Download current pricing information for specific type of asset.
         
         Parameters:
-        asset_type (str): Optional; specify one asset type (e.g., 'stock', 'crypto').
+        asset_type (str): Specify one asset type (e.g., 'stock', 'crypto').
                           If None, downloads for all types in self.asset_dict.
         
         Returns:
-        pd.DataFrame: A dataframe containing symbol, name, type, current_price, and last_updated.
+        pd.DataFrame: A dataframe containing asset information.
         """
         results = []
 
-        # Decide which asset types to fetch
         types_to_download = [asset_type] if asset_type else list(self.asset_dict.keys())
 
         for asset in types_to_download:
@@ -56,29 +56,20 @@ class YahooFetcher:
                     print(f"[Error] Failed to process symbol '{symbol}': {e}")
                     continue
 
-        # Convert the list of dictionaries into a DataFrame
+
         return pd.DataFrame(results)
     
-    def fetchBYSymbol(self, symbol: str) -> dict:
+    def fetchBySymbol(self, symbol: str, asset_type: str) -> dict:
         """
-        Fetch current price and info for a single symbol.
+        Download current pricing information for specific symbol of asset.
 
         Parameters:
-        symbol (str): The symbol to fetch data for (e.g., 'AAPL', 'BTC-USD')
-
+        symbol (str): The asset symbol (e.g., 'AAPL', 'BTC-USD')
+        asset_type (str): The asset type ('stock', 'crypto', 'etf', 'bond')
+        
         Returns:
-        dict: A dictionary with symbol, name, type, current_price, and last_updated
+        pd.DataFrame: A dataframe containing asset information.
         """
-        asset_type = None
-        for atype, symbols in self.asset_dict.items():
-            if symbol in symbols:
-                asset_type = atype
-                break
-
-        if asset_type is None:
-            print(f"[Warning] Symbol '{symbol}' not found in asset_info.json.")
-            asset_type = "unknown"
-
         try:
             ticker = yf.Ticker(symbol)
             info = ticker.info
@@ -87,30 +78,56 @@ class YahooFetcher:
             price = info.get('regularMarketPrice', None)
             now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
 
-            return {
+            results =  {
                 'symbol': symbol,
                 'name': name,
                 'type': asset_type,
                 'current_price': round(price, 2) if price else None,
                 'last_updated': now
             }
+            return pd.DataFrame([results])
 
         except Exception as e:
             print(f"[Error] Failed to fetch data for '{symbol}': {e}")
-            return {}
+            return pd.DataFrame()
         
-    def saveTodb(self,df):
-        pass
+        
 
-    
+    def saveTodb(self, df):
+        """
+        Save the asset DataFrame into the Assets table.
 
-if __name__ == "__main__":
-    # Initialize the fetcher with empty symbol list, since asset types are in asset_info.json
-    fetcher = YahooFetcher([], '2023-01-01', '2023-12-31')
+        Parameters:
+        - df (pd.DataFrame): The asset information to save
+        """
+        try:
+            # Initialize database engine
+            engine = create_engine(f"mysql+pymysql://{self.username}:{self.password}@127.0.0.1:3306/{self.schema}")
 
-    # Download all assets across all types listed in asset_info.json
-    df_all_assets = fetcher.fetchByAssetType()
+            with engine.connect() as conn:
+                for _, row in df.iterrows():
+                    conn.execute(text("""
+                        INSERT INTO Assets (symbol, name, type, current_price, last_updated)
+                        VALUES (:symbol, :name, :type, :current_price, :last_updated)
+                        ON DUPLICATE KEY UPDATE
+                            name = VALUES(name),
+                            type = VALUES(type),
+                            current_price = VALUES(current_price),
+                            last_updated = VALUES(last_updated)
+                    """), row.to_dict())
+                conn.commit()
+            print("✅ Data successfully saved to the Assets table.")
+        except Exception as e:
+            print(f"❌ Failed to save data: {e}")
 
-    # Display first few rows
-    print(df_all_assets.head(10))
+    def run(self):
+        """
+        Fetch current price data from Yahoo and save into asset table.
+        """
+       # Download all assets across all types listed in asset_info.json
+        df_all_assets = self.fetchByAssetType()
+        print(df_all_assets.head(10))
+        
+        # save to database
+        self.saveTodb(df_all_assets)
 
