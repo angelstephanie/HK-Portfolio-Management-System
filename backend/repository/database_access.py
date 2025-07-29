@@ -4,10 +4,10 @@ def get_database_connection(host='localhost', user='root', password='n3u3da!', d
     """Establish a connection to the MySQL database."""
     try:
         mydb = mysql.connector.connect(
-            host,
-            user,
-            password,
-            database
+            host = host,
+            user = user,
+            password = password,
+            database = database
         )
         return mydb
     except mysql.connector.Error as err:
@@ -15,7 +15,7 @@ def get_database_connection(host='localhost', user='root', password='n3u3da!', d
         return None
     
 if __name__ == "__main__":
-    db_connection = get_database_connection()
+    db_connection = get_database_connection(database="hongkonghackathon")
     if db_connection:
         print("Database connection established successfully.")
         print(db_connection.database)

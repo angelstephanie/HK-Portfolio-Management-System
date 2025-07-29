@@ -11,7 +11,7 @@ class Portfolio_repo:
     def add_portfolio(self, portfolio: Portfolio):
         pass
 
-    def get_portfolio_by_id(self, portfolio_id: int) -> Portfolio:
+    def get_by_id(self, portfolio_id: int) -> Portfolio:
         pass
 
     def get_all_portfolios(self) -> list[Portfolio]:

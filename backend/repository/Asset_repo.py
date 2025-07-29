@@ -6,7 +6,19 @@ class Asset_repo:
         self.connection = get_database_connection()
 
     def create_asset_table(self):
-        pass
+        """Create the Asset table in the database if it does not exist."""
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT Assets EXITS(
+                symbol VARCHAR(20) PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                type ENUM('stock', 'crypto', 'etf', 'bond'),
+                current_price DECIMAL(15, 2),
+                last_updated TIMESTAMP
+            );
+        """)
+        self.connection.commit()
+        cursor.close()
     
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         pass
