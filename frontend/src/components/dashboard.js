@@ -2,78 +2,82 @@ import React from 'react';
 
 export default function PortfolioDashboard() {
   return (
-    <div className="min-h-screen p-4 bg-gray-100">
-      {/* Top Navigation Bar */}
-      <div className="flex justify-between items-center bg-white p-4 rounded shadow">
-        <div className="space-x-4">
-          <button>Dashboard</button>
-          <button>Holdings</button>
-          <button>Transactions</button>
-          <button>Settings</button>
-        </div>
-        <input
-          type="text"
-          placeholder="Search for investments..."
-          className="border px-3 py-1 rounded"
-        />
-        <div className="border rounded-full px-4 py-1">User</div>
-      </div>
+    <div className="container py-4">
+      {/* Summary */}
+      {/* Option 1: */}
+      {/* <div className="text-center mb-4">
+        <h3>Total Portfolio Value: $1.8M</h3>
+        <p className="text-success">P&L: +4.2%</p>
+      </div> */}
 
-      {/* Portfolio Summary */}
-      <div className="text-center text-lg font-semibold my-4">
-        Total Portfolio Value: $1.8M | P&amp;L: +4.2%
-      </div>
-
-      {/* Middle Section */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
-        {/* Pie Chart and Filter */}
-        <div className="bg-white p-4 rounded shadow col-span-1">
-          <div className="flex justify-between items-center mb-2">
-            <span>List</span> | <span>Pie</span>
+      {/* Option 2: */}
+      <div className="row mb-4">
+        <div className="col-12">
+          <div className="d-flex justify-content-between align-items-center bg-white p-4 rounded shadow-sm border">
+            <div>
+              <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
+                Total Portfolio Value
+              </h6>
+              <h2 className="fw-semibold mb-0 text-dark">$1,800,000</h2>
+            </div>
+            <div className="text-end">
+              <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
+                P&L
+              </h6>
+              <h5 className="mb-0 text-success">+4.2%</h5>
+            </div>
           </div>
-          <div className="h-40 flex items-center justify-center border rounded">
-            Pie chart for total portfolio by {'<filter>'}
-          </div>
-          <div className="mt-4 text-center text-sm text-gray-600">
-            ⇦ Filter by: (asset type, gain, asset amount, etc.) ⇨
-          </div>
-        </div>
-
-        {/* Top Movers Section */}
-        <div className="bg-white p-4 rounded shadow col-span-1">
-          <div className="mb-2">Top Movers | Top Gainers | Top Losers</div>
-          <div className="h-40 flex items-center justify-center text-sm text-gray-600">
-            From Sumer and Lareb
-          </div>
-        </div>
-
-        {/* Watchlists Performance */}
-        <div className="bg-white p-4 rounded shadow col-span-1">
-          <div className="text-lg font-medium mb-2">Watchlists Performance</div>
-          <ul className="list-disc list-inside text-gray-700">
-            <li>one</li>
-            <li>two</li>
-            <li>three</li>
-          </ul>
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Recent Activity Feed */}
-        <div className="bg-white p-4 rounded shadow">
-          <div className="text-lg font-medium mb-2">Recent Activity Feed</div>
-          <div className="text-sm text-gray-600">Date | Action | Ticker | Qty | Price</div>
-          {/* Add dynamic rows later */}
+      {/* Main Cards */}
+      <div className="row">
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Asset Allocation</h5>
+              <div className="text-muted">[Pie Chart Placeholder]</div>
+            </div>
+          </div>
         </div>
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Top Movers</h5>
+              <div className="text-muted">Top Gainers / Losers</div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Watchlist Performance</h5>
+              <ul className="list-unstyled">
+                <li>• AAPL: +3%</li>
+                <li>• TSLA: -1%</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {/* Performance Line Chart */}
-        <div className="bg-white p-4 rounded shadow">
-          <div className="text-lg font-medium mb-2">Performance Line Chart</div>
-          <ul className="text-sm text-gray-600">
-            <li>Portfolio vs Benchmark over selected period</li>
-            <li>Toggle: 1W, 1M, 3M, YTD, 1Y, 5Y</li>
-          </ul>
+      {/* Bottom Row */}
+      <div className="row">
+        <div className="col-md-6 mb-4">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Recent Activity Feed</h5>
+              <p className="text-muted">[Table Placeholder]</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6 mb-4">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Performance Chart</h5>
+              <p className="text-muted">[Line Chart Placeholder]</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
