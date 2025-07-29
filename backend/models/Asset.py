@@ -59,3 +59,6 @@ class Asset:
         if not isinstance(value, datetime):
             raise ValueError("last_updated must be a datetime object")
         self.__last_updated = value
+    
+    def __str__(self):
+        return f"Asset(symbol={self.symbol}, name={self.name}, type={self.type.value}, current_price={self.current_price}, last_updated={self.last_updated})"

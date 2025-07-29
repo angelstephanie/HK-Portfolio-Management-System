@@ -104,3 +104,9 @@ class Transaction:
     @notes.setter
     def notes(self, value):
         self.__notes = value
+    
+    def __str__(self):
+        return (f"Transaction(transaction_id={self.transaction_id}, portfolio_id={self.portfolio_id}, "
+                f"symbol={self.symbol}, type={self.type.value}, quantity={self.quantity}, "
+                f"price_per_unit={self.price_per_unit}, fee={self.fee}, timestamp={self.timestamp}, "
+                f"notes='{self.notes}')")

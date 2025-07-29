@@ -40,3 +40,6 @@ class Portfolio:
         if not isinstance(value, datetime):
             raise ValueError("created_at must be a datetime object")
         self.__created_at = value
+    
+    def __str__(self):
+        return f"Portfolio(name={self.name}, description={self.description}, created_at={self.created_at})"

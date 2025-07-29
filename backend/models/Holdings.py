@@ -47,3 +47,6 @@ class Holdings:
     @avg_buy_price.setter
     def avg_buy_price(self, value):
         self.__avg_buy_price = value
+        
+    def __str__(self):
+        return f"Holding(symbol={self.symbol}, quantity={self.quantity}, avg_buy_price={self.avg_buy_price})"
