@@ -1,6 +1,6 @@
 import mysql.connector
 
-def get_database_connection(host='localhost', user='root', password='n3u3da!', database='PortolioManagement'):
+def get_database_connection(host='localhost', user='root', password='n3u3da!', database='hongkonghackathon'):
     """Establish a connection to the MySQL database."""
     try:
         mydb = mysql.connector.connect(

@@ -7,28 +7,36 @@ class Portfolio:
         self.__description = description
         self.__created_at = created_at
 
-    def get_portfolio_id(self):
+    @property
+    def portfolio_id(self):
         return self.__portfolio_id
 
-    def set_portfolio_id(self, portfolio_id):
+    @portfolio_id.setter
+    def portfolio_id(self, portfolio_id):
         self.__portfolio_id = portfolio_id
 
-    def get_name(self):
+    @property
+    def name(self):
         return self.__name
 
-    def set_name(self, name):
+    @name.setter
+    def name(self, name):
         self.__name = name
 
-    def get_description(self):
+    @property
+    def description(self):
         return self.__description
 
-    def set_description(self, description):
+    @description.setter
+    def description(self, description):
         self.__description = description
 
-    def get_created_at(self):
+    @property
+    def created_at(self):
         return self.__created_at
 
-    def set_created_at(self, value):
+    @created_at.setter
+    def created_at(self, value):
         if not isinstance(value, datetime):
             raise ValueError("created_at must be a datetime object")
         self.__created_at = value
