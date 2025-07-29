@@ -1,3 +1,4 @@
+-- CREATE DATABASE HongKongHackathon; 
 USE HongKongHackathon;
 
 CREATE TABLE Portfolios (
