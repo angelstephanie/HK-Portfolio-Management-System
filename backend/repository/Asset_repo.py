@@ -38,10 +38,13 @@ class Asset_repo:
                     last_updated = VALUES(last_updated)
             """, (asset.symbol, asset.name, asset.type.value, asset.current_price, asset.last_updated))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Asset added/updated: {asset.symbol}")
         except Exception as e:
             print(f"❌ Error adding/updating asset: {e}")
+            
+        return affected_rows if affected_rows > 0 else None
     
     def update_asset(self, asset: Asset):
         """Update an existing asset in the database."""
@@ -53,10 +56,13 @@ class Asset_repo:
                 WHERE symbol = %s
             """, (asset.name, asset.type.value, asset.current_price, asset.last_updated, asset.symbol))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Asset updated: {asset.symbol}")
         except Exception as e:
             print(f"❌ Error updating asset: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
             
     def delete_asset(self, symbol: str):
         """Delete an asset by its symbol."""
@@ -64,10 +70,13 @@ class Asset_repo:
             cursor = self.connection.cursor()
             cursor.execute("DELETE FROM Assets WHERE symbol = %s", (symbol,))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Asset deleted: {symbol}")
         except Exception as e:
             print(f"❌ Error deleting asset: {e}") 
+        
+        return affected_rows if affected_rows > 0 else None
         
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""

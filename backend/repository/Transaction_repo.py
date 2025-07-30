@@ -3,7 +3,8 @@ from repository.database_access import get_database_connection
 class Transaction_repo:
     def __init__(self):
         self.connection = get_database_connection()
-        
+    
+    @staticmethod
     def create_transaction_table(self):
         """Create the Transaction table in the database if it does not exist."""
         try:
@@ -29,6 +30,7 @@ class Transaction_repo:
         except Exception as e:
             print(f"❌ Error creating Transaction table: {e}")
     
+    @staticmethod
     def add_transaction(self, transaction: Transaction):
         """Add a new transaction to the database."""
         try:
@@ -39,11 +41,15 @@ class Transaction_repo:
             """, (transaction.holding_id, transaction.transaction_type, transaction.quantity, transaction.price))
             self.connection.commit()
             transaction.transaction_id = cursor.lastrowid
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction added: {transaction.transaction_id}")
         except Exception as e:
             print(f"❌ Error adding transaction: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
     
+    @staticmethod
     def update_transaction(self, transaction: Transaction):
         """Update an existing transaction in the database."""
         try:
@@ -55,22 +61,30 @@ class Transaction_repo:
             """, (transaction.portfolio_id, transaction.symbol, transaction.type.value, transaction.quantity,
                   transaction.price_per_unit, transaction.fee, transaction.timestamp, transaction.notes, transaction.transaction_id))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction updated: {transaction.transaction_id}")
         except Exception as e:
             print(f"❌ Error updating transaction: {e}")
-            
+        
+        return affected_rows if affected_rows > 0 else None
+    
+    @staticmethod        
     def delete_transaction(self, transaction_id: int):
         """Delete a transaction by its ID."""
         try:
             cursor = self.connection.cursor()
             cursor.execute("DELETE FROM Transactions WHERE transaction_id = %s", (transaction_id,))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction deleted: {transaction_id}")
         except Exception as e:
             print(f"❌ Error deleting transaction: {e}")
         
+        return affected_rows if affected_rows > 0 else None
+    
+    @staticmethod    
     def get_transaction_by_id(self, transaction_id: int) -> Transaction:
         """Retrieve a transaction by its ID."""
         cursor = self.connection.cursor()
@@ -93,6 +107,7 @@ class Transaction_repo:
 
         return None
     
+    @staticmethod
     def get_all_transactions(self) -> list[Transaction]:
         """Retrieve all transactions from the database."""
         cursor = self.connection.cursor()
