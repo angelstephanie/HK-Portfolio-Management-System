@@ -40,7 +40,21 @@ class Holdings_repo:
             print(f"✅ Holding added: {holding}")
         except Exception as e:
             print(f"❌ Error adding holding: {e}")
-    
+    def update_holding(self, holding: Holdings):
+        """Update an existing holding in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Holdings
+                SET portfolio_id = %s, symbol = %s, quantity = %s, avg_buy_price = %s
+                WHERE holding_id = %s
+            """, (holding.portfolio_id, holding.symbol, holding.quantity, holding.avg_buy_price, holding.holding_id))
+            self.connection.commit()
+            cursor.close()
+            print(f"✅ Holding updated: {holding}")
+        except Exception as e:
+            print(f"❌ Error updating holding: {e}")
+            
     def get_holdings_by_id(self, holding_id: int) -> Holdings:
         """Retrieve holdings by portfolio ID."""
         cursor = self.connection.cursor()

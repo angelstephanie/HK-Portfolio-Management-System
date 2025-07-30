@@ -43,7 +43,21 @@ class Asset_repo:
         except Exception as e:
             print(f"❌ Error adding/updating asset: {e}")
     
-    
+    def update_asset(self, asset: Asset):
+        """Update an existing asset in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Assets
+                SET name = %s, type = %s, current_price = %s, last_updated = %s
+                WHERE symbol = %s
+            """, (asset.name, asset.type.value, asset.current_price, asset.last_updated, asset.symbol))
+            self.connection.commit()
+            cursor.close()
+            print(f"✅ Asset updated: {asset.symbol}")
+        except Exception as e:
+            print(f"❌ Error updating asset: {e}")
+            
     def delete_asset(self, symbol: str):
         """Delete an asset by its symbol."""
         try:
