@@ -80,3 +80,33 @@ class YahooFetcher:
             print(f"[Error] Failed to fetch data for '{symbol}': {e}")
             return None
         
+    
+        ## just for testing purpose
+    def saveTodb(self, asserts):
+        
+        asserts_repo = Asset_repo()
+        try:
+            for asset in asserts:
+                asserts_repo.add_asset(asset)
+            print("✅ All assets saved to the database successfully.")
+        except Exception as e:
+            print(f"❌ Failed to save assets to the database: {e}")
+        
+        print(asserts_repo.get_asset_by_symbol('AAPL'))
+            
+
+    def run(self):
+        """
+        Fetch current price data from Yahoo and save into asset table.
+        """
+       # Download all assets across all types listed in asset_info.json
+        df_all_assets = self.fetchByAssetType()
+        print(df_all_assets)
+        
+        # # save to database
+        self.saveTodb(df_all_assets)
+
+if __name__ == "__main__":
+    # Example usage
+    fetcher = YahooFetcher(symbols='asset_info.json', username='root', password='n3u3da!', schema='HongKongHackathon')
+    fetcher.run()

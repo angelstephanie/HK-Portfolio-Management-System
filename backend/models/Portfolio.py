@@ -42,4 +42,13 @@ class Portfolio:
         self.__created_at = value
     
     def __str__(self):
-        return f"Portfolio(name={self.name}, description={self.description}, created_at={self.created_at})"
+        return f"Portfolio(portfolio_id ={self.portfolio_id}, name={self.name}, description={self.description}, created_at={self.created_at})"
+    
+    def to_dict(self):
+        """Convert the portfolio to a dictionary."""
+        return {
+            "portfolio_id": self.portfolio_id,
+            "name": self.name,
+            "description": self.description,
+            "created_at": self.created_at.isoformat() if isinstance(self.created_at, datetime) else self.created_at
+        }
