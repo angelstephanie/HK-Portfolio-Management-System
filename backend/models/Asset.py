@@ -62,3 +62,13 @@ class Asset:
     
     def __str__(self):
         return f"Asset(symbol={self.symbol}, name={self.name}, type={self.type.value}, current_price={self.current_price}, last_updated={self.last_updated})"
+    
+    def to_dict(self):
+        """Convert the asset to a dictionary."""
+        return {
+            "symbol": self.symbol,
+            "name": self.name,
+            "type": self.type.value,
+            "current_price": self.current_price,
+            "last_updated": self.last_updated.strftime('%Y-%m-%d %H:%M:%S')
+        }
