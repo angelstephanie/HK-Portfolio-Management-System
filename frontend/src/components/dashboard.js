@@ -5,13 +5,6 @@ export default function PortfolioDashboard() {
   return (
     <div className="container py-4">
       {/* Summary */}
-      {/* Option 1: */}
-      {/* <div className="text-center mb-4">
-        <h3>Total Portfolio Value: $1.8M</h3>
-        <p className="text-success">P&L: +4.2%</p>
-      </div> */}
-
-      {/* Option 2: */}
       <div className="row mb-4">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center bg-white p-4 rounded shadow-sm border">

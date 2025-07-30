@@ -16,7 +16,7 @@ const ArgonNavbar = () => {
         </Nav>
 
         {/* Search form */}
-        <Form className="d-none d-md-flex me-3" role="search">
+        <Form className="d-none d-md-flex me-3 w-auto" role="search">
         <div className="input-group">
           <span className="input-group-text bg-white border-end-0">
             <i className="fas fa-search text-muted"></i>

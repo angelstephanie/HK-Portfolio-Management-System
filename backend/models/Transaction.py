@@ -110,3 +110,17 @@ class Transaction:
                 f"symbol={self.symbol}, type={self.type.value}, quantity={self.quantity}, "
                 f"price_per_unit={self.price_per_unit}, fee={self.fee}, timestamp={self.timestamp}, "
                 f"notes='{self.notes}')")
+    
+    def to_dict(self):
+        """Convert the transaction to a dictionary."""
+        return {
+            "transaction_id": self.transaction_id,
+            "portfolio_id": self.portfolio_id,
+            "symbol": self.symbol,
+            "type": self.type.value,
+            "quantity": self.quantity,
+            "price_per_unit": self.price_per_unit,
+            "fee": self.fee,
+            "timestamp": self.timestamp.isoformat() if isinstance(self.timestamp, datetime) else self.timestamp,
+            "notes": self.notes
+        }
