@@ -3,6 +3,7 @@ from repository.database_access import get_database_connection
 class Transaction_repo:
     def __init__(self):
         self.connection = get_database_connection()
+        
     def create_transaction_table(self):
         """Create the Transaction table in the database if it does not exist."""
         try:
@@ -43,6 +44,22 @@ class Transaction_repo:
         except Exception as e:
             print(f"❌ Error adding transaction: {e}")
     
+    def update_transaction(self, transaction: Transaction):
+        """Update an existing transaction in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Transactions
+                SET portfolio_id = %s, symbol = %s, type = %s, quantity = %s, price_per_unit = %s, fee = %s, timestamp = %s, notes = %s
+                WHERE transaction_id = %s
+            """, (transaction.portfolio_id, transaction.symbol, transaction.type.value, transaction.quantity,
+                  transaction.price_per_unit, transaction.fee, transaction.timestamp, transaction.notes, transaction.transaction_id))
+            self.connection.commit()
+            cursor.close()
+            print(f"✅ Transaction updated: {transaction.transaction_id}")
+        except Exception as e:
+            print(f"❌ Error updating transaction: {e}")
+            
     def delete_transaction(self, transaction_id: int):
         """Delete a transaction by its ID."""
         try:

@@ -37,6 +37,21 @@ class Portfolio_repo:
             print(f"✅ Portfolio added: {portfolio.name}")
         except Exception as e:
             print(f"❌ Error adding portfolio: {e}")
+    
+    def update_portfolio(self, portfolio: Portfolio):
+        """Update an existing portfolio in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Portfolios
+                SET name = %s, description = %s, created_at = %s
+                WHERE portfolio_id = %s
+            """, (portfolio.name, portfolio.description, portfolio.created_at, portfolio.portfolio_id))
+            self.connection.commit()
+            cursor.close()
+            print(f"✅ Portfolio updated: {portfolio.name}")
+        except Exception as e:
+            print(f"❌ Error updating portfolio: {e}")
 
     def delete_portfolio(self, portfolio_id: int):
         """Delete a portfolio by its ID."""
