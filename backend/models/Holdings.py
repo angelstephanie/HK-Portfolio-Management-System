@@ -49,4 +49,15 @@ class Holdings:
         self.__avg_buy_price = value
         
     def __str__(self):
-        return f"Holding(symbol={self.symbol}, quantity={self.quantity}, avg_buy_price={self.avg_buy_price})"
+        return f"Holdings(holding_id={self.holding_id}, portfolio_id={self.portfolio_id}, " \
+               f"symbol={self.symbol}, quantity={self.quantity}, avg_buy_price={self.avg_buy_price})"
+    
+    def to_dict(self):
+        """Convert the holding to a dictionary."""
+        return {
+            "holding_id": self.holding_id,
+            "portfolio_id": self.portfolio_id,
+            "symbol": self.symbol,
+            "quantity": self.quantity,
+            "avg_buy_price": self.avg_buy_price
+        }
