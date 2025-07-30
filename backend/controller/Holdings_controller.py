@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from service.Holdings_service import HoldingsService
+from backend.service.Holdings_service import HoldingsService
 
 holdings_controller = Blueprint('holdings_controller', __name__)
 holdings_service = HoldingsService()

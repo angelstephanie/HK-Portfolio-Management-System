@@ -1,5 +1,5 @@
-from models.Asset import Asset, AssetType
-from repository.database_access import get_database_connection
+from backend.models.Asset import Asset, AssetType
+from backend.repository.database_access import get_database_connection
 
 class Asset_repo:
     def __init__(self):

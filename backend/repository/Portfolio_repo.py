@@ -1,5 +1,5 @@
-from models.Portfolio import Portfolio
-from repository.database_access import get_database_connection
+from backend.models.Portfolio import Portfolio
+from backend.repository.database_access import get_database_connection
 
 class Portfolio_repo:
     def __init__(self):

@@ -1,4 +1,4 @@
-from repository.Asset_repo import Asset_repo
+from backend.repository.Asset_repo import Asset_repo
 
 class AssetService:
     def __init__(self):
