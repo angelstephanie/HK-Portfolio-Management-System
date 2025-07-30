@@ -1,5 +1,5 @@
-from models.Transaction import Transaction, TransactionType
-from repository.database_access import get_database_connection
+from backend.models.Transaction import Transaction, TransactionType
+from backend.repository.database_access import get_database_connection
 class Transaction_repo:
     def __init__(self):
         self.connection = get_database_connection()

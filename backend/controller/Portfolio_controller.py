@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from service.Portfolio_service import PortfolioService
+from backend.service.Portfolio_service import PortfolioService
 
 portfolio_controller = Blueprint('portfolio_controller', __name__)
 portfolio_service = PortfolioService()

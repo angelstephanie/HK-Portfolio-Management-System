@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from service.Asset_service import AssetService
+from backend.service.Asset_service import AssetService
 
 asset_controller = Blueprint('asset_controller', __name__)
 asset_service = AssetService()

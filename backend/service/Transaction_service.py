@@ -1,4 +1,4 @@
-from repository.Transaction_repo import Transaction_repo
+from backend.repository.Transaction_repo import Transaction_repo
 
 class TransactionService:
     def __init__(self):

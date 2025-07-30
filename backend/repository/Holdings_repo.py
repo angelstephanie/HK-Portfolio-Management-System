@@ -1,5 +1,5 @@
-from models.Holdings import Holdings
-from repository.database_access import get_database_connection
+from backend.models.Holdings import Holdings
+from backend.repository.database_access import get_database_connection
 
 class Holdings_repo:
     def __init__(self):
