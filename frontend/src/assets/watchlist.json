@@ -1,0 +1,34 @@
+[
+    {
+        "symbol":"AAPL",
+        "name":"Apple Inc.",
+        "type":"stock",
+        "open_price":200.00,
+        "current_price":213.88,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"MSFT",
+        "name":"Microsoft Corporation",
+        "type":"stock",
+        "open_price":550.00,
+        "current_price":513.71,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"BTC-USD",
+        "name":"Bitcoin USD",
+        "type":"crypto",
+        "open_price":118887.00,
+        "current_price":118817.78,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"ETH-USD",
+        "name":"Ethereum USD",
+        "type":"crypto",
+        "open_price":3550.00,
+        "current_price":3884.04,
+        "last_updated":"2025-07-28 09:52:45"
+    }
+]

@@ -1,4 +1,5 @@
 import React from 'react';
+import Watchlist from './watchlist/Watchlist';
 
 export default function PortfolioDashboard() {
   return (
@@ -52,10 +53,7 @@ export default function PortfolioDashboard() {
           <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Watchlist Performance</h5>
-              <ul className="list-unstyled">
-                <li>• AAPL: +3%</li>
-                <li>• TSLA: -1%</li>
-              </ul>
+              <Watchlist/>
             </div>
           </div>
         </div>
