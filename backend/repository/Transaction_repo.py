@@ -40,7 +40,7 @@ class Transaction_repo:
                 VALUES (%s, %s, %s, %s)
             """, (transaction.holding_id, transaction.transaction_type, transaction.quantity, transaction.price))
             self.connection.commit()
-            transaction.transaction_id = cursor.lastrowid
+            transaction.transaction_id(cursor.lastrowid)
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction added: {transaction.transaction_id}")

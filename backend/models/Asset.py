@@ -8,10 +8,11 @@ class AssetType(Enum):
     BOND = 'bond'
     
 class Asset:
-    def __init__(self, symbol: str, name: str , type: AssetType, current_price: float, last_updated: datetime):
+    def __init__(self, symbol: str, name: str , type: AssetType, current_price: float, opening_price: float, last_updated: datetime):
         self.__symbol = symbol
         self.__name = name
         self.__type = type  # 'stock', 'crypto', 'etf', 'bond'
+        self.__opening_price = opening_price
         self.__current_price = current_price
         self.__last_updated = last_updated or datetime.now()
 
@@ -49,6 +50,14 @@ class Asset:
     @current_price.setter
     def current_price(self, value):
         self.__current_price = value
+    
+    @property
+    def opening_price(self):
+        return self.__opening_price
+    
+    @opening_price.setter
+    def opening_price(self, value):
+        self.__opening_price = value
 
     @property
     def last_updated(self):
@@ -61,7 +70,7 @@ class Asset:
         self.__last_updated = value
     
     def __str__(self):
-        return f"Asset(symbol={self.symbol}, name={self.name}, type={self.type.value}, current_price={self.current_price}, last_updated={self.last_updated})"
+        return f"Asset(symbol={self.symbol}, name={self.name}, type={self.type.value}, current_price={self.current_price}, opening_price={self.opening_price}, last_updated={self.last_updated})"
     
     def to_dict(self):
         """Convert the asset to a dictionary."""
@@ -70,5 +79,6 @@ class Asset:
             "name": self.name,
             "type": self.type.value,
             "current_price": self.current_price,
+            "opening_price": self.opening_price,
             "last_updated": self.last_updated.strftime('%Y-%m-%d %H:%M:%S')
         }

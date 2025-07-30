@@ -5,6 +5,7 @@ class Asset_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
+    @staticmethod
     def create_asset_table(self):
         """Create the Asset table in the database if it does not exist."""
         try:
@@ -15,6 +16,7 @@ class Asset_repo:
                     name VARCHAR(100) NOT NULL,
                     type ENUM('stock', 'crypto', 'etf', 'bond'),
                     current_price DECIMAL(15, 2),
+                    opening_price DECIMAL(15, 2),
                     last_updated TIMESTAMP
                 );
             """)
@@ -24,6 +26,7 @@ class Asset_repo:
         except Exception as e:
             print(f"❌ Error creating Asset table: {e}")
     
+    @staticmethod
     def add_asset(self, asset: Asset):
         """Add a new asset to the database."""
         try:
@@ -35,8 +38,9 @@ class Asset_repo:
                     name = VALUES(name),
                     type = VALUES(type),
                     current_price = VALUES(current_price),
+                    opening_price = VALUES(opening_price),
                     last_updated = VALUES(last_updated)
-            """, (asset.symbol, asset.name, asset.type.value, asset.current_price, asset.last_updated))
+            """, (asset.symbol, asset.name, asset.type.value, asset.current_price, asset.opening_price, asset.last_updated))
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
@@ -46,15 +50,16 @@ class Asset_repo:
             
         return affected_rows if affected_rows > 0 else None
     
+    @staticmethod
     def update_asset(self, asset: Asset):
         """Update an existing asset in the database."""
         try:
             cursor = self.connection.cursor()
             cursor.execute("""
                 UPDATE Assets
-                SET name = %s, type = %s, current_price = %s, last_updated = %s
+                SET name = %s, type = %s, current_price = %s, opening_price = %s, last_updated = %s
                 WHERE symbol = %s
-            """, (asset.name, asset.type.value, asset.current_price, asset.last_updated, asset.symbol))
+            """, (asset.name, asset.type.value, asset.current_price, asset.opening_price, asset.last_updated, asset.symbol))
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
@@ -63,7 +68,8 @@ class Asset_repo:
             print(f"❌ Error updating asset: {e}")
         
         return affected_rows if affected_rows > 0 else None
-            
+    
+    @staticmethod       
     def delete_asset(self, symbol: str):
         """Delete an asset by its symbol."""
         try:
@@ -77,7 +83,8 @@ class Asset_repo:
             print(f"❌ Error deleting asset: {e}") 
         
         return affected_rows if affected_rows > 0 else None
-        
+    
+    @staticmethod
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
         cursor = self.connection.cursor()
@@ -91,10 +98,12 @@ class Asset_repo:
                 name=row[1],
                 type=AssetType(row[2]),
                 current_price=row[3],
-                last_updated=row[4]
+                opening_price=row[4],
+                last_updated=row[5]
             )
         return None
     
+    @staticmethod
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
         cursor = self.connection.cursor()
@@ -109,7 +118,8 @@ class Asset_repo:
                 name=row[1],
                 type=AssetType(row[2]),
                 current_price=row[3],
-                last_updated=row[4]
+                opening_price=row[4],
+                last_updated=row[5]
             ))
         return assets
     
