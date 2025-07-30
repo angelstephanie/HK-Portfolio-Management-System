@@ -82,7 +82,8 @@ class Holdings_repo:
             cursor = self.connection.cursor()
             cursor.execute("DELETE FROM Holdings WHERE holding_id = %s", (holding_id,))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Holding with ID {holding_id} deleted.")
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting holding: {e}")
