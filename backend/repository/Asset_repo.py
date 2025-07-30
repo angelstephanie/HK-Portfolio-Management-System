@@ -10,7 +10,7 @@ class Asset_repo:
         try:
             cursor = self.connection.cursor()
             cursor.execute("""
-                CREATE TABLE IF NOT Assets EXITS(
+                CREATE TABLE IF NOT Assets EXISTS(
                     symbol VARCHAR(20) PRIMARY KEY,
                     name VARCHAR(100) NOT NULL,
                     type ENUM('stock', 'crypto', 'etf', 'bond'),
