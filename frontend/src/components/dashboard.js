@@ -1,5 +1,6 @@
 import React from 'react';
 import Watchlist from './watchlist/Watchlist';
+import PerformanceChart from './performance-chart/PerformanceChart';
 
 export default function PortfolioDashboard() {
   return (
@@ -66,6 +67,7 @@ export default function PortfolioDashboard() {
           <div className="card shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Performance Chart</h5>
+              <PerformanceChart />
               <p className="text-muted">[Line Chart Placeholder]</p>
             </div>
           </div>
