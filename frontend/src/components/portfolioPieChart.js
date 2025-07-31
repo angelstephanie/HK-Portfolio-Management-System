@@ -69,6 +69,16 @@ function PortfolioPieChart() {
         ]
     };
 
+// function getTopNLabels(num, data, labels){
+//     const topValues = [...data].sort((a, b) => b - a).slice(0, num);
+//     const selectedIndexes = data
+//     .map((value, index) => ({ value, index }))
+//     .filter(item => topValues.includes(item.value))
+//     .map(item => item.index);
+//     const selectedLabels = labels.filter((_, index) => selectedIndexes.includes(index));
+//     return selectedLabels.slice(0, num);
+// }
+
     return (
         <>
             <Form.Group className="mb-3">
@@ -91,7 +101,35 @@ function PortfolioPieChart() {
                             legend: {
                                 display: true,
                                 position: 'bottom',
-                                labels: { color: '#333', font: { size: 14 } }
+                                labels: { color: '#333', font: { size: 14 },
+                                    generateLabels: function(chart) {
+                                        const labels = chart.data.labels || [];
+                                        const dataset = chart.data.datasets[0] || {};
+                                        const backgroundColors = dataset.backgroundColor || [];
+                                        const data = dataset.data || [];
+
+                                        // Get topN indexes by value
+                                        const topN = 5;
+                                        const topIndexes = data
+                                            .map((value, index) => ({ value, index }))
+                                            .sort((a, b) => b.value - a.value)
+                                            .slice(0, topN)
+                                            .map(item => item.index);
+
+                                        // Build all legend labels manually
+                                        const allLabels = labels.map((label, index) => ({
+                                            text: label,
+                                            fillStyle: backgroundColors[index] || 'gray',
+                                            strokeStyle: '#fff',
+                                            lineWidth: 2,
+                                            hidden: false,
+                                            index: index
+                                        }));
+
+                                        // Filter to only top N indexes
+                                        return allLabels.filter(label => topIndexes.includes(label.index));
+                                        }
+                            }
                             },
                             tooltip: {
                                 callbacks: {
