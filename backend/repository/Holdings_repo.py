@@ -74,7 +74,7 @@ class Holdings_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Holding with ID {holding_id} deleted.")
+            print(f"✅ Holding deleted: {holding_id}")
         except Exception as e:
             print(f"❌ Error deleting holding: {e}")
         

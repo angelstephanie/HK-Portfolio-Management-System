@@ -36,9 +36,9 @@ class Transaction_repo:
         try:
             cursor = self.connection.cursor()
             cursor.execute("""
-                INSERT INTO Transactions (holding_id, transaction_type, quantity, price)
-                VALUES (%s, %s, %s, %s)
-            """, (transaction.holding_id, transaction.transaction_type, transaction.quantity, transaction.price))
+                INSERT INTO Transactions (portfolio_id, symbol, type, quantity, price_per_unit, fee, timestamp, notes)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (transaction.portfolio_id, transaction.symbol, transaction.type.value, transaction.quantity, transaction.price_per_unit, transaction.fee, transaction.timestamp, transaction.notes))
             self.connection.commit()
             transaction.transaction_id(cursor.lastrowid)
             affected_rows = cursor.rowcount
