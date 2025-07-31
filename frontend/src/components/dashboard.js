@@ -1,6 +1,7 @@
 import React from 'react';
 import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
+import PortfolioPieChart from './portfolioPieChart';
 
 export default function PortfolioDashboard() {
   return (
@@ -31,7 +32,7 @@ export default function PortfolioDashboard() {
           <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Asset Allocation</h5>
-              <div className="text-muted">[Pie Chart Placeholder]</div>
+              <PortfolioPieChart/>
             </div>
           </div>
         </div>

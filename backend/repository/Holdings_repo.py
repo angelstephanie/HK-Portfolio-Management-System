@@ -1,5 +1,5 @@
-from models.Holdings import Holdings
-from repository.database_access import get_database_connection
+from backend.models.Holdings import Holdings
+from backend.repository.database_access import get_database_connection
 
 class Holdings_repo:
     def __init__(self):
@@ -26,6 +26,7 @@ class Holdings_repo:
         except Exception as e:
             print(f"❌ Error creating Holdings table: {e}")
 
+
     def add_holding(self, holding: Holdings):
         """Add a new holding to the database."""
         try:
@@ -35,12 +36,50 @@ class Holdings_repo:
                 VALUES (%s, %s, %s, %s)
             """, (holding.portfolio_id, holding.symbol, holding.quantity, holding.avg_buy_price))
             self.connection.commit()
-            holding.holding_id = cursor.lastrowid
+            holding.holding_id(cursor.lastrowid)
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Holding added: {holding}")
         except Exception as e:
             print(f"❌ Error adding holding: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
     
+      
+    def update_holding(self, holding: Holdings):
+        """Update an existing holding in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Holdings
+                SET portfolio_id = %s, symbol = %s, quantity = %s, avg_buy_price = %s
+                WHERE holding_id = %s
+            """, (holding.portfolio_id, holding.symbol, holding.quantity, holding.avg_buy_price, holding.holding_id))
+            self.connection.commit()
+            affected_rows = cursor.rowcount
+            cursor.close()
+            print(f"✅ Holding updated: {holding}")
+        except Exception as e:
+            print(f"❌ Error updating holding: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
+    
+
+    def delete_holding(self, holding_id: int):
+        """Delete a holding by its ID."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("DELETE FROM Holdings WHERE holding_id = %s", (holding_id,))
+            self.connection.commit()
+            affected_rows = cursor.rowcount
+            cursor.close()
+            print(f"✅ Holding deleted: {holding_id}")
+        except Exception as e:
+            print(f"❌ Error deleting holding: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
+        
+            
     def get_holdings_by_id(self, holding_id: int) -> Holdings:
         """Retrieve holdings by portfolio ID."""
         cursor = self.connection.cursor()
@@ -58,6 +97,7 @@ class Holdings_repo:
             )
         return None
     
+
     def get_all_holdings(self) -> list[Holdings]:
         """Retrieve all holdings from the database."""
         cursor = self.connection.cursor()
@@ -75,14 +115,3 @@ class Holdings_repo:
                 avg_buy_price=row[4]
             ))
         return holdings_list
-    
-    def delete_holding(self, holding_id: int):
-        """Delete a holding by its ID."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("DELETE FROM Holdings WHERE holding_id = %s", (holding_id,))
-            self.connection.commit()
-            cursor.close()
-            print(f"✅ Holding with ID {holding_id} deleted.")
-        except Exception as e:
-            print(f"❌ Error deleting holding: {e}")

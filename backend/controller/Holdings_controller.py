@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from service.Holdings_service import HoldingsService
+from backend.models.Holdings import Holdings
+from backend.service.Holdings_service import HoldingsService
 
 holdings_controller = Blueprint('holdings_controller', __name__)
 holdings_service = HoldingsService()
@@ -13,9 +14,9 @@ def get_all_holdings():
         return jsonify({'error': str(e)}), 500
 
 @holdings_controller.route('/holdings/<int:portfolio_id>', methods=['GET'])
-def get_holdings_by_portfolio_id(portfolio_id):
+def get_holdings_by_id(portfolio_id):
     try:
-        holdings = holdings_service.get_holdings_by_portfolio_id(portfolio_id)
+        holdings = holdings_service.get_holdings_by_id(portfolio_id)
         if holdings:
             return jsonify(holdings), 200
         else:
@@ -27,7 +28,8 @@ def get_holdings_by_portfolio_id(portfolio_id):
 def add_holding():
     try:
         data = request.get_json()
-        new_holding = holdings_service.add_holding(data)
+        holding = Holdings(**data)
+        new_holding = holdings_service.add_holding(holding)
         return jsonify(new_holding), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500

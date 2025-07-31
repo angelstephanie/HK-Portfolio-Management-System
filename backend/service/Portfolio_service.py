@@ -1,4 +1,4 @@
-from repository.Portfolio_repo import Portfolio_repo
+from backend.repository.Portfolio_repo import Portfolio_repo
 
 class PortfolioService:
     def __init__(self):

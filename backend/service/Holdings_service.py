@@ -1,4 +1,4 @@
-from repository.Holdings_repo import Holdings_repo  
+from backend.repository.Holdings_repo import Holdings_repo  
 
 class HoldingsService:
     def __init__(self):

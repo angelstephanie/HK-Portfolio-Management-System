@@ -1,9 +1,10 @@
-from models.Portfolio import Portfolio
-from repository.database_access import get_database_connection
+from backend.models.Portfolio import Portfolio
+from backend.repository.database_access import get_database_connection
 
 class Portfolio_repo:
     def __init__(self):
         self.connection = get_database_connection()
+
 
     def create_portfolio_table(self):
         """Create the Portfolio table in the database if it does not exist."""
@@ -23,6 +24,7 @@ class Portfolio_repo:
         except Exception as e:
             print(f"❌ Error creating Portfolio table: {e}")
 
+
     def add_portfolio(self, portfolio: Portfolio):
         """Add a new portfolio to the database."""
         try:
@@ -32,11 +34,34 @@ class Portfolio_repo:
                 VALUES (%s, %s, %s)
             """, (portfolio.name, portfolio.description, portfolio.created_at))
             self.connection.commit()
-            portfolio.set_portfolio_id(cursor.lastrowid)
+            portfolio.portfolio_id(cursor.lastrowid)
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Portfolio added: {portfolio.name}")
         except Exception as e:
             print(f"❌ Error adding portfolio: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
+    
+
+    def update_portfolio(self, portfolio: Portfolio):
+        """Update an existing portfolio in the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                UPDATE Portfolios
+                SET name = %s, description = %s, created_at = %s
+                WHERE portfolio_id = %s
+            """, (portfolio.name, portfolio.description, portfolio.created_at, portfolio.portfolio_id))
+            self.connection.commit()
+            affected_rows = cursor.rowcount
+            cursor.close()
+            print(f"✅ Portfolio updated: {portfolio.name}")
+        except Exception as e:
+            print(f"❌ Error updating portfolio: {e}")
+        
+        return affected_rows if affected_rows > 0 else None
+
 
     def delete_portfolio(self, portfolio_id: int):
         """Delete a portfolio by its ID."""
@@ -44,11 +69,15 @@ class Portfolio_repo:
             cursor = self.connection.cursor()
             cursor.execute("DELETE FROM Portfolios WHERE portfolio_id = %s", (portfolio_id,))
             self.connection.commit()
+            affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Portfolio deleted: {portfolio_id}")
         except Exception as e:
             print(f"❌ Error deleting portfolio: {e}")
         
+        return affected_rows if affected_rows > 0 else None
+    
+ 
     def get_portfolio_by_id(self, portfolio_id: int) -> Portfolio:
         """Retrieve a portfolio by its ID."""
         cursor = self.connection.cursor()
@@ -64,6 +93,7 @@ class Portfolio_repo:
                 description=row[2] if row[2] is not None else ""
             )
         return None
+
 
     def get_all_portfolios(self) -> list[Portfolio]:
         """Retrieve all portfolios from the database."""

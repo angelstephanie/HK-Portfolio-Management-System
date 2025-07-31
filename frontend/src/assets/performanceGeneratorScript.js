@@ -7,11 +7,11 @@ const endDate = new Date('2024-12-31');
 let currentDate = startDate;
 
 const data = [];
-let totalAssetValue = 100000; // Starting asset value
+let totalAssetValue = 1000000; // Starting asset value
 
 while (currentDate <= endDate) {
     // Random change between -1000 and +1000
-    const randomChange = Math.floor(Math.random() * 2001) - 1000;
+    const randomChange = Math.floor(Math.random() * 20001) - 9000;
     totalAssetValue += randomChange;
 
     // Ensure totalAssetValue is not negative
