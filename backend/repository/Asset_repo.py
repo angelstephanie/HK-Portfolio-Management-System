@@ -5,7 +5,7 @@ class Asset_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    @staticmethod
+
     def create_asset_table(self):
         """Create the Asset table in the database if it does not exist."""
         try:
@@ -26,7 +26,7 @@ class Asset_repo:
         except Exception as e:
             print(f"❌ Error creating Asset table: {e}")
     
-    @staticmethod
+
     def add_asset(self, asset: Asset):
         """Add a new asset to the database."""
         try:
@@ -50,7 +50,7 @@ class Asset_repo:
             
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def update_asset(self, asset: Asset):
         """Update an existing asset in the database."""
         try:
@@ -69,7 +69,7 @@ class Asset_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod       
+     
     def delete_asset(self, symbol: str):
         """Delete an asset by its symbol."""
         try:
@@ -84,7 +84,7 @@ class Asset_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
         cursor = self.connection.cursor()
@@ -103,7 +103,7 @@ class Asset_repo:
             )
         return None
     
-    @staticmethod
+
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
         cursor = self.connection.cursor()
