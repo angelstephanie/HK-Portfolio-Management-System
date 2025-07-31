@@ -5,7 +5,7 @@ class Portfolio_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    @staticmethod
+
     def create_portfolio_table(self):
         """Create the Portfolio table in the database if it does not exist."""
         try:
@@ -24,7 +24,7 @@ class Portfolio_repo:
         except Exception as e:
             print(f"❌ Error creating Portfolio table: {e}")
 
-    @staticmethod
+
     def add_portfolio(self, portfolio: Portfolio):
         """Add a new portfolio to the database."""
         try:
@@ -43,7 +43,7 @@ class Portfolio_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def update_portfolio(self, portfolio: Portfolio):
         """Update an existing portfolio in the database."""
         try:
@@ -62,7 +62,7 @@ class Portfolio_repo:
         
         return affected_rows if affected_rows > 0 else None
 
-    @staticmethod
+
     def delete_portfolio(self, portfolio_id: int):
         """Delete a portfolio by its ID."""
         try:
@@ -77,7 +77,7 @@ class Portfolio_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod    
+ 
     def get_portfolio_by_id(self, portfolio_id: int) -> Portfolio:
         """Retrieve a portfolio by its ID."""
         cursor = self.connection.cursor()
@@ -94,7 +94,7 @@ class Portfolio_repo:
             )
         return None
 
-    @staticmethod
+
     def get_all_portfolios(self) -> list[Portfolio]:
         """Retrieve all portfolios from the database."""
         cursor = self.connection.cursor()
