@@ -5,7 +5,6 @@ class Holdings_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    @staticmethod
     def create_holdings_table(self):
         """Create the Holdings table in the database if it does not exist."""
         try:
@@ -27,7 +26,7 @@ class Holdings_repo:
         except Exception as e:
             print(f"❌ Error creating Holdings table: {e}")
 
-    @staticmethod
+
     def add_holding(self, holding: Holdings):
         """Add a new holding to the database."""
         try:
@@ -46,7 +45,7 @@ class Holdings_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod        
+      
     def update_holding(self, holding: Holdings):
         """Update an existing holding in the database."""
         try:
@@ -65,7 +64,7 @@ class Holdings_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def delete_holding(self, holding_id: int):
         """Delete a holding by its ID."""
         try:
@@ -79,6 +78,7 @@ class Holdings_repo:
             print(f"❌ Error deleting holding: {e}")
         
         return affected_rows if affected_rows > 0 else None
+        
             
     def get_holdings_by_id(self, holding_id: int) -> Holdings:
         """Retrieve holdings by portfolio ID."""
@@ -97,7 +97,7 @@ class Holdings_repo:
             )
         return None
     
-    @staticmethod
+
     def get_all_holdings(self) -> list[Holdings]:
         """Retrieve all holdings from the database."""
         cursor = self.connection.cursor()

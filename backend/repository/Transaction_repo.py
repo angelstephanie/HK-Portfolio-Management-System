@@ -4,7 +4,7 @@ class Transaction_repo:
     def __init__(self):
         self.connection = get_database_connection()
     
-    @staticmethod
+
     def create_transaction_table(self):
         """Create the Transaction table in the database if it does not exist."""
         try:
@@ -30,7 +30,7 @@ class Transaction_repo:
         except Exception as e:
             print(f"❌ Error creating Transaction table: {e}")
     
-    @staticmethod
+
     def add_transaction(self, transaction: Transaction):
         """Add a new transaction to the database."""
         try:
@@ -49,7 +49,7 @@ class Transaction_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def update_transaction(self, transaction: Transaction):
         """Update an existing transaction in the database."""
         try:
@@ -69,7 +69,7 @@ class Transaction_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod        
+     
     def delete_transaction(self, transaction_id: int):
         """Delete a transaction by its ID."""
         try:
@@ -84,7 +84,7 @@ class Transaction_repo:
         
         return affected_rows if affected_rows > 0 else None
     
-    @staticmethod    
+  
     def get_transaction_by_id(self, transaction_id: int) -> Transaction:
         """Retrieve a transaction by its ID."""
         cursor = self.connection.cursor()
@@ -107,7 +107,7 @@ class Transaction_repo:
 
         return None
     
-    @staticmethod
+
     def get_all_transactions(self) -> list[Transaction]:
         """Retrieve all transactions from the database."""
         cursor = self.connection.cursor()
