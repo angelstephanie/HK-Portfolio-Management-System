@@ -68,7 +68,6 @@ export default function PortfolioDashboard() {
             <div className="card-body">
               <h5 className="card-title">Performance Chart</h5>
               <PerformanceChart />
-              <p className="text-muted">[Line Chart Placeholder]</p>
             </div>
           </div>
         </div>
