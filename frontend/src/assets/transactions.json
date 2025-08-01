@@ -1,0 +1,24 @@
+[
+  {
+    "transaction_id": 1,
+    "portfolio_id": 101,
+    "symbol": "AAPL",
+    "type": "buy",
+    "quantity": 10,
+    "price_per_unit": 150.5,
+    "fee": 1.0,
+    "timestamp": "2025-07-30T10:00:00",
+    "notes": "Initial purchase"
+  },
+  {
+    "transaction_id": 2,
+    "portfolio_id": 101,
+    "symbol": "BTC",
+    "type": "sell",
+    "quantity": 0.25,
+    "price_per_unit": 30000,
+    "fee": 10,
+    "timestamp": "2025-07-29T15:30:00",
+    "notes": "Partial profit"
+  }
+]
