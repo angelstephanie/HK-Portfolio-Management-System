@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 import json
 from datetime import datetime
-from models.Asset import Asset, AssetType
+from backend.models.Asset import Asset, AssetType
 
 class YahooFetcher:
     def __init__(self):                
