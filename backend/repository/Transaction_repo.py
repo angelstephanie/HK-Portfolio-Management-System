@@ -23,6 +23,7 @@ class Transaction_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding transaction: {e}")
+            return None
         
         
     
@@ -45,6 +46,7 @@ class Transaction_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating transaction: {e}")
+            return None
         
         
     
@@ -62,52 +64,64 @@ class Transaction_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting transaction: {e}")
+            return
         
         
     
   
     def get_transaction_by_id(self, transaction_id: int) -> Transaction:
         """Retrieve a transaction by its ID."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Transactions WHERE transaction_id = %s", (transaction_id,))
-        row = cursor.fetchone()
-        cursor.close()
-        
-        if row:
-            return Transaction(
-                transaction_id=row[0],
-                portfolio_id=row[1],
-                symbol=row[2],
-                type=TransactionType(row[3]),
-                quantity=row[4],
-                price_per_unit=row[5],
-                fee=row[6],
-                timestamp=row[7],
-                notes=row[8]
-            )
-
-        return None
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Transactions WHERE transaction_id = %s", (transaction_id,))
+            row = cursor.fetchone()
+            cursor.close()
+            
+            if row:
+                return Transaction(
+                    transaction_id=row[0],
+                    portfolio_id=row[1],
+                    symbol=row[2],
+                    type=TransactionType(row[3]),
+                    quantity=row[4],
+                    price_per_unit=row[5],
+                    fee=row[6],
+                    timestamp=row[7],
+                    notes=row[8]
+                )
+            else:
+                print(f"❌ No transaction found with ID: {transaction_id}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving transaction: {e}")
+            return None
     
 
     def get_all_transactions(self) -> list[Transaction]:
         """Retrieve all transactions from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Transactions")
-        rows = cursor.fetchall()
-        cursor.close()
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Transactions")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            transactions = []
+            for row in rows:
+                transactions.append(Transaction(
+                    transaction_id=row[0],
+                    portfolio_id=row[1],
+                    symbol=row[2],
+                    type=TransactionType(row[3]),
+                    quantity=row[4],
+                    price_per_unit=row[5],
+                    fee=row[6] if row[6] is not None else 0.0,
+                    timestamp=row[7],
+                    notes=row[8] if row[8] is not None else ""
+                ))
+            print(f"✅ Retrieved {len(transactions)} transactions")
+            return transactions
         
-        transactions = []
-        for row in rows:
-            transactions.append(Transaction(
-                transaction_id=row[0],
-                portfolio_id=row[1],
-                symbol=row[2],
-                type=TransactionType(row[3]),
-                quantity=row[4],
-                price_per_unit=row[5],
-                fee=row[6] if row[6] is not None else 0.0,
-                timestamp=row[7],
-                notes=row[8] if row[8] is not None else ""
-            ))
-        return transactions
+        except Exception as e:
+            print(f"❌ Error retrieving all transactions: {e}")
+            return []
     
