@@ -8,11 +8,11 @@ class PortfolioSnap:
         self.__invested_value = invested_value
         
     @property
-    def portflio_id(self):
+    def portfolio_id(self):
         return self.__portfolio_id
     
-    @portflio_id.setter
-    def portflio_id(self, value):
+    @portfolio_id.setter
+    def portfolio_id(self, value):
         self.__portfolio_id = value
         
     @property
