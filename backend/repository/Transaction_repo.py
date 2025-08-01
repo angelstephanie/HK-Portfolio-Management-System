@@ -3,32 +3,7 @@ from backend.repository.database_access import get_database_connection
 class Transaction_repo:
     def __init__(self):
         self.connection = get_database_connection()
-    
 
-    def create_transaction_table(self):
-        """Create the Transaction table in the database if it does not exist."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS Transactions (
-                    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-                    portfolio_id INT NOT NULL,
-                    symbol VARCHAR(20) NOT NULL,
-                    type ENUM('buy', 'sell') NOT NULL,
-                    quantity DECIMAL(15, 6) NOT NULL,
-                    price_per_unit DECIMAL(15, 2) NOT NULL,
-                    fee DECIMAL(15, 2) DEFAULT 0,
-                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    notes TEXT,
-                    FOREIGN KEY (portfolio_id) REFERENCES Portfolios(portfolio_id),
-                    FOREIGN KEY (symbol) REFERENCES Assets(symbol)
-                );
-            """)
-            self.connection.commit()
-            cursor.close()
-            print("✅ Transaction table created successfully.")
-        except Exception as e:
-            print(f"❌ Error creating Transaction table: {e}")
     
 
     def add_transaction(self, transaction: Transaction):
@@ -44,10 +19,12 @@ class Transaction_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction added: {transaction.transaction_id}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding transaction: {e}")
         
-        return affected_rows if affected_rows > 0 else None
+        
     
 
     def update_transaction(self, transaction: Transaction):
@@ -64,10 +41,12 @@ class Transaction_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction updated: {transaction.transaction_id}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating transaction: {e}")
         
-        return affected_rows if affected_rows > 0 else None
+        
     
      
     def delete_transaction(self, transaction_id: int):
@@ -79,10 +58,12 @@ class Transaction_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Transaction deleted: {transaction_id}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting transaction: {e}")
         
-        return affected_rows if affected_rows > 0 else None
+        
     
   
     def get_transaction_by_id(self, transaction_id: int) -> Transaction:
