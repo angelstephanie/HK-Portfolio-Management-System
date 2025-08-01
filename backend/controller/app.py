@@ -13,5 +13,9 @@ app.register_blueprint(holdings_controller)
 app.register_blueprint(portfolio_controller)   
 app.register_blueprint(transaction_controller)
 
+@app.route('/')
+def home():
+    return "Welcome to the HK Portfolio Management System!"
+
 if __name__ == '__main__':
     app.run(debug=True)
