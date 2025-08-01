@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Portfolios (
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
                 );
 
-CREATE TABLE IF NOT Assets EXISTS(
+CREATE TABLE IF NOT EXISTS Assets(
                     symbol VARCHAR(20) PRIMARY KEY,
                     name VARCHAR(100) NOT NULL,
                     type ENUM('stock', 'crypto', 'etf', 'bond'),
@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS PortfolioSnaps (
                     snapshot_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                     cash_value DECIMAL(10, 2) NOT NULL,
                     invested_value DECIMAL(10, 2) NOT NULL,
-                    FOREIGN KEY (portfolio_id) REFERENCES Portfolios(portfolio_id)
-                    PriMARY KEY (portfolio_id, snapshot_date)
+                    FOREIGN KEY (portfolio_id) REFERENCES Portfolios(portfolio_id),
+                    PRIMARY KEY (portfolio_id, snapshot_date)
                 );
 
 INSERT INTO Portfolios (name, description)
