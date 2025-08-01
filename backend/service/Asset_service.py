@@ -6,13 +6,13 @@ class AssetService:
         self.yahooFetcher = YahooFetcher()
             
     def get_asset_by_symbol(self, symbol: str):
-        asset = self.yahooFetcher.get_asset(symbol)
+        asset = self.yahooFetcher.fetchBySymbol(symbol)
         if asset:
             self.asset_repo.update_asset(asset)
         return self.asset_repo.get_asset_by_symbol(symbol)
     
     def get_all_assets(self):
-        assets = self.yahooFetcher.get_all_assets()
+        assets = self.yahooFetcher.fetchByAssetType()
         if assets:
             for asset in assets:
                 self.asset_repo.update_asset(asset)
@@ -20,13 +20,13 @@ class AssetService:
         return self.asset_repo.get_all_assets()
     
     def add_asset(self, asset):
-        asset = self.yahooFetcher.get_asset(asset.symbol)
+        asset = self.yahooFetcher.fetchBySymbol(asset.symbol)
         if asset:
             self.asset_repo.update_asset(asset)
         return self.asset_repo.add_asset(asset)
     
     def update_asset(self, asset):
-        asset = self.yahooFetcher.get_asset(asset.symbol)
+        asset = self.yahooFetcher.fetchBySymbol(asset.symbol)
         if asset:
             self.asset_repo.update_asset(asset)
             
