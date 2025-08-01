@@ -1,9 +1,16 @@
 import React from 'react';
+import { useState } from 'react';
 import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
+import { Navigate } from 'react-router-dom';
 
 export default function PortfolioDashboard() {
+  const [goToMyComponent, setGoToMyComponent] = useState(false);
+  if (goToMyComponent) {
+    return <Navigate to="/mycomponent"/>;
+  }
+
   return (
     <div className="container py-4">
       {/* Summary */}
@@ -73,6 +80,9 @@ export default function PortfolioDashboard() {
           </div>
         </div>
       </div>
+      <button onClick={() => {
+        setGoToMyComponent(true);
+      }}>MyComponent</button>
     </div>
   );
 }

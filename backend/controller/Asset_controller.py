@@ -12,8 +12,9 @@ def get_all_assets():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@asset_controller.route('/assets/<int:asset_id>', methods=['GET'])
+@asset_controller.route('/assets/<symbol>', methods=['GET'])
 def get_asset_by_symbol(symbol):
+    print("Symbol: ", symbol)
     try:
         asset = asset_service.get_asset_by_symbol(symbol)
         if asset:

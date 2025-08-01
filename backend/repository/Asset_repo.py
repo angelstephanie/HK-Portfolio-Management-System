@@ -5,28 +5,6 @@ class Asset_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-
-    def create_asset_table(self):
-        """Create the Asset table in the database if it does not exist."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT Assets EXISTS(
-                    symbol VARCHAR(20) PRIMARY KEY,
-                    name VARCHAR(100) NOT NULL,
-                    type ENUM('stock', 'crypto', 'etf', 'bond'),
-                    current_price DECIMAL(15, 2),
-                    opening_price DECIMAL(15, 2),
-                    last_updated TIMESTAMP
-                );
-            """)
-            self.connection.commit()
-            cursor.close()
-            print("✅ Asset table created successfully.")
-        except Exception as e:
-            print(f"❌ Error creating Asset table: {e}")
-    
-
     def add_asset(self, asset: Asset):
         """Add a new asset to the database."""
         try:
@@ -87,41 +65,50 @@ class Asset_repo:
 
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
-        row = cursor.fetchone()
-        cursor.close()
+        # cursor = self.connection.cursor()
+        # cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
+        # row = cursor.fetchone()
+        # cursor.close()
         
-        if row:
-            return Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            )
-        return None
-    
+        # if row:
+        #     return Asset(
+        #         symbol=row[0],
+        #         name=row[1],
+        #         type=AssetType(row[2]),
+        #         current_price=row[3],
+        #         opening_price=row[4],
+        #         last_updated=row[5]
+        #     )
+        # return None
+        import json
+        with open('backend/assets_data.json', 'r') as file:
+            assets_data = json.load(file)
+        for asset in assets_data:
+            if asset['symbol'] == symbol:
+                return asset
 
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets")
-        rows = cursor.fetchall()
-        cursor.close()
+        # cursor = self.connection.cursor()
+        # cursor.execute("SELECT * FROM Assets")
+        # rows = cursor.fetchall()
+        # cursor.close()
         
-        assets = []
-        for row in rows:
-            assets.append(Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            ))
-        return assets
+        # assets = []
+        # for row in rows:
+        #     assets.append(Asset(
+        #         symbol=row[0],
+        #         name=row[1],
+        #         type=AssetType(row[2]),
+        #         current_price=row[3],
+        #         opening_price=row[4],
+        #         last_updated=row[5]
+        #     ))
+        # return assets
+        import json 
+        with open('backend/assets_data.json', 'r') as file:
+            assets_data = json.load(file)
+        return assets_data
     
 
     
