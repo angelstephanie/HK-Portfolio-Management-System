@@ -1,6 +1,6 @@
 from datetime import datetime
 
-class PortofolioSnap:
+class PortfolioSnap:
     def __init__(self, portfolio_id: int, snapshot_date: datetime, cash_value: float, invested_value: float):
         self.__portfolio_id = portfolio_id
         self.__snapshot_date = snapshot_date
