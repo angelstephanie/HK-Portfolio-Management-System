@@ -1,0 +1,105 @@
+/* DataTable.css */
+
+:root {
+  --bg-light: #f1f3f5;
+  --card-bg: #ffffff;
+  --text-color: #212529;
+  --card-border-radius: 12px;
+}
+
+.row-card-content.many-columns {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.header-row.many-columns {
+    flex-wrap: wrap;
+}
+
+body {
+  background-color: var(--bg-light);
+}
+
+.data-table-container {
+  background-color: var(--bg-light);
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.clear-sort-icon {
+  border: none;
+  color: #888;
+}
+
+.clear-sort-icon:hover {
+  color: #495057;
+}
+
+
+.row-card {
+  background-color: var(--card-bg);
+  border-radius: var(--card-border-radius);
+  margin-bottom: 1rem;
+  padding: 1.2rem 1rem;
+}
+
+.row-card:hover {
+  transform: scale(1.016);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.row-card-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+/* .row-field {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+} */
+
+.row-field-label {
+  font-size: 0.75rem;
+  color: var(--label-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.row-field-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.header-row-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.header-row {
+  display: flex;
+  background: var(--bg-light);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.header-cell {
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-color);
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.header-row,
+.row-card-content {
+  min-width: max-content;
+}
