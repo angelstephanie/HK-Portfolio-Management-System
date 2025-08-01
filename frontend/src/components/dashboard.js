@@ -4,6 +4,7 @@ import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
 import { Navigate } from 'react-router-dom';
+import TopMovers from './topMovers';
 
 export default function PortfolioDashboard() {
   const [goToMyComponent, setGoToMyComponent] = useState(false);
@@ -46,8 +47,8 @@ export default function PortfolioDashboard() {
         <div className="col-md-4 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Top Movers</h5>
-              <div className="text-muted">Top Gainers / Losers</div>
+              <h5 className="card-title">Market Top Movers</h5>
+              <TopMovers/>
             </div>
           </div>
         </div>

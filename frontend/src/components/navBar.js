@@ -1,4 +1,5 @@
 import { Navbar, Nav, Form, FormControl, Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Searchbox from './navbar-components/Searchbox';
 
 const ArgonNavbar = () => {
@@ -12,9 +13,9 @@ const ArgonNavbar = () => {
         </Navbar.Brand>
 
         <Nav className="me-auto">
-          <Nav.Link href="#dashboard">Dashboard</Nav.Link>
-          <Nav.Link href="#holdings">Holdings</Nav.Link>
-          <Nav.Link href="#transactions">Transactions</Nav.Link>
+          <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+          <Nav.Link as={Link} to="/holdings">Holdings</Nav.Link>
+          <Nav.Link as={Link} to="/transactions">Transactions</Nav.Link>
         </Nav>
 
         /* Search form with dropdown */

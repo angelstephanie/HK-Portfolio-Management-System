@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Spinner } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import '../styles/portfolioPieChart.css';
 
 const FILTER_OPTIONS = [
     { value: 'assetType', label: 'Asset Type' },
@@ -95,6 +96,7 @@ function PortfolioPieChart() {
                 </div>
             ) : (
                 <Pie
+                    className="pie-chart-container"
                     data={chartData}
                     options={{
                         plugins: {
@@ -141,7 +143,6 @@ function PortfolioPieChart() {
                             }
                         }
                     }}
-                    style={{ maxHeight: 350 }}
                 />
             )}
         </>
