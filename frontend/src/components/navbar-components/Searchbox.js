@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 
 const Searchbox = () => {
+    const navigate = useNavigate();
     const searchOptions = [
         {value: "GOOGL", label: "Google"},
         {value: "AAPL", label: "Apple"},
@@ -15,6 +17,10 @@ const Searchbox = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const handleChange= (selectedOption) => {
         setSelectedOption(selectedOption);
+        if (selectedOption != null) {
+            const path = `/asset/${selectedOption.value}`;
+            navigate(path);
+        }
     }
 
     return (

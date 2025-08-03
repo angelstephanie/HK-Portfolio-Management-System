@@ -94,50 +94,51 @@ class Asset_repo:
 
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
-        # cursor = self.connection.cursor()
-        # cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
-        # row = cursor.fetchone()
-        # cursor.close()
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
+        row = cursor.fetchone()
+        cursor.close()
         
-        # if row:
-        #     return Asset(
-        #         symbol=row[0],
-        #         name=row[1],
-        #         type=AssetType(row[2]),
-        #         current_price=row[3],
-        #         opening_price=row[4],
-        #         last_updated=row[5]
-        #     )
-        # return None
-        import json
-        with open('backend/assets_data.json', 'r') as file:
-            assets_data = json.load(file)
-        for asset in assets_data:
-            if asset['symbol'] == symbol:
-                return asset
+        if row:
+            return Asset(
+                symbol=row[0],
+                name=row[1],
+                type=AssetType(row[2]),
+                current_price=row[3],
+                opening_price=row[4],
+                last_updated=row[5]
+            )
+        return None
+        # import json
+        # with open('backend/assets_data.json', 'r') as file:
+        #     assets_data = json.load(file)
+        # for asset in assets_data:
+        #     if asset['symbol'] == symbol:
+        #         return asset
 
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
-        # cursor = self.connection.cursor()
-        # cursor.execute("SELECT * FROM Assets")
-        # rows = cursor.fetchall()
-        # cursor.close()
-        
-        # assets = []
-        # for row in rows:
-        #     assets.append(Asset(
-        #         symbol=row[0],
-        #         name=row[1],
-        #         type=AssetType(row[2]),
-        #         current_price=row[3],
-        #         opening_price=row[4],
-        #         last_updated=row[5]
-        #     ))
-        # return assets
-        import json 
-        with open('backend/assets_data.json', 'r') as file:
-            assets_data = json.load(file)
-        return assets_data
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM Assets")
+        rows = cursor.fetchall()
+        cursor.close()
+        assets = []
+        print("Assets retrieved from database: ", type(rows))
+        for row in rows:
+            assets.append(Asset(
+                symbol=row[0],
+                name=row[1],
+                type=AssetType(row[2]),
+                current_price=row[3],
+                opening_price=row[4],
+                last_updated=row[5]
+            ).to_dict())
+        print("Assets[0] retrieved: ", assets[0])
+        return assets
+        # import json 
+        # with open('backend/assets_data.json', 'r') as file:
+        #     assets_data = json.load(file)
+        # return assets_data
     
 
     

@@ -12,10 +12,10 @@ class AssetService:
         return self.asset_repo.get_asset_by_symbol(symbol)
     
     def get_all_assets(self):
-        assets = self.yahooFetcher.get_all_assets()
-        if assets:
-            for asset in assets:
-                self.asset_repo.update_asset(asset)
+        # assets = self.yahooFetcher.get_all_assets()
+        # if assets:
+        #     for asset in assets:
+        #         self.asset_repo.update_asset(asset)
                 
         return self.asset_repo.get_all_assets()
     

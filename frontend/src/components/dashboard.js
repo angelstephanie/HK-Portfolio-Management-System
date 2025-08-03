@@ -1,16 +1,15 @@
 import React from 'react';
-import { useState } from 'react';
 import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
 
 export default function PortfolioDashboard() {
-  const [goToMyComponent, setGoToMyComponent] = useState(false);
-  if (goToMyComponent) {
-    return <Navigate to="/mycomponent"/>;
-  }
+  const navigate = useNavigate();
+  const handleChange = () => {
+    navigate('/mycomponent');
+  };
 
   return (
     <div className="container py-4">
@@ -81,9 +80,7 @@ export default function PortfolioDashboard() {
           </div>
         </div>
       </div>
-      <button onClick={() => {
-        setGoToMyComponent(true);
-      }}>MyComponent</button>
+      <button onClick={handleChange}>MyComponent</button>
     </div>
   );
 }

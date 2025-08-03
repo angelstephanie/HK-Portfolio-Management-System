@@ -7,15 +7,18 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HoldingsPage from './components/holdingsPage';
 import TransactionsPage from './components/transactionsPage';
 import MyComponent from './components/testing-endpoint/MyComponent';
+import Asset from './components/navbar-components/Asset';
 
 function App() {
   return (
       <Router>
         <ArgonNavbar />
         <Routes>
+          <Route path="/" element={<PortfolioDashboard />} />
+          <Route path="/dashboard" element={<PortfolioDashboard />} />
           <Route path="/holdings" element={<HoldingsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/dashboard" element={<PortfolioDashboard />} />
+          <Route path="/asset/:symbol" element={<Asset />} />
           <Route path="/mycomponent" element={<MyComponent/>} />
           {/* Define other routes here as needed */}
         </Routes>
