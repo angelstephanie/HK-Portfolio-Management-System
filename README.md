@@ -30,25 +30,3 @@ npm install
 ```bash
 npm start
 ```
-
-## Fetch Pricing data from Yahoo and save into database
-To fetch pricing data from Yahoo and save data into asset table, follow these steps:
-
-### 1.Create table in your local server
-Make sure the script in **backend\database\Hong Kong Hackathon.sql** is run and tables are created.
-
-### 2.Update asset_info.json
-Add ticket name into **\backend\asset_info.json** if you have.
-
-### 3.Run YahooFetcher
-```python3
-# example of using fetcher
-asset_config = "asset_info.json"
-username = "root" # your username
-password = "n3u3da!" # your password
-schema = "HongKongHackathon" # schema name
-    
-fetcher = YahooFetcher(asset_config,username,password,password,schema)
-fetcher.run()
-```
-

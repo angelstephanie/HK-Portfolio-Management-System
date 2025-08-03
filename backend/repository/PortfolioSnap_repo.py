@@ -6,25 +6,6 @@ class PortfolioSnap_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    def create_portfolio_snap_table(self):
-        """Create the PortfolioSnap table in the database if it does not exist."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS PortfolioSnaps (
-                    portfolio_id INT NOT NULL,
-                    snapshot_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    cash_value DECIMAL(10, 2) NOT NULL,
-                    invested_value DECIMAL(10, 2) NOT NULL,
-                    FOREIGN KEY (portfolio_id) REFERENCES Portfolios(portfolio_id)
-                    PriMARY KEY (portfolio_id, snapshot_date)
-                );
-            """)
-            self.connection.commit()
-            cursor.close()
-            print("✅ PortfolioSnap table created successfully.")
-        except Exception as e:
-            print(f"❌ Error creating PortfolioSnap table: {e}")
     
     def add_portfolio_snap(self, portfolio_snap: PortfolioSnap):
         """Add a new portfolio snapshot to the database."""
@@ -38,10 +19,13 @@ class PortfolioSnap_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ PortfolioSnap added: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding PortfolioSnap: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
+        
     
     def update_portfolio_snap(self, portfolio_snap: PortfolioSnap):
         """Update an existing portfolio snapshot in the database."""
@@ -56,10 +40,13 @@ class PortfolioSnap_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ PortfolioSnap updated: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating PortfolioSnap: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
+       
     
     def get_portfolio_snap_by_id(self, portfolio_id: int, snapshot_date: datetime):
         """Retrieve a portfolio snapshot by portfolio ID and snapshot date."""
@@ -100,6 +87,7 @@ class PortfolioSnap_repo:
                     cash_value=row[2],
                     invested_value=row[3]
                 ))
+            print(f"✅ Retrieved {len(portfolio_snaps)} PortfolioSnaps")
             return portfolio_snaps
         except Exception as e:
             print(f"❌ Error retrieving all PortfolioSnaps: {e}")
@@ -117,8 +105,8 @@ class PortfolioSnap_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ PortfolioSnap deleted: {portfolio_id} on {snapshot_date}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting PortfolioSnap: {e}")
-        
-        return affected_rows if affected_rows > 0 else None
-    
+            return None

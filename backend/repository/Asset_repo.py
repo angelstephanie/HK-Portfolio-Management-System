@@ -52,6 +52,7 @@ class Asset_repo:
         
         except Exception as e:
             print(f"❌ Error adding/updating asset: {e}")
+            return None
             
         
     
@@ -73,6 +74,7 @@ class Asset_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating asset: {e}")
+            return None
         
     
      
@@ -89,56 +91,58 @@ class Asset_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting asset: {e}") 
+            return None
         
     
 
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
-        row = cursor.fetchone()
-        cursor.close()
-        
-        if row:
-            return Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            )
-        return None
-        # import json
-        # with open('backend/assets_data.json', 'r') as file:
-        #     assets_data = json.load(file)
-        # for asset in assets_data:
-        #     if asset['symbol'] == symbol:
-        #         return asset
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
+            row = cursor.fetchone()
+            cursor.close()
+            
+            if row:
+                return Asset(
+                    symbol=row[0],
+                    name=row[1],
+                    type=AssetType(row[2]),
+                    current_price=row[3],
+                    opening_price=row[4],
+                    last_updated=row[5]
+                )
+            else:
+                print(f"❌ No asset found with symbol: {symbol}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving asset: {e}")
+            return None
+    
 
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets")
-        rows = cursor.fetchall()
-        cursor.close()
-        assets = []
-        print("Assets retrieved from database: ", type(rows))
-        for row in rows:
-            assets.append(Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            ).to_dict())
-        print("Assets[0] retrieved: ", assets[0])
-        return assets
-        # import json 
-        # with open('backend/assets_data.json', 'r') as file:
-        #     assets_data = json.load(file)
-        # return assets_data
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Assets")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            assets = []
+            for row in rows:
+                assets.append(Asset(
+                    symbol=row[0],
+                    name=row[1],
+                    type=AssetType(row[2]),
+                    current_price=row[3],
+                    opening_price=row[4],
+                    last_updated=row[5]
+                ))
+            print(f"✅ Retrieved {len(assets)} assets")
+            return assets
+        except Exception as e:
+            print(f"❌ Error retrieving all assets: {e}")
+            return []
     
 
     
