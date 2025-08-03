@@ -15,6 +15,7 @@ def get_all_assets():
 
 @asset_controller.route('/assets/<string:symbol>', methods=['GET'])
 def get_asset_by_symbol(symbol):
+    print("Symbol: ", symbol)
     try:
         asset = asset_service.get_asset_by_symbol(symbol)
         if asset:

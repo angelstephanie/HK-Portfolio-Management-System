@@ -1,9 +1,16 @@
 import React from 'react';
 import Watchlist from './watchlist/Watchlist';
+import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
+import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
 
 export default function PortfolioDashboard() {
+  const navigate = useNavigate();
+  const handleChange = () => {
+    navigate('/mycomponent');
+  };
+
   return (
     <div className="container py-4">
       {/* Summary */}
@@ -68,11 +75,12 @@ export default function PortfolioDashboard() {
           <div className="card shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Performance Chart</h5>
-              <p className="text-muted">[Line Chart Placeholder]</p>
+              <PerformanceChart />
             </div>
           </div>
         </div>
       </div>
+      <button onClick={handleChange}>MyComponent</button>
     </div>
   );
 }

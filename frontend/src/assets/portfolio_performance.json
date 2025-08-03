@@ -1,0 +1,1466 @@
+[
+    {
+        "date": "2024-01-01",
+        "totalAssetValue": 1005092
+    },
+    {
+        "date": "2024-01-02",
+        "totalAssetValue": 1015816
+    },
+    {
+        "date": "2024-01-03",
+        "totalAssetValue": 1008861
+    },
+    {
+        "date": "2024-01-04",
+        "totalAssetValue": 1005095
+    },
+    {
+        "date": "2024-01-05",
+        "totalAssetValue": 1015789
+    },
+    {
+        "date": "2024-01-06",
+        "totalAssetValue": 1007241
+    },
+    {
+        "date": "2024-01-07",
+        "totalAssetValue": 1004032
+    },
+    {
+        "date": "2024-01-08",
+        "totalAssetValue": 1008302
+    },
+    {
+        "date": "2024-01-09",
+        "totalAssetValue": 1001254
+    },
+    {
+        "date": "2024-01-10",
+        "totalAssetValue": 1003634
+    },
+    {
+        "date": "2024-01-11",
+        "totalAssetValue": 998340
+    },
+    {
+        "date": "2024-01-12",
+        "totalAssetValue": 1008357
+    },
+    {
+        "date": "2024-01-13",
+        "totalAssetValue": 1000159
+    },
+    {
+        "date": "2024-01-14",
+        "totalAssetValue": 999122
+    },
+    {
+        "date": "2024-01-15",
+        "totalAssetValue": 1009564
+    },
+    {
+        "date": "2024-01-16",
+        "totalAssetValue": 1000864
+    },
+    {
+        "date": "2024-01-17",
+        "totalAssetValue": 999257
+    },
+    {
+        "date": "2024-01-18",
+        "totalAssetValue": 1000117
+    },
+    {
+        "date": "2024-01-19",
+        "totalAssetValue": 1010982
+    },
+    {
+        "date": "2024-01-20",
+        "totalAssetValue": 1016713
+    },
+    {
+        "date": "2024-01-21",
+        "totalAssetValue": 1020294
+    },
+    {
+        "date": "2024-01-22",
+        "totalAssetValue": 1031112
+    },
+    {
+        "date": "2024-01-23",
+        "totalAssetValue": 1026502
+    },
+    {
+        "date": "2024-01-24",
+        "totalAssetValue": 1024241
+    },
+    {
+        "date": "2024-01-25",
+        "totalAssetValue": 1017352
+    },
+    {
+        "date": "2024-01-26",
+        "totalAssetValue": 1018098
+    },
+    {
+        "date": "2024-01-27",
+        "totalAssetValue": 1014669
+    },
+    {
+        "date": "2024-01-28",
+        "totalAssetValue": 1025171
+    },
+    {
+        "date": "2024-01-29",
+        "totalAssetValue": 1025141
+    },
+    {
+        "date": "2024-01-30",
+        "totalAssetValue": 1017206
+    },
+    {
+        "date": "2024-01-31",
+        "totalAssetValue": 1010620
+    },
+    {
+        "date": "2024-02-01",
+        "totalAssetValue": 1019130
+    },
+    {
+        "date": "2024-02-02",
+        "totalAssetValue": 1016299
+    },
+    {
+        "date": "2024-02-03",
+        "totalAssetValue": 1013117
+    },
+    {
+        "date": "2024-02-04",
+        "totalAssetValue": 1015254
+    },
+    {
+        "date": "2024-02-05",
+        "totalAssetValue": 1011808
+    },
+    {
+        "date": "2024-02-06",
+        "totalAssetValue": 1020842
+    },
+    {
+        "date": "2024-02-07",
+        "totalAssetValue": 1029967
+    },
+    {
+        "date": "2024-02-08",
+        "totalAssetValue": 1025529
+    },
+    {
+        "date": "2024-02-09",
+        "totalAssetValue": 1025981
+    },
+    {
+        "date": "2024-02-10",
+        "totalAssetValue": 1023094
+    },
+    {
+        "date": "2024-02-11",
+        "totalAssetValue": 1020671
+    },
+    {
+        "date": "2024-02-12",
+        "totalAssetValue": 1031562
+    },
+    {
+        "date": "2024-02-13",
+        "totalAssetValue": 1033516
+    },
+    {
+        "date": "2024-02-14",
+        "totalAssetValue": 1036733
+    },
+    {
+        "date": "2024-02-15",
+        "totalAssetValue": 1028169
+    },
+    {
+        "date": "2024-02-16",
+        "totalAssetValue": 1032453
+    },
+    {
+        "date": "2024-02-17",
+        "totalAssetValue": 1024915
+    },
+    {
+        "date": "2024-02-18",
+        "totalAssetValue": 1026844
+    },
+    {
+        "date": "2024-02-19",
+        "totalAssetValue": 1035848
+    },
+    {
+        "date": "2024-02-20",
+        "totalAssetValue": 1035348
+    },
+    {
+        "date": "2024-02-21",
+        "totalAssetValue": 1031210
+    },
+    {
+        "date": "2024-02-22",
+        "totalAssetValue": 1029452
+    },
+    {
+        "date": "2024-02-23",
+        "totalAssetValue": 1039984
+    },
+    {
+        "date": "2024-02-24",
+        "totalAssetValue": 1033217
+    },
+    {
+        "date": "2024-02-25",
+        "totalAssetValue": 1041156
+    },
+    {
+        "date": "2024-02-26",
+        "totalAssetValue": 1051623
+    },
+    {
+        "date": "2024-02-27",
+        "totalAssetValue": 1057882
+    },
+    {
+        "date": "2024-02-28",
+        "totalAssetValue": 1063100
+    },
+    {
+        "date": "2024-02-29",
+        "totalAssetValue": 1071173
+    },
+    {
+        "date": "2024-03-01",
+        "totalAssetValue": 1077353
+    },
+    {
+        "date": "2024-03-02",
+        "totalAssetValue": 1079805
+    },
+    {
+        "date": "2024-03-03",
+        "totalAssetValue": 1076593
+    },
+    {
+        "date": "2024-03-04",
+        "totalAssetValue": 1080405
+    },
+    {
+        "date": "2024-03-05",
+        "totalAssetValue": 1080045
+    },
+    {
+        "date": "2024-03-06",
+        "totalAssetValue": 1090456
+    },
+    {
+        "date": "2024-03-07",
+        "totalAssetValue": 1087563
+    },
+    {
+        "date": "2024-03-08",
+        "totalAssetValue": 1088255
+    },
+    {
+        "date": "2024-03-09",
+        "totalAssetValue": 1082458
+    },
+    {
+        "date": "2024-03-10",
+        "totalAssetValue": 1084542
+    },
+    {
+        "date": "2024-03-11",
+        "totalAssetValue": 1091237
+    },
+    {
+        "date": "2024-03-12",
+        "totalAssetValue": 1097839
+    },
+    {
+        "date": "2024-03-13",
+        "totalAssetValue": 1105783
+    },
+    {
+        "date": "2024-03-14",
+        "totalAssetValue": 1104887
+    },
+    {
+        "date": "2024-03-15",
+        "totalAssetValue": 1102822
+    },
+    {
+        "date": "2024-03-16",
+        "totalAssetValue": 1101844
+    },
+    {
+        "date": "2024-03-17",
+        "totalAssetValue": 1104667
+    },
+    {
+        "date": "2024-03-18",
+        "totalAssetValue": 1100929
+    },
+    {
+        "date": "2024-03-19",
+        "totalAssetValue": 1101092
+    },
+    {
+        "date": "2024-03-20",
+        "totalAssetValue": 1107186
+    },
+    {
+        "date": "2024-03-21",
+        "totalAssetValue": 1103563
+    },
+    {
+        "date": "2024-03-22",
+        "totalAssetValue": 1101530
+    },
+    {
+        "date": "2024-03-23",
+        "totalAssetValue": 1102073
+    },
+    {
+        "date": "2024-03-24",
+        "totalAssetValue": 1113021
+    },
+    {
+        "date": "2024-03-25",
+        "totalAssetValue": 1112679
+    },
+    {
+        "date": "2024-03-26",
+        "totalAssetValue": 1105821
+    },
+    {
+        "date": "2024-03-27",
+        "totalAssetValue": 1116712
+    },
+    {
+        "date": "2024-03-28",
+        "totalAssetValue": 1118094
+    },
+    {
+        "date": "2024-03-29",
+        "totalAssetValue": 1112159
+    },
+    {
+        "date": "2024-03-30",
+        "totalAssetValue": 1113851
+    },
+    {
+        "date": "2024-03-31",
+        "totalAssetValue": 1121793
+    },
+    {
+        "date": "2024-04-01",
+        "totalAssetValue": 1126449
+    },
+    {
+        "date": "2024-04-02",
+        "totalAssetValue": 1118999
+    },
+    {
+        "date": "2024-04-03",
+        "totalAssetValue": 1123761
+    },
+    {
+        "date": "2024-04-04",
+        "totalAssetValue": 1130023
+    },
+    {
+        "date": "2024-04-05",
+        "totalAssetValue": 1125810
+    },
+    {
+        "date": "2024-04-06",
+        "totalAssetValue": 1125826
+    },
+    {
+        "date": "2024-04-07",
+        "totalAssetValue": 1126019
+    },
+    {
+        "date": "2024-04-08",
+        "totalAssetValue": 1129674
+    },
+    {
+        "date": "2024-04-09",
+        "totalAssetValue": 1128845
+    },
+    {
+        "date": "2024-04-10",
+        "totalAssetValue": 1126899
+    },
+    {
+        "date": "2024-04-11",
+        "totalAssetValue": 1137448
+    },
+    {
+        "date": "2024-04-12",
+        "totalAssetValue": 1145039
+    },
+    {
+        "date": "2024-04-13",
+        "totalAssetValue": 1136255
+    },
+    {
+        "date": "2024-04-14",
+        "totalAssetValue": 1130772
+    },
+    {
+        "date": "2024-04-15",
+        "totalAssetValue": 1140605
+    },
+    {
+        "date": "2024-04-16",
+        "totalAssetValue": 1131698
+    },
+    {
+        "date": "2024-04-17",
+        "totalAssetValue": 1135227
+    },
+    {
+        "date": "2024-04-18",
+        "totalAssetValue": 1128821
+    },
+    {
+        "date": "2024-04-19",
+        "totalAssetValue": 1124784
+    },
+    {
+        "date": "2024-04-20",
+        "totalAssetValue": 1130886
+    },
+    {
+        "date": "2024-04-21",
+        "totalAssetValue": 1128162
+    },
+    {
+        "date": "2024-04-22",
+        "totalAssetValue": 1126509
+    },
+    {
+        "date": "2024-04-23",
+        "totalAssetValue": 1121224
+    },
+    {
+        "date": "2024-04-24",
+        "totalAssetValue": 1121953
+    },
+    {
+        "date": "2024-04-25",
+        "totalAssetValue": 1113688
+    },
+    {
+        "date": "2024-04-26",
+        "totalAssetValue": 1108488
+    },
+    {
+        "date": "2024-04-27",
+        "totalAssetValue": 1108929
+    },
+    {
+        "date": "2024-04-28",
+        "totalAssetValue": 1107331
+    },
+    {
+        "date": "2024-04-29",
+        "totalAssetValue": 1104616
+    },
+    {
+        "date": "2024-04-30",
+        "totalAssetValue": 1102506
+    },
+    {
+        "date": "2024-05-01",
+        "totalAssetValue": 1108582
+    },
+    {
+        "date": "2024-05-02",
+        "totalAssetValue": 1116285
+    },
+    {
+        "date": "2024-05-03",
+        "totalAssetValue": 1107828
+    },
+    {
+        "date": "2024-05-04",
+        "totalAssetValue": 1117158
+    },
+    {
+        "date": "2024-05-05",
+        "totalAssetValue": 1117209
+    },
+    {
+        "date": "2024-05-06",
+        "totalAssetValue": 1115889
+    },
+    {
+        "date": "2024-05-07",
+        "totalAssetValue": 1111244
+    },
+    {
+        "date": "2024-05-08",
+        "totalAssetValue": 1112289
+    },
+    {
+        "date": "2024-05-09",
+        "totalAssetValue": 1116588
+    },
+    {
+        "date": "2024-05-10",
+        "totalAssetValue": 1126203
+    },
+    {
+        "date": "2024-05-11",
+        "totalAssetValue": 1119224
+    },
+    {
+        "date": "2024-05-12",
+        "totalAssetValue": 1120008
+    },
+    {
+        "date": "2024-05-13",
+        "totalAssetValue": 1113549
+    },
+    {
+        "date": "2024-05-14",
+        "totalAssetValue": 1115195
+    },
+    {
+        "date": "2024-05-15",
+        "totalAssetValue": 1110097
+    },
+    {
+        "date": "2024-05-16",
+        "totalAssetValue": 1115228
+    },
+    {
+        "date": "2024-05-17",
+        "totalAssetValue": 1117611
+    },
+    {
+        "date": "2024-05-18",
+        "totalAssetValue": 1125215
+    },
+    {
+        "date": "2024-05-19",
+        "totalAssetValue": 1118581
+    },
+    {
+        "date": "2024-05-20",
+        "totalAssetValue": 1114670
+    },
+    {
+        "date": "2024-05-21",
+        "totalAssetValue": 1117511
+    },
+    {
+        "date": "2024-05-22",
+        "totalAssetValue": 1126505
+    },
+    {
+        "date": "2024-05-23",
+        "totalAssetValue": 1123321
+    },
+    {
+        "date": "2024-05-24",
+        "totalAssetValue": 1133634
+    },
+    {
+        "date": "2024-05-25",
+        "totalAssetValue": 1129483
+    },
+    {
+        "date": "2024-05-26",
+        "totalAssetValue": 1130885
+    },
+    {
+        "date": "2024-05-27",
+        "totalAssetValue": 1139722
+    },
+    {
+        "date": "2024-05-28",
+        "totalAssetValue": 1138942
+    },
+    {
+        "date": "2024-05-29",
+        "totalAssetValue": 1134051
+    },
+    {
+        "date": "2024-05-30",
+        "totalAssetValue": 1134537
+    },
+    {
+        "date": "2024-05-31",
+        "totalAssetValue": 1130552
+    },
+    {
+        "date": "2024-06-01",
+        "totalAssetValue": 1133243
+    },
+    {
+        "date": "2024-06-02",
+        "totalAssetValue": 1134333
+    },
+    {
+        "date": "2024-06-03",
+        "totalAssetValue": 1143766
+    },
+    {
+        "date": "2024-06-04",
+        "totalAssetValue": 1141253
+    },
+    {
+        "date": "2024-06-05",
+        "totalAssetValue": 1144993
+    },
+    {
+        "date": "2024-06-06",
+        "totalAssetValue": 1144080
+    },
+    {
+        "date": "2024-06-07",
+        "totalAssetValue": 1149522
+    },
+    {
+        "date": "2024-06-08",
+        "totalAssetValue": 1145980
+    },
+    {
+        "date": "2024-06-09",
+        "totalAssetValue": 1145530
+    },
+    {
+        "date": "2024-06-10",
+        "totalAssetValue": 1149491
+    },
+    {
+        "date": "2024-06-11",
+        "totalAssetValue": 1150479
+    },
+    {
+        "date": "2024-06-12",
+        "totalAssetValue": 1149721
+    },
+    {
+        "date": "2024-06-13",
+        "totalAssetValue": 1146980
+    },
+    {
+        "date": "2024-06-14",
+        "totalAssetValue": 1151430
+    },
+    {
+        "date": "2024-06-15",
+        "totalAssetValue": 1143467
+    },
+    {
+        "date": "2024-06-16",
+        "totalAssetValue": 1143856
+    },
+    {
+        "date": "2024-06-17",
+        "totalAssetValue": 1135215
+    },
+    {
+        "date": "2024-06-18",
+        "totalAssetValue": 1129766
+    },
+    {
+        "date": "2024-06-19",
+        "totalAssetValue": 1123093
+    },
+    {
+        "date": "2024-06-20",
+        "totalAssetValue": 1120042
+    },
+    {
+        "date": "2024-06-21",
+        "totalAssetValue": 1113609
+    },
+    {
+        "date": "2024-06-22",
+        "totalAssetValue": 1107202
+    },
+    {
+        "date": "2024-06-23",
+        "totalAssetValue": 1111213
+    },
+    {
+        "date": "2024-06-24",
+        "totalAssetValue": 1121216
+    },
+    {
+        "date": "2024-06-25",
+        "totalAssetValue": 1125856
+    },
+    {
+        "date": "2024-06-26",
+        "totalAssetValue": 1123159
+    },
+    {
+        "date": "2024-06-27",
+        "totalAssetValue": 1124237
+    },
+    {
+        "date": "2024-06-28",
+        "totalAssetValue": 1119217
+    },
+    {
+        "date": "2024-06-29",
+        "totalAssetValue": 1110487
+    },
+    {
+        "date": "2024-06-30",
+        "totalAssetValue": 1112691
+    },
+    {
+        "date": "2024-07-01",
+        "totalAssetValue": 1112000
+    },
+    {
+        "date": "2024-07-02",
+        "totalAssetValue": 1118529
+    },
+    {
+        "date": "2024-07-03",
+        "totalAssetValue": 1121304
+    },
+    {
+        "date": "2024-07-04",
+        "totalAssetValue": 1128513
+    },
+    {
+        "date": "2024-07-05",
+        "totalAssetValue": 1135056
+    },
+    {
+        "date": "2024-07-06",
+        "totalAssetValue": 1127017
+    },
+    {
+        "date": "2024-07-07",
+        "totalAssetValue": 1127333
+    },
+    {
+        "date": "2024-07-08",
+        "totalAssetValue": 1119691
+    },
+    {
+        "date": "2024-07-09",
+        "totalAssetValue": 1113862
+    },
+    {
+        "date": "2024-07-10",
+        "totalAssetValue": 1108104
+    },
+    {
+        "date": "2024-07-11",
+        "totalAssetValue": 1108172
+    },
+    {
+        "date": "2024-07-12",
+        "totalAssetValue": 1111095
+    },
+    {
+        "date": "2024-07-13",
+        "totalAssetValue": 1106484
+    },
+    {
+        "date": "2024-07-14",
+        "totalAssetValue": 1112808
+    },
+    {
+        "date": "2024-07-15",
+        "totalAssetValue": 1113014
+    },
+    {
+        "date": "2024-07-16",
+        "totalAssetValue": 1116156
+    },
+    {
+        "date": "2024-07-17",
+        "totalAssetValue": 1124325
+    },
+    {
+        "date": "2024-07-18",
+        "totalAssetValue": 1122420
+    },
+    {
+        "date": "2024-07-19",
+        "totalAssetValue": 1119565
+    },
+    {
+        "date": "2024-07-20",
+        "totalAssetValue": 1127710
+    },
+    {
+        "date": "2024-07-21",
+        "totalAssetValue": 1121373
+    },
+    {
+        "date": "2024-07-22",
+        "totalAssetValue": 1117136
+    },
+    {
+        "date": "2024-07-23",
+        "totalAssetValue": 1108378
+    },
+    {
+        "date": "2024-07-24",
+        "totalAssetValue": 1118984
+    },
+    {
+        "date": "2024-07-25",
+        "totalAssetValue": 1119338
+    },
+    {
+        "date": "2024-07-26",
+        "totalAssetValue": 1124024
+    },
+    {
+        "date": "2024-07-27",
+        "totalAssetValue": 1120724
+    },
+    {
+        "date": "2024-07-28",
+        "totalAssetValue": 1130565
+    },
+    {
+        "date": "2024-07-29",
+        "totalAssetValue": 1139322
+    },
+    {
+        "date": "2024-07-30",
+        "totalAssetValue": 1149679
+    },
+    {
+        "date": "2024-07-31",
+        "totalAssetValue": 1144950
+    },
+    {
+        "date": "2024-08-01",
+        "totalAssetValue": 1144757
+    },
+    {
+        "date": "2024-08-02",
+        "totalAssetValue": 1152790
+    },
+    {
+        "date": "2024-08-03",
+        "totalAssetValue": 1145308
+    },
+    {
+        "date": "2024-08-04",
+        "totalAssetValue": 1143306
+    },
+    {
+        "date": "2024-08-05",
+        "totalAssetValue": 1135880
+    },
+    {
+        "date": "2024-08-06",
+        "totalAssetValue": 1129914
+    },
+    {
+        "date": "2024-08-07",
+        "totalAssetValue": 1134701
+    },
+    {
+        "date": "2024-08-08",
+        "totalAssetValue": 1133981
+    },
+    {
+        "date": "2024-08-09",
+        "totalAssetValue": 1137960
+    },
+    {
+        "date": "2024-08-10",
+        "totalAssetValue": 1130855
+    },
+    {
+        "date": "2024-08-11",
+        "totalAssetValue": 1132025
+    },
+    {
+        "date": "2024-08-12",
+        "totalAssetValue": 1128890
+    },
+    {
+        "date": "2024-08-13",
+        "totalAssetValue": 1121566
+    },
+    {
+        "date": "2024-08-14",
+        "totalAssetValue": 1115638
+    },
+    {
+        "date": "2024-08-15",
+        "totalAssetValue": 1117481
+    },
+    {
+        "date": "2024-08-16",
+        "totalAssetValue": 1123226
+    },
+    {
+        "date": "2024-08-17",
+        "totalAssetValue": 1130674
+    },
+    {
+        "date": "2024-08-18",
+        "totalAssetValue": 1126879
+    },
+    {
+        "date": "2024-08-19",
+        "totalAssetValue": 1137642
+    },
+    {
+        "date": "2024-08-20",
+        "totalAssetValue": 1147764
+    },
+    {
+        "date": "2024-08-21",
+        "totalAssetValue": 1143281
+    },
+    {
+        "date": "2024-08-22",
+        "totalAssetValue": 1151313
+    },
+    {
+        "date": "2024-08-23",
+        "totalAssetValue": 1155635
+    },
+    {
+        "date": "2024-08-24",
+        "totalAssetValue": 1155634
+    },
+    {
+        "date": "2024-08-25",
+        "totalAssetValue": 1163333
+    },
+    {
+        "date": "2024-08-26",
+        "totalAssetValue": 1173817
+    },
+    {
+        "date": "2024-08-27",
+        "totalAssetValue": 1171157
+    },
+    {
+        "date": "2024-08-28",
+        "totalAssetValue": 1178141
+    },
+    {
+        "date": "2024-08-29",
+        "totalAssetValue": 1183736
+    },
+    {
+        "date": "2024-08-30",
+        "totalAssetValue": 1175564
+    },
+    {
+        "date": "2024-08-31",
+        "totalAssetValue": 1169560
+    },
+    {
+        "date": "2024-09-01",
+        "totalAssetValue": 1161050
+    },
+    {
+        "date": "2024-09-02",
+        "totalAssetValue": 1160512
+    },
+    {
+        "date": "2024-09-03",
+        "totalAssetValue": 1159859
+    },
+    {
+        "date": "2024-09-04",
+        "totalAssetValue": 1155179
+    },
+    {
+        "date": "2024-09-05",
+        "totalAssetValue": 1153625
+    },
+    {
+        "date": "2024-09-06",
+        "totalAssetValue": 1148033
+    },
+    {
+        "date": "2024-09-07",
+        "totalAssetValue": 1156030
+    },
+    {
+        "date": "2024-09-08",
+        "totalAssetValue": 1149074
+    },
+    {
+        "date": "2024-09-09",
+        "totalAssetValue": 1157593
+    },
+    {
+        "date": "2024-09-10",
+        "totalAssetValue": 1155309
+    },
+    {
+        "date": "2024-09-11",
+        "totalAssetValue": 1162060
+    },
+    {
+        "date": "2024-09-12",
+        "totalAssetValue": 1161840
+    },
+    {
+        "date": "2024-09-13",
+        "totalAssetValue": 1171429
+    },
+    {
+        "date": "2024-09-14",
+        "totalAssetValue": 1167332
+    },
+    {
+        "date": "2024-09-15",
+        "totalAssetValue": 1166423
+    },
+    {
+        "date": "2024-09-16",
+        "totalAssetValue": 1171687
+    },
+    {
+        "date": "2024-09-17",
+        "totalAssetValue": 1173405
+    },
+    {
+        "date": "2024-09-18",
+        "totalAssetValue": 1181604
+    },
+    {
+        "date": "2024-09-19",
+        "totalAssetValue": 1184528
+    },
+    {
+        "date": "2024-09-20",
+        "totalAssetValue": 1183100
+    },
+    {
+        "date": "2024-09-21",
+        "totalAssetValue": 1175996
+    },
+    {
+        "date": "2024-09-22",
+        "totalAssetValue": 1182871
+    },
+    {
+        "date": "2024-09-23",
+        "totalAssetValue": 1179282
+    },
+    {
+        "date": "2024-09-24",
+        "totalAssetValue": 1184239
+    },
+    {
+        "date": "2024-09-25",
+        "totalAssetValue": 1184368
+    },
+    {
+        "date": "2024-09-26",
+        "totalAssetValue": 1187087
+    },
+    {
+        "date": "2024-09-27",
+        "totalAssetValue": 1187448
+    },
+    {
+        "date": "2024-09-28",
+        "totalAssetValue": 1184778
+    },
+    {
+        "date": "2024-09-29",
+        "totalAssetValue": 1182898
+    },
+    {
+        "date": "2024-09-30",
+        "totalAssetValue": 1185428
+    },
+    {
+        "date": "2024-10-01",
+        "totalAssetValue": 1178190
+    },
+    {
+        "date": "2024-10-02",
+        "totalAssetValue": 1183408
+    },
+    {
+        "date": "2024-10-03",
+        "totalAssetValue": 1186147
+    },
+    {
+        "date": "2024-10-04",
+        "totalAssetValue": 1190860
+    },
+    {
+        "date": "2024-10-05",
+        "totalAssetValue": 1199081
+    },
+    {
+        "date": "2024-10-06",
+        "totalAssetValue": 1203736
+    },
+    {
+        "date": "2024-10-07",
+        "totalAssetValue": 1196362
+    },
+    {
+        "date": "2024-10-08",
+        "totalAssetValue": 1200624
+    },
+    {
+        "date": "2024-10-09",
+        "totalAssetValue": 1210946
+    },
+    {
+        "date": "2024-10-10",
+        "totalAssetValue": 1204648
+    },
+    {
+        "date": "2024-10-11",
+        "totalAssetValue": 1211834
+    },
+    {
+        "date": "2024-10-12",
+        "totalAssetValue": 1204176
+    },
+    {
+        "date": "2024-10-13",
+        "totalAssetValue": 1207183
+    },
+    {
+        "date": "2024-10-14",
+        "totalAssetValue": 1212166
+    },
+    {
+        "date": "2024-10-15",
+        "totalAssetValue": 1207162
+    },
+    {
+        "date": "2024-10-16",
+        "totalAssetValue": 1211426
+    },
+    {
+        "date": "2024-10-17",
+        "totalAssetValue": 1204853
+    },
+    {
+        "date": "2024-10-18",
+        "totalAssetValue": 1211005
+    },
+    {
+        "date": "2024-10-19",
+        "totalAssetValue": 1216605
+    },
+    {
+        "date": "2024-10-20",
+        "totalAssetValue": 1209322
+    },
+    {
+        "date": "2024-10-21",
+        "totalAssetValue": 1217760
+    },
+    {
+        "date": "2024-10-22",
+        "totalAssetValue": 1219893
+    },
+    {
+        "date": "2024-10-23",
+        "totalAssetValue": 1219700
+    },
+    {
+        "date": "2024-10-24",
+        "totalAssetValue": 1227171
+    },
+    {
+        "date": "2024-10-25",
+        "totalAssetValue": 1237289
+    },
+    {
+        "date": "2024-10-26",
+        "totalAssetValue": 1230159
+    },
+    {
+        "date": "2024-10-27",
+        "totalAssetValue": 1222052
+    },
+    {
+        "date": "2024-10-28",
+        "totalAssetValue": 1218761
+    },
+    {
+        "date": "2024-10-29",
+        "totalAssetValue": 1210449
+    },
+    {
+        "date": "2024-10-30",
+        "totalAssetValue": 1215031
+    },
+    {
+        "date": "2024-10-31",
+        "totalAssetValue": 1218181
+    },
+    {
+        "date": "2024-11-01",
+        "totalAssetValue": 1212497
+    },
+    {
+        "date": "2024-11-02",
+        "totalAssetValue": 1222830
+    },
+    {
+        "date": "2024-11-03",
+        "totalAssetValue": 1231281
+    },
+    {
+        "date": "2024-11-04",
+        "totalAssetValue": 1236345
+    },
+    {
+        "date": "2024-11-05",
+        "totalAssetValue": 1232716
+    },
+    {
+        "date": "2024-11-06",
+        "totalAssetValue": 1238098
+    },
+    {
+        "date": "2024-11-07",
+        "totalAssetValue": 1241778
+    },
+    {
+        "date": "2024-11-08",
+        "totalAssetValue": 1249501
+    },
+    {
+        "date": "2024-11-09",
+        "totalAssetValue": 1258341
+    },
+    {
+        "date": "2024-11-10",
+        "totalAssetValue": 1252955
+    },
+    {
+        "date": "2024-11-11",
+        "totalAssetValue": 1254694
+    },
+    {
+        "date": "2024-11-12",
+        "totalAssetValue": 1260334
+    },
+    {
+        "date": "2024-11-13",
+        "totalAssetValue": 1259939
+    },
+    {
+        "date": "2024-11-14",
+        "totalAssetValue": 1257117
+    },
+    {
+        "date": "2024-11-15",
+        "totalAssetValue": 1255964
+    },
+    {
+        "date": "2024-11-16",
+        "totalAssetValue": 1264854
+    },
+    {
+        "date": "2024-11-17",
+        "totalAssetValue": 1259214
+    },
+    {
+        "date": "2024-11-18",
+        "totalAssetValue": 1265362
+    },
+    {
+        "date": "2024-11-19",
+        "totalAssetValue": 1262312
+    },
+    {
+        "date": "2024-11-20",
+        "totalAssetValue": 1270277
+    },
+    {
+        "date": "2024-11-21",
+        "totalAssetValue": 1273746
+    },
+    {
+        "date": "2024-11-22",
+        "totalAssetValue": 1278086
+    },
+    {
+        "date": "2024-11-23",
+        "totalAssetValue": 1273624
+    },
+    {
+        "date": "2024-11-24",
+        "totalAssetValue": 1266621
+    },
+    {
+        "date": "2024-11-25",
+        "totalAssetValue": 1269338
+    },
+    {
+        "date": "2024-11-26",
+        "totalAssetValue": 1271168
+    },
+    {
+        "date": "2024-11-27",
+        "totalAssetValue": 1266921
+    },
+    {
+        "date": "2024-11-28",
+        "totalAssetValue": 1261104
+    },
+    {
+        "date": "2024-11-29",
+        "totalAssetValue": 1271994
+    },
+    {
+        "date": "2024-11-30",
+        "totalAssetValue": 1279998
+    },
+    {
+        "date": "2024-12-01",
+        "totalAssetValue": 1271955
+    },
+    {
+        "date": "2024-12-02",
+        "totalAssetValue": 1267886
+    },
+    {
+        "date": "2024-12-03",
+        "totalAssetValue": 1267175
+    },
+    {
+        "date": "2024-12-04",
+        "totalAssetValue": 1272743
+    },
+    {
+        "date": "2024-12-05",
+        "totalAssetValue": 1271530
+    },
+    {
+        "date": "2024-12-06",
+        "totalAssetValue": 1279715
+    },
+    {
+        "date": "2024-12-07",
+        "totalAssetValue": 1282114
+    },
+    {
+        "date": "2024-12-08",
+        "totalAssetValue": 1291148
+    },
+    {
+        "date": "2024-12-09",
+        "totalAssetValue": 1298464
+    },
+    {
+        "date": "2024-12-10",
+        "totalAssetValue": 1292599
+    },
+    {
+        "date": "2024-12-11",
+        "totalAssetValue": 1287766
+    },
+    {
+        "date": "2024-12-12",
+        "totalAssetValue": 1298704
+    },
+    {
+        "date": "2024-12-13",
+        "totalAssetValue": 1298000
+    },
+    {
+        "date": "2024-12-14",
+        "totalAssetValue": 1289721
+    },
+    {
+        "date": "2024-12-15",
+        "totalAssetValue": 1291347
+    },
+    {
+        "date": "2024-12-16",
+        "totalAssetValue": 1286812
+    },
+    {
+        "date": "2024-12-17",
+        "totalAssetValue": 1288420
+    },
+    {
+        "date": "2024-12-18",
+        "totalAssetValue": 1298536
+    },
+    {
+        "date": "2024-12-19",
+        "totalAssetValue": 1309269
+    },
+    {
+        "date": "2024-12-20",
+        "totalAssetValue": 1310625
+    },
+    {
+        "date": "2024-12-21",
+        "totalAssetValue": 1306534
+    },
+    {
+        "date": "2024-12-22",
+        "totalAssetValue": 1311863
+    },
+    {
+        "date": "2024-12-23",
+        "totalAssetValue": 1302880
+    },
+    {
+        "date": "2024-12-24",
+        "totalAssetValue": 1298302
+    },
+    {
+        "date": "2024-12-25",
+        "totalAssetValue": 1306885
+    },
+    {
+        "date": "2024-12-26",
+        "totalAssetValue": 1298982
+    },
+    {
+        "date": "2024-12-27",
+        "totalAssetValue": 1295102
+    },
+    {
+        "date": "2024-12-28",
+        "totalAssetValue": 1303610
+    },
+    {
+        "date": "2024-12-29",
+        "totalAssetValue": 1304250
+    },
+    {
+        "date": "2024-12-30",
+        "totalAssetValue": 1303683
+    },
+    {
+        "date": "2024-12-31",
+        "totalAssetValue": 1312963
+    }
+]
