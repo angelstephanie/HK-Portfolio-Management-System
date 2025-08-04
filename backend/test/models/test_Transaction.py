@@ -17,3 +17,7 @@ def test_creation():
     assert transaction.price_per_unit == 150.00
     assert transaction.transaction_date == datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
     assert transaction.transaction_type == "BUY"
+    
+def run_tests():
+    test_creation()
+    print("All tests in testing model Asset passed!")

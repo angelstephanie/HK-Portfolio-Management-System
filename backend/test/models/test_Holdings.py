@@ -17,3 +17,7 @@ def test_creation():
     assert holding.purchase_price == 150.00
     assert holding.purchase_date == datetime.strptime("2023-10-01")
     assert holding.last_updated == datetime.strptime("2023-10-01 12:00:00")
+    
+def run_tests():
+    test_creation()
+    print("All tests in testing model Asset passed!")

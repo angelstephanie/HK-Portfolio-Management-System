@@ -15,3 +15,7 @@ def test_creation():
     assert portfolio.description == "A portfolio focused on technology stocks"
     assert portfolio.creation_date == datetime.strptime("2023-10-01", "%Y-%m-%d")
     assert portfolio.last_updated == datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
+
+def run_tests():
+    test_creation()
+    print("All tests in testing model Asset passed!")

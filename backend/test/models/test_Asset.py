@@ -1,7 +1,5 @@
 from backend.models.Asset import Asset, AssetType
 from datetime import datetime
-import unittest
-
 
 def test_creation():
     asset = Asset(
@@ -19,3 +17,7 @@ def test_creation():
     assert asset.current_price == 150.00
     assert asset.opening_price == 148.00
     assert asset.last_updated == datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
+
+def run_tests():
+    test_creation()
+    print("All tests in testing model Asset passed!")
