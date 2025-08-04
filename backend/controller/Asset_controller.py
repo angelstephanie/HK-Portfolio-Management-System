@@ -31,7 +31,10 @@ def add_asset():
         asset_data = request.json
         asset = Asset(**asset_data)
         added_asset = asset_service.add_asset(asset)
-        return jsonify(added_asset.to_dict()), 201
+        if added_asset:
+            return jsonify({'message': 'Asset added successfully'}), 201
+        else:
+            return jsonify({'message': 'Asset not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -43,7 +46,7 @@ def update_asset(symbol):
         asset = Asset(**asset_data)
         updated_asset = asset_service.update_asset(asset)
         if updated_asset:
-            return jsonify(updated_asset), 200
+            return jsonify({'message': 'Asset updated successfully'}), 200
         else:
             return jsonify({'message': 'Asset not found'}), 404
     except Exception as e:
