@@ -9,7 +9,7 @@ holdings_service = HoldingsService()
 def get_all_holdings():
     try:
         holdings = holdings_service.get_all_holdings()
-        return jsonify(holdings), 200
+        return jsonify([holding.to_dict() for holding in holdings]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -18,7 +18,7 @@ def get_holdings_by_id(portfolio_id):
     try:
         holdings = holdings_service.get_holdings_by_id(portfolio_id)
         if holdings:
-            return jsonify(holdings), 200
+            return jsonify([holding.to_dict() for holding in holdings]), 200
         else:
             return jsonify({'message': 'Portfolio not found'}), 404
     except Exception as e:
@@ -30,7 +30,8 @@ def add_holding():
         data = request.get_json()
         holding = Holdings(**data)
         new_holding = holdings_service.add_holding(holding)
-        return jsonify(new_holding), 201
+        if new_holding:
+            return jsonify({'message': 'Holding added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
