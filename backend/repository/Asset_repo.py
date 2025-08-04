@@ -46,7 +46,7 @@ class Asset_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Asset added/updated: {asset.symbol}")
+            print(f"✅ Asset added/updated: {asset}")
             
             return affected_rows if affected_rows > 0 else None
         
@@ -69,7 +69,7 @@ class Asset_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Asset updated: {asset.symbol}")
+            print(f"✅ Asset updated: {asset}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:

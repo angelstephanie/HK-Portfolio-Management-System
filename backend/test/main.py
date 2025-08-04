@@ -18,6 +18,13 @@ def run_tests():
     test_PortfolioSnap.run_tests()
     test_Portfolio.run_tests()
     test_Transaction.run_tests()
+    
+    # Run repositories tests
+    test_Asset_repo.run_tests()
+    test_Holdings_repo.run_tests()
+    test_Portfolio_repo.run_tests()
+    test_PortfolioSnap_repo.run_tests()
+    test_Transaction_repo.run_tests()
 
 if __name__ == "__main__":
     run_tests()
