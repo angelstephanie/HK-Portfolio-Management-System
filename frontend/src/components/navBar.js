@@ -1,4 +1,4 @@
-import { Navbar, Nav, Form, FormControl, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Searchbox from './navbar-components/Searchbox';
 
@@ -7,7 +7,7 @@ const ArgonNavbar = () => {
   return (
     <Navbar expand="md" variant="dark" className="bg-dark py-3 px-4 shadow" id="navbar-main">
       <div className="container-fluid">
-        /* Left-side Nav Links */
+        {/* Left-side Nav Links */}
         <Navbar.Brand href="#">
           Portfolio Pro
         </Navbar.Brand>
@@ -18,10 +18,12 @@ const ArgonNavbar = () => {
           <Nav.Link as={Link} to="/transactions">Transactions</Nav.Link>
         </Nav>
 
-        /* Search form with dropdown */
-        <Searchbox/>
-
-        /* User Dropdown */
+        {/* Search form with dropdown */}
+        <Nav>
+          <Searchbox/>
+        </Nav>
+        
+        {/* User Dropdown */}
         <Nav className="d-none d-md-flex align-items-center">
           <Dropdown align="end">
             <Dropdown.Toggle variant="link" className="nav-link pr-0 text-white">

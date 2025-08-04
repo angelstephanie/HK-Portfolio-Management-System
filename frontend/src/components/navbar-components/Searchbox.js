@@ -10,18 +10,13 @@ const Searchbox = () => {
         // Fetch search options 
         fetch('http://127.0.0.1:5000/assets')
             .then(response => {
-                console.log(`Response status: ${response.status}`);
-                console.log(`Response: ${response}`);
-                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // Assuming data is an array of objects with 'value' and 'label' properties
                 const options = data.map(item => ({ value: item.symbol, label: item.name }));
-                console.log("Search options: ", options);
                 setSearchOptions(options);
             })
             .catch(error => {
@@ -43,7 +38,6 @@ const Searchbox = () => {
           options={searchOptions}
           value={selectedOption}
           onChange={handleChange}
-          className="w-50"
           placeholder="Search"
           isClearable
           isSearchable
