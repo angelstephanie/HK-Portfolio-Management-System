@@ -14,9 +14,9 @@ class HoldingsService:
     
     def get_holdings_by_id(self, portfolio_id: int):
         if not portfolio_id:
-            raise ValueError("Holding_id cannot be empty")
+            raise ValueError("Portfolio_id cannot be empty")
         if not isinstance(portfolio_id,int):
-            raise TypeError("Holding_id must be an int")
+            raise TypeError("Portfolio_id must be an int")
         
         return self.holdings_repo.get_holdings_by_id(portfolio_id)
     

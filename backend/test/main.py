@@ -10,6 +10,12 @@ import backend.test.repositories.test_PortfolioSnap_repo as test_PortfolioSnap_r
 import backend.test.repositories.test_Portfolio_repo as test_Portfolio_repo
 import backend.test.repositories.test_Transaction_repo as test_Transaction_repo
 
+from backend.test.controllers.test_Asset_controller import TestAssetController
+from backend.test.controllers.test_Holdings_controller import TestHoldingsController
+from backend.test.controllers.test_Portfolio_controller import TestPortfolioController
+from backend.test.controllers.test_PortfolioSnap_controller import TestPortfolioSnapController
+from backend.test.controllers.test_Transaction_controller import TestTransactionController
+
 def run_tests():
     
     # Run models tests
@@ -25,6 +31,15 @@ def run_tests():
     test_Portfolio_repo.run_tests()
     test_PortfolioSnap_repo.run_tests()
     test_Transaction_repo.run_tests()
+    
+    # Run controllers tests   
+    TestAssetController().run()
+    TestHoldingsController().run()
+    TestPortfolioController().run()
+    TestPortfolioSnapController().run()
+    TestTransactionController().run()
+     
+    
 
 if __name__ == "__main__":
     run_tests()
