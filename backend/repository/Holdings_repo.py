@@ -14,7 +14,7 @@ class Holdings_repo:
                 VALUES (%s, %s, %s, %s)
             """, (holding.portfolio_id, holding.symbol, holding.quantity, holding.avg_buy_price))
             self.connection.commit()
-            holding.holding_id(cursor.lastrowid)
+            holding.holding_id = cursor.lastrowid
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Holding added: {holding}")
