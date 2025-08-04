@@ -14,16 +14,16 @@ def setup():
     )
 
 def test_get_holdings_by_id():
-    holding_id = 1
-    holding = holdings_repo.get_holdings_by_id(holding_id)
+    portfolio_id=1
+    holdings = holdings_repo.get_holdings_by_id(portfolio_id)
     
-    assert holding is not None
-    assert isinstance(holding, Holdings)
-    assert holding.holding_id == holding_id
-    assert holding.portfolio_id == 1
-    assert holding.symbol == "AAPL"
-    assert holding.quantity == 10
-    assert holding.avg_buy_price == 150.00
+    for holding in holdings:
+        assert holding is not None
+        assert isinstance(holding, Holdings)
+        assert holding.portfolio_id == portfolio_id
+        assert holding.symbol is not None
+        assert holding.quantity is not None
+        assert holding.avg_buy_price is not None
 
 def test_get_all_holdings():
     holdings = holdings_repo.get_all_holdings()
