@@ -29,8 +29,9 @@ def get_asset_by_symbol(symbol):
 def add_asset():
     try:
         asset_data = request.json
-        asset = asset_service.add_asset(asset_data)
-        return jsonify(asset), 201
+        asset = Asset(**asset_data)
+        added_asset = asset_service.add_asset(asset)
+        return jsonify(added_asset.to_dict()), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
