@@ -15,10 +15,10 @@ class Portfolio_repo:
                 VALUES (%s, %s, %s)
             """, (portfolio.name, portfolio.description, portfolio.created_at))
             self.connection.commit()
-            portfolio.portfolio_id(cursor.lastrowid)
+            portfolio.portfolio_id = cursor.lastrowid
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Portfolio added: {portfolio.name}")
+            print(f"✅ Portfolio added: {portfolio}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
@@ -40,7 +40,7 @@ class Portfolio_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Portfolio updated: {portfolio.name}")
+            print(f"✅ Portfolio updated: {portfolio}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:

@@ -13,6 +13,13 @@ def setup():
         avg_buy_price=215.00
     )
 
+def test_add_holding():
+    holdings_add = holdings_repo.add_holding(new_holding)
+    
+    assert holdings_add is not None
+    assert isinstance(holdings_add, int)    
+    assert holdings_add == 1
+
 def test_get_holdings_by_id():
     portfolio_id=1
     holdings = holdings_repo.get_holdings_by_id(portfolio_id)
@@ -40,13 +47,6 @@ def test_get_all_holdings():
         assert holding.avg_buy_price is not None
         
 
-def test_add_holding():
-    holdings_add = holdings_repo.add_holding(new_holding)
-    
-    assert holdings_add is not None
-    assert isinstance(holdings_add, int)    
-    assert holdings_add == 1
-
 def test_update_holding():
     # Update the holding's quantity
     new_holding.quantity += 5
@@ -61,7 +61,7 @@ def test_update_holding():
     assert holding.quantity == 15
 
 def test_delete_holding():
-    holding_id = 2
+    holding_id = new_holding.holding_id
     deleted_count = holdings_repo.delete_holding(holding_id)
     
     assert deleted_count == 1
