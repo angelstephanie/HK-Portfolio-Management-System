@@ -1,5 +1,5 @@
 import unittest
-from flask import Flask, jsonify
+from flask import Flask
 from unittest.mock import patch, MagicMock
 from backend.controller.Asset_controller import asset_controller
 from backend.service.Asset_service import AssetService
@@ -31,15 +31,15 @@ class TestAssetController(unittest.TestCase):
     @patch('backend.service.Asset_service.AssetService.add_asset')
     def test_add_asset(self, mock_add_asset):
         """Test the add asset endpoint."""
-        mock_add_asset.return_value = MagicMock(to_dict=lambda: {'symbol': 'AAPL', 'name': 'Apple Inc.', 'type': 'stock', 'current_price': 150.0, 'opening_price': 145.0, 'last_updated': '2023-10-01'})
+        mock_add_asset.return_value = 1
         response = self.app.test_client().post('/assets', json={'symbol': 'AAPL', 'name': 'Apple Inc.', 'type': 'stock', 'current_price': 150.0, 'opening_price': 145.0, 'last_updated': '2023-10-01'})
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json['symbol'], 'AAPL')
+        self.assertEqual(response.json['message'], 'Asset added successfully')
         
     @patch('backend.service.Asset_service.AssetService.update_asset')
     def test_update_asset(self, mock_update_asset):
         """Test the update asset endpoint."""
-        mock_update_asset.return_value = {'symbol': 'AAPL', 'name': 'Apple Inc.', 'type': 'stock', 'current_price': 155.0, 'opening_price': 150.0, 'last_updated': '2023-10-01'}
+        mock_update_asset.return_value = 1
         response = self.app.test_client().put('/assets/AAPL', json={'name': 'Apple Inc.', 'type': 'stock', 'current_price': 155.0, 'opening_price': 150.0, 'last_updated': '2023-10-01'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json['symbol'], 'AAPL')
+        self.assertEqual(response.json['message'], 'Asset updated successfully')
