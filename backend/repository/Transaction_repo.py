@@ -12,13 +12,13 @@ class Transaction_repo:
             cursor = self.connection.cursor()
             cursor.execute("""
                 INSERT INTO Transactions (portfolio_id, symbol, type, quantity, price_per_unit, fee, timestamp, notes)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (transaction.portfolio_id, transaction.symbol, transaction.type.value, transaction.quantity, transaction.price_per_unit, transaction.fee, transaction.timestamp, transaction.notes))
             self.connection.commit()
-            transaction.transaction_id(cursor.lastrowid)
+            transaction.transaction_id = cursor.lastrowid
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Transaction added: {transaction.transaction_id}")
+            print(f"✅ Transaction added: {transaction}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
@@ -41,7 +41,7 @@ class Transaction_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Transaction updated: {transaction.transaction_id}")
+            print(f"✅ Transaction updated: {transaction}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:

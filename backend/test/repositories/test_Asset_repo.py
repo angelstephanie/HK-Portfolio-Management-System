@@ -15,6 +15,13 @@ def setup():
         opening_price=2795.00,
         last_updated=datetime.now()
     )
+
+def test_add_asset():
+    assets_add = asset_repo.add_asset(new_asset)
+    
+    assert assets_add is not None
+    assert isinstance(assets_add, int)    
+    assert assets_add == 1
     
 def test_get_asset_by_symbol():
     symbol = "AAPL"
@@ -43,13 +50,6 @@ def test_get_all_assets():
         assert asset.current_price is not None
         assert asset.opening_price is not None
         assert asset.last_updated is not None
-
-def test_add_asset():
-    assets_add = asset_repo.add_asset(new_asset)
-    
-    assert assets_add is not None
-    assert isinstance(assets_add, int)    
-    assert assets_add == 1
 
 def test_update_asset():
     # Update the asset's current price

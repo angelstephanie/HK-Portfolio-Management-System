@@ -1,88 +1,83 @@
-from backend.repository.Asset_repo import Asset_repo
-from backend.models.Asset import Asset, AssetType
+from backend.repository.PortfolioSnap_repo import PortfolioSnap_repo
+from backend.models.PortfolioSnap import PortfolioSnap
 from datetime import datetime
-import math
 
 def setup():
-    global asset_repo
-    asset_repo = Asset_repo()
-    global new_asset
-    new_asset = Asset(
-        symbol="GOOGL",
-        name="Alphabet Inc.",
-        type=AssetType.STOCK,
-        current_price=2800.00,
-        opening_price=2795.00,
-        last_updated=datetime.now()
+    global portfolio_snap_repo
+    portfolio_snap_repo = PortfolioSnap_repo()
+    global snapshot_date
+    snapshot_date = datetime.strptime("2023-12-02 12:00:00", "%Y-%m-%d %H:%M:%S")
+    global new_portfolio_snap
+    new_portfolio_snap = PortfolioSnap(
+        portfolio_id=1,
+        cash_value=10000.00,
+        invested_value=1500.00,
+        snapshot_date=snapshot_date
     )
     
-def test_get_asset_by_symbol():
-    symbol = "AAPL"
-    asset = asset_repo.get_asset_by_symbol(symbol)
-    
-    assert asset is not None
-    assert isinstance(asset, Asset)
-    assert asset.symbol == symbol
-    assert asset.name == "Apple Inc."
-    assert asset.type == AssetType.STOCK
-    assert math.isclose(asset.current_price, 207.57, rel_tol=1e-9)
-    assert math.isclose(asset.opening_price, 208.00, rel_tol=1e-9)
-    assert asset.last_updated == datetime.strptime("2025-08-01 06:26:00", "%Y-%m-%d %H:%M:%S")
-    
-def test_get_all_assets():
-    assets = asset_repo.get_all_assets()
-    
-    assert isinstance(assets, list)
-    assert len(assets) > 0
-    
-    for asset in assets:
-        assert isinstance(asset, Asset)
-        assert asset.symbol is not None
-        assert asset.name is not None
-        assert asset.type is not None
-        assert asset.current_price is not None
-        assert asset.opening_price is not None
-        assert asset.last_updated is not None
 
-def test_add_asset():
-    assets_add = asset_repo.add_asset(new_asset)
+def test_add_portfolio_snap():
+    portfolio_snap_add = portfolio_snap_repo.add_portfolio_snap(new_portfolio_snap)
     
-    assert assets_add is not None
-    assert isinstance(assets_add, int)    
-    assert assets_add == 1
+    assert portfolio_snap_add is not None
+    assert isinstance(portfolio_snap_add, int)    
+    assert portfolio_snap_add == 1
+    
+def test_get_portfolio_snap_by_id():
+    portfolio_id = 1
+    portfolio_snap = portfolio_snap_repo.get_portfolio_snap_by_id(portfolio_id,snapshot_date)
+    
+    assert portfolio_snap is not None
+    assert isinstance(portfolio_snap, PortfolioSnap)
+    assert portfolio_snap.portfolio_id == portfolio_id
+    assert portfolio_snap.cash_value == 10000.00
+    assert portfolio_snap.invested_value == 1500.00
 
-def test_update_asset():
-    # Update the asset's current price
-    new_price = 210.00
-    new_asset.current_price = new_price
+def test_get_all_portfolio_snaps():
+    portfolio_snaps = portfolio_snap_repo.get_all_portfolio_snaps()
     
-    updated_count = asset_repo.update_asset(new_asset)
+    assert isinstance(portfolio_snaps, list)
+    assert len(portfolio_snaps) > 0
     
+    for snap in portfolio_snaps:
+        assert isinstance(snap, PortfolioSnap)
+        assert snap.portfolio_id is not None
+        assert snap.cash_value is not None
+        assert snap.invested_value is not None
+        assert snap.snapshot_date is not None
+
+def test_update_portfolio_snap():
+    # Update the portfolio snap's cash value
+    new_portfolio_snap.cash_value += 500.00
+    updated_count = portfolio_snap_repo.update_portfolio_snap(new_portfolio_snap)
+    
+    assert updated_count is not None
+    assert isinstance(updated_count, int)
     assert updated_count == 1
     
     # Verify the update
-    updated_asset = asset_repo.get_asset_by_symbol(new_asset.symbol)
-    assert updated_asset.current_price == new_price
+    portfolio_snap = portfolio_snap_repo.get_portfolio_snap_by_id(new_portfolio_snap.portfolio_id,snapshot_date)
+    assert portfolio_snap.cash_value == new_portfolio_snap.cash_value
+
+def test_delete_portfolio_snap():
+    portfolio_id = 1
+    portfolio_snap = portfolio_snap_repo.get_portfolio_snap_by_id(portfolio_id,snapshot_date)
     
-def test_delete_asset():
-    symbol = "GOOGL"
-    asset = asset_repo.get_asset_by_symbol(symbol)
+    assert portfolio_snap is not None
     
-    assert asset is not None
-    
-    deleted_count = asset_repo.delete_asset(symbol)
+    deleted_count = portfolio_snap_repo.delete_portfolio_snap(portfolio_id,snapshot_date)
     
     assert deleted_count == 1
     
     # Verify the deletion
-    deleted_asset = asset_repo.get_asset_by_symbol(symbol)
-    assert deleted_asset is None
-    
-if __name__ == "__main__":
+    deleted_snap = portfolio_snap_repo.get_portfolio_snap_by_id(portfolio_id,snapshot_date)
+    assert deleted_snap is None
+
+def run_tests():
     setup()
-    test_get_asset_by_symbol()
-    test_get_all_assets()
-    test_add_asset()
-    test_update_asset()
-    test_delete_asset()
-    print("All tests passed!")
+    test_add_portfolio_snap()
+    test_get_portfolio_snap_by_id()
+    test_get_all_portfolio_snaps()
+    test_update_portfolio_snap()
+    test_delete_portfolio_snap()
+    print("All tests in PortfolioSnap repository passed!")
