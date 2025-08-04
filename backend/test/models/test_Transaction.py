@@ -1,23 +1,27 @@
-from backend.models.Transaction import Transaction
+from backend.models.Transaction import Transaction, TransactionType
 from datetime import datetime
 
 def test_creation():
     transaction = Transaction(
-        id=1,
-        asset_symbol="AAPL",
+        transaction_id=1,
+        portfolio_id = 1,
+        symbol="AAPL",
+        type = TransactionType.BUY,
         quantity=10,
         price_per_unit=150.00,
-        transaction_date=datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S"),
-        transaction_type="BUY"
+        fee=5.00,
+        timestamp=datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
     )
     
-    assert transaction.id == 1
-    assert transaction.asset_symbol == "AAPL"
+    assert transaction.transaction_id == 1
+    assert transaction.portfolio_id == 1
+    assert transaction.symbol == "AAPL"
+    assert transaction.type == TransactionType.BUY
     assert transaction.quantity == 10
     assert transaction.price_per_unit == 150.00
-    assert transaction.transaction_date == datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
-    assert transaction.transaction_type == "BUY"
+    assert transaction.fee == 5.00
+    assert transaction.timestamp == datetime.strptime("2023-10-01 12:00:00", "%Y-%m-%d %H:%M:%S")
     
 def run_tests():
     test_creation()
-    print("All tests in testing model Asset passed!")
+    print("All tests in testing model Transaction passed!")
