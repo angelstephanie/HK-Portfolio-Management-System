@@ -10,7 +10,7 @@ class HoldingsService:
         if not isinstance(holding, Holdings):
             raise TypeError("Holding must be a Holdings object")
         
-        self.holdings_repo.add_holding(holding)
+        return self.holdings_repo.add_holding(holding)
     
     def get_holdings_by_id(self, holding_id: int):
         if not holding_id:
@@ -29,4 +29,4 @@ class HoldingsService:
         if not isinstance(holding_id,int):
             raise TypeError("Holding_id must be an int")
         
-        self.holdings_repo.delete_holding(holding_id)
+        return self.holdings_repo.delete_holding(holding_id)

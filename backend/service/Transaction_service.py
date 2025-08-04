@@ -10,7 +10,7 @@ class TransactionService:
         if not isinstance(Transaction,transaction):
             raise TypeError("transaction must be a object of Transaction")
         
-        self.transaction_repo.add_transaction(transaction)
+        return self.transaction_repo.add_transaction(transaction)
 
     def get_transaction_by_id(self, transaction_id: int):
         if not transaction_id:
@@ -29,4 +29,4 @@ class TransactionService:
         if not isinstance(int,transaction_id):
             raise TypeError("transaction_id must be an int")
         
-        self.transaction_repo.delete_transaction(transaction_id)
+        return self.transaction_repo.delete_transaction(transaction_id)
