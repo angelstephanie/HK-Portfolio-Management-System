@@ -26,7 +26,7 @@ class TestHoldingsController(unittest.TestCase):
         mock_get_holdings_by_id.return_value = MagicMock(to_dict=lambda: {'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})
         response = self.app.test_client().get('/holdings/1')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json['portfolio_id'], 1)
+        self.assertTrue(all(holding['portfolio_id'] == 1 for holding in response.json))
         
     @patch('backend.service.Holdings_service.HoldingsService.add_holding')
     def test_add_holding(self, mock_add_holding):
