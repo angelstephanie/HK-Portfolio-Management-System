@@ -1,6 +1,7 @@
 from backend.repository.Asset_repo import Asset_repo
 from backend.YahooFetcher import YahooFetcher
 from backend.models.Asset import Asset
+from datetime import datetime
 class AssetService:
     def __init__(self):
         self.asset_repo = Asset_repo()
@@ -66,7 +67,7 @@ class AssetService:
             print("❌ No assets found.")
             return None
     
-    def get_price_by_range(self, symbol: str, start_date: str, end_date: str):
+    def get_price_by_range(self, symbol: str, start_date: str, end_date = datetime.now().strftime('%Y-%m-%d')):
         if not symbol:
             raise ValueError("Symbol cannot be empty")
         if not isinstance(symbol, str):
