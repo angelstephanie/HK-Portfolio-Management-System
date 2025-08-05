@@ -7,8 +7,8 @@ const ArgonNavbar = () => {
   return (
     <Navbar expand="md" variant="dark" className="bg-dark py-3 px-4 shadow" id="navbar-main">
       <div className="container-fluid">
-        /* Left-side Nav Links */
-        <Navbar.Brand href="#">
+        {/* Left-side Nav Links */}
+        <Navbar.Brand>
           Portfolio Pro
         </Navbar.Brand>
 

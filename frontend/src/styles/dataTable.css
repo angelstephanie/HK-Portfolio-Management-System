@@ -1,0 +1,149 @@
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table-grid {
+  display: grid;
+  grid-auto-rows: auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: max-content;
+}
+
+.header-cell {
+  background-color: #ffffff;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.header-cell:hover {
+  background-color: #f8f9fa;
+}
+
+.clear-sort-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
+  color: #888;
+}
+
+.row-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.row-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.row-card-grid {
+  display: grid;
+  align-items: center;
+}
+
+.row-cell {
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.row-cell:last-child {
+  border-right: none;
+}
+
+/* .data-table-container {
+  background-color: var(--bg-light);
+  padding: 1rem;
+  border-radius: 16px;
+  overflow-x: auto;
+}
+
+.scroll-container {
+  min-width: max-content;
+}
+
+.table-grid {
+  display: grid;
+  grid-auto-rows: auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+.header-cell {
+  font-weight: bold;
+  background: var(--card-bg);
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.row-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.row-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.row-card-grid {
+  display: grid;
+  align-items: center;
+}
+
+.row-cell {
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid #eee;
+}
+
+.row-cell:last-child {
+  border-right: none;
+}
+
+.row-field-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.clear-sort-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
+  color: #888;
+} */
