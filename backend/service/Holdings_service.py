@@ -27,7 +27,7 @@ class HoldingsService:
             raise TypeError("Holding must be a Holdings object")
         
         # Calculate the new average buying price
-        existing_holding = self.holdings_repo.get_holding_by_id(holding.id)
+        existing_holding = self.holdings_repo.get_holdings_by_holding_id(holding.id)
         if not existing_holding:
             raise ValueError("Holding does not exist")
 
