@@ -12,7 +12,7 @@ class PortfolioSnapService:
         if not isinstance(PortfolioSnap,portfolio_snap):
             raise TypeError("portfolio must be a object of Portfolio")
         
-        self.portfolio_snap_repo.add_portfolio_snap(portfolio_snap)
+        return self.portfolio_snap_repo.add_portfolio_snap(portfolio_snap)
         
     def update_portfolio_snap(self, portfolio_snap):
         if not portfolio_snap:

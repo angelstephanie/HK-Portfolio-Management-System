@@ -10,15 +10,15 @@ class HoldingsService:
         if not isinstance(holding, Holdings):
             raise TypeError("Holding must be a Holdings object")
         
-        self.holdings_repo.add_holding(holding)
+        return self.holdings_repo.add_holding(holding)
     
-    def get_holdings_by_id(self, holding_id: int):
-        if not holding_id:
-            raise ValueError("Holding_id cannot be empty")
-        if not isinstance(holding_id,int):
-            raise TypeError("Holding_id must be an int")
+    def get_holdings_by_id(self, portfolio_id: int):
+        if not portfolio_id:
+            raise ValueError("Portfolio_id cannot be empty")
+        if not isinstance(portfolio_id,int):
+            raise TypeError("Portfolio_id must be an int")
         
-        return self.holdings_repo.get_holdings_by_id(holding_id)
+        return self.holdings_repo.get_holdings_by_id(portfolio_id)
     
     def get_all_holdings(self):
         return self.holdings_repo.get_all_holdings()
@@ -29,4 +29,4 @@ class HoldingsService:
         if not isinstance(holding_id,int):
             raise TypeError("Holding_id must be an int")
         
-        self.holdings_repo.delete_holding(holding_id)
+        return self.holdings_repo.delete_holding(holding_id)

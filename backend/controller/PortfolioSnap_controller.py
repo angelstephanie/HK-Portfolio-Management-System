@@ -9,7 +9,7 @@ portfolio_snap_service = PortfolioSnapService()
 def get_all_portfolio_snaps():
     try:
         snaps = portfolio_snap_service.get_all_portfolio_snaps()
-        return jsonify(snaps), 200
+        return jsonify([snap.to_dict() for snap in snaps]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -18,7 +18,7 @@ def get_portfolio_snap_by_id(snap_id, snap_date):
     try:
         snap = portfolio_snap_service.get_portfolio_snap_by_id(snap_id, snap_date)
         if snap:
-            return jsonify(snap), 200
+            return jsonify(snap.to_dict()), 200
         else:
             return jsonify({'message': 'Portfolio Snap not found'}), 404
     except Exception as e:
@@ -29,8 +29,11 @@ def add_portfolio_snap():
     try:
         snap_data = request.json
         portfolio_snap = PortfolioSnap(**snap_data)
-        portfolio_snap_service.add_portfolio_snap(portfolio_snap)
-        return jsonify({'message': 'Portfolio Snap added successfully'}), 201
+        added_snap = portfolio_snap_service.add_portfolio_snap(portfolio_snap)
+        if added_snap:
+            return jsonify({'message': 'Portfolio Snap added successfully'}), 201
+        else:
+            return jsonify({'message': 'Failed to add Portfolio Snap'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     

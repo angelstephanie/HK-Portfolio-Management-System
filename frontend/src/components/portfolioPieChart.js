@@ -90,6 +90,7 @@ function PortfolioPieChart() {
                     ))}
                 </Form.Select>
             </Form.Group>
+            <br></br>
             {loading ? (
                 <div className="text-center">
                     <Spinner animation="border" variant="primary" />

@@ -18,7 +18,7 @@ class PortfolioSnap_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ PortfolioSnap added: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            print(f"✅ PortfolioSnap added: {portfolio_snap}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
@@ -39,7 +39,7 @@ class PortfolioSnap_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ PortfolioSnap updated: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            print(f"✅ PortfolioSnap updated: {portfolio_snap}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
