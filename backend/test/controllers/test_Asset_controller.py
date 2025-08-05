@@ -43,3 +43,11 @@ class TestAssetController(unittest.TestCase):
         response = self.app.test_client().put('/assets/AAPL', json={'name': 'Apple Inc.', 'type': 'stock', 'current_price': 155.0, 'opening_price': 150.0, 'last_updated': '2023-10-01'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['message'], 'Asset updated successfully')
+    
+    # def run_tests(self):
+    #     unittest.TextTestRunner().run(unittest.makeSuite(self.__class__))
+    #     print("All asset controller tests pass")
+    
+# def run_unittest():
+#     unittest.TextTestRunner().run(unittest.makeSuite(TestAssetController))
+#     print("All asset controller tests pass")
