@@ -57,7 +57,7 @@ def test_update_holding():
     assert updated_holding == 1
     
     # Verify the update
-    holding = holdings_repo.get_holdings_by_id(new_holding.holding_id)
+    holding = holdings_repo.get_holdings_by_holding_id(new_holding.holding_id)
     assert holding.quantity == 15
 
 def test_delete_holding():
@@ -67,7 +67,7 @@ def test_delete_holding():
     assert deleted_count == 1
     
     # Verify the deletion
-    holding = holdings_repo.get_holdings_by_id(holding_id)
+    holding = holdings_repo.get_holdings_by_holding_id(holding_id)
     assert holding is None
 
 def run_tests():
