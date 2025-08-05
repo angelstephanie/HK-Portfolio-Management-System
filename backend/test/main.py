@@ -1,3 +1,5 @@
+import backend.test.repositories.test_database_access as test_database_access
+
 import backend.test.models.test_Transaction as test_Transaction
 import backend.test.models.test_Holdings as test_Holdings
 import backend.test.models.test_Asset as test_Asset
@@ -17,6 +19,8 @@ from backend.test.controllers.test_PortfolioSnap_controller import TestPortfolio
 from backend.test.controllers.test_Transaction_controller import TestTransactionController
 
 def run_tests():
+    # run database access tests
+    test_database_access.run_tests()
     
     # Run models tests
     test_Asset.run_tests()
