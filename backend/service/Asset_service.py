@@ -65,3 +65,13 @@ class AssetService:
         else:
             print("❌ No assets found.")
             return None
+    
+    def get_price_by_range(self, symbol: str, start_date: str, end_date: str):
+        if not symbol:
+            raise ValueError("Symbol cannot be empty")
+        if not isinstance(symbol, str):
+            raise TypeError("Symbol must be a string")
+        if not start_date or not end_date:
+            raise ValueError("Start date and end date cannot be empty")
+        
+        return self.yahooFetcher.fetchPriceByRange(symbol, start_date, end_date)
