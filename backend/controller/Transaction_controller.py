@@ -9,7 +9,7 @@ transaction_service = TransactionService()
 def get_all_transactions():
     try:
         transactions = transaction_service.get_all_transactions()
-        return jsonify(transactions), 200
+        return jsonify([transaction.to_dict() for transaction in transactions]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -18,7 +18,7 @@ def get_transaction_by_id(transaction_id):
     try:
         transaction = transaction_service.get_transaction_by_id(transaction_id)
         if transaction:
-            return jsonify(transaction), 200
+            return jsonify(transaction.to_dict()), 200
         else:
             return jsonify({'message': 'Transaction not found'}), 404
     except Exception as e:
@@ -30,7 +30,8 @@ def add_transaction():
         data = request.get_json()
         transaction = Transaction(**data)
         new_transaction = transaction_service.add_transaction(transaction)
-        return jsonify(new_transaction), 201
+        if new_transaction:
+            return jsonify({'message': 'Transaction added successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

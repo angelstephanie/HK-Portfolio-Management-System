@@ -1,7 +1,9 @@
 import { Navbar, Nav, Form, FormControl, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Searchbox from './navbar-components/Searchbox';
 
 const ArgonNavbar = () => {
+
   return (
     <Navbar expand="md" variant="dark" className="bg-dark py-3 px-4 shadow" id="navbar-main">
       <div className="container-fluid">
@@ -16,22 +18,10 @@ const ArgonNavbar = () => {
           <Nav.Link as={Link} to="/transactions">Transactions</Nav.Link>
         </Nav>
 
-        {/* Search form */}
-        <Form className="d-none d-md-flex me-3 w-auto" role="search">
-        <div className="input-group">
-          <span className="input-group-text bg-white border-end-0">
-            <i className="fas fa-search text-muted"></i>
-          </span>
-          <FormControl
-            type="search"
-            placeholder="Search"
-            className="form-control border-start-0"
-          />
-        </div>
-      </Form>
+        /* Search form with dropdown */
+        <Searchbox/>
 
-
-        {/* User Dropdown */}
+        /* User Dropdown */
         <Nav className="d-none d-md-flex align-items-center">
           <Dropdown align="end">
             <Dropdown.Toggle variant="link" className="nav-link pr-0 text-white">

@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from backend.controller.Asset_controller import asset_controller
 from backend.controller.Holdings_controller import holdings_controller
 from backend.controller.Portfolio_controller import portfolio_controller

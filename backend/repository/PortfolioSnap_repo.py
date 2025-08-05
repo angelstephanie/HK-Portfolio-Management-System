@@ -18,11 +18,12 @@ class PortfolioSnap_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ PortfolioSnap added: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            print(f"✅ PortfolioSnap added: {portfolio_snap}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding PortfolioSnap: {e}")
+            return None
         
         
     
@@ -38,11 +39,12 @@ class PortfolioSnap_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ PortfolioSnap updated: {portfolio_snap.portfolio_id} on {portfolio_snap.snapshot_date}")
+            print(f"✅ PortfolioSnap updated: {portfolio_snap}")
             
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating PortfolioSnap: {e}")
+            return None
         
        
     
@@ -85,6 +87,7 @@ class PortfolioSnap_repo:
                     cash_value=row[2],
                     invested_value=row[3]
                 ))
+            print(f"✅ Retrieved {len(portfolio_snaps)} PortfolioSnaps")
             return portfolio_snaps
         except Exception as e:
             print(f"❌ Error retrieving all PortfolioSnaps: {e}")
@@ -106,3 +109,4 @@ class PortfolioSnap_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting PortfolioSnap: {e}")
+            return None

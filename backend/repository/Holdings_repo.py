@@ -14,7 +14,7 @@ class Holdings_repo:
                 VALUES (%s, %s, %s, %s)
             """, (holding.portfolio_id, holding.symbol, holding.quantity, holding.avg_buy_price))
             self.connection.commit()
-            holding.holding_id(cursor.lastrowid)
+            holding.holding_id = cursor.lastrowid
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Holding added: {holding}")
@@ -22,6 +22,7 @@ class Holdings_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding holding: {e}")
+            return None
         
        
     
@@ -43,6 +44,7 @@ class Holdings_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating holding: {e}")
+            return None
         
         
     
@@ -60,42 +62,54 @@ class Holdings_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting holding: {e}")
+            return None
         
         
         
             
-    def get_holdings_by_id(self, holding_id: int) -> Holdings:
+    def get_holdings_by_id(self, portfolio_id: int) -> list[Holdings]:
         """Retrieve holdings by portfolio ID."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Holdings WHERE holding_id = %s", (holding_id,))
-        row = cursor.fetchone()
-        cursor.close()
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Holdings WHERE portfolio_id = %s", (portfolio_id,))
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            holdings_list = []
+            for row in rows:
+                holdings_list.append(Holdings(
+                    holding_id=row[0],
+                    portfolio_id=row[1],
+                    symbol=row[2],
+                    quantity=row[3],
+                    avg_buy_price=row[4]
+                ))
+            print(f"✅ Retrieved {len(holdings_list)} Holdings for portfolio_id {portfolio_id}")
+            return holdings_list
+        except Exception as e:
+            print(f"❌ Error retrieving all Holdings: {e}")
+            return []
         
-        if row:
-            return Holdings(
-                holding_id=row[0],
-                portfolio_id=row[1],
-                symbol=row[2],
-                quantity=row[3],
-                avg_buy_price=row[4]
-            )
-        return None
-    
 
     def get_all_holdings(self) -> list[Holdings]:
         """Retrieve all holdings from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Holdings")
-        rows = cursor.fetchall()
-        cursor.close()
-        
-        holdings_list = []
-        for row in rows:
-            holdings_list.append(Holdings(
-                holding_id=row[0],
-                portfolio_id=row[1],
-                symbol=row[2],
-                quantity=row[3],
-                avg_buy_price=row[4]
-            ))
-        return holdings_list
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Holdings")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            holdings_list = []
+            for row in rows:
+                holdings_list.append(Holdings(
+                    holding_id=row[0],
+                    portfolio_id=row[1],
+                    symbol=row[2],
+                    quantity=row[3],
+                    avg_buy_price=row[4]
+                ))
+            print(f"✅ Retrieved {len(holdings_list)} Holdings")
+            return holdings_list
+        except Exception as e:
+            print(f"❌ Error retrieving all Holdings: {e}")
+            return []
