@@ -16,7 +16,7 @@ const RecentActivityFeed = () => {
 
     return (
         <div className="recent-activity-feed">
-            <ListGroup variant="flush">
+            <ListGroup variant="flush">git
                 {transactions.length > 0 ? (
                     transactions.map((transaction, index) => (
                         <ListGroup.Item key={index} className="transaction-item">

@@ -3,11 +3,9 @@ import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
 import TopMovers from './topMovers';
-// import RecentActivityFeed from './recentActivity/recentActivity';
+import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
-  const navigate = useNavigate();
-
   return (
     <div className="container-fluid py-4">
       {/* Summary */}
