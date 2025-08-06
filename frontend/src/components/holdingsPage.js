@@ -47,8 +47,8 @@ const HoldingsPage = () => {
               : 0;
             return {
               ...item,
+              quantity: parseInt(item.quantity).toFixed(2),  
               pl_absolute: absolutePL.toFixed(2),  
-              quantity: item.quantity.toFixed(2),  
               pl_percentage: `${percentagePL.toFixed(2)}%`
             };
           });
