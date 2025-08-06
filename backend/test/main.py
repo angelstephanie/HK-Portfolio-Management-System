@@ -20,6 +20,12 @@ from backend.test.controllers.test_Portfolio_controller import TestPortfolioCont
 from backend.test.controllers.test_PortfolioSnap_controller import TestPortfolioSnapController
 from backend.test.controllers.test_Transaction_controller import TestTransactionController
 
+from backend.test.services.test_Asset_service import TestAssetService
+from backend.test.services.test_Holdings_service import TestHoldingsService
+from backend.test.services.test_Portfolio_service import TestPortfolioService
+from backend.test.services.test_PortfolioSnap_service import TestPortfolioSnapService
+from backend.test.services.test_Transaction_service import TestTransactionService
+
 def run_tests():
     # run database access tests
     test_database_access.run_tests()
@@ -37,7 +43,7 @@ def run_tests():
     test_Portfolio_repo.run_tests()
     test_PortfolioSnap_repo.run_tests()
     test_Transaction_repo.run_tests()
-    
+
     # Run controllers tests   
     test_loader = unittest.TestLoader()
     test_suite = test_loader.discover('backend/test/controllers', pattern='test_*.py')

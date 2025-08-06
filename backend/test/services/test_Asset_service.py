@@ -6,7 +6,7 @@ from backend.repository.Asset_repo import Asset_repo
 from backend.models.Asset import Asset, AssetType
 from datetime import datetime
 
-class TestAssetController(unittest.TestCase):
+class TestAssetService(unittest.TestCase):
     """Test cases for the Asset Service."""
     
     def setUp(self):
