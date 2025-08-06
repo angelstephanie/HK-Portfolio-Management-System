@@ -3,12 +3,13 @@ import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
 import TopMovers from './topMovers';
-import RecentActivityFeed from './recentActivity/recentActivity';
+// import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
+  const navigate = useNavigate();
 
   return (
-    <div className="container py-4">
+    <div className="container-fluid py-4">
       {/* Summary */}
       <div className="row mb-4">
         <div className="col-12">
@@ -75,6 +76,15 @@ export default function PortfolioDashboard() {
             <div className="card-body">
               <h5 className="card-title">Recent Activity Feed</h5>
               <RecentActivityFeed />
+              <p> </p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6 mb-4">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Performance Chart</h5>
+              <PerformanceChart />
             </div>
           </div>
         </div>
