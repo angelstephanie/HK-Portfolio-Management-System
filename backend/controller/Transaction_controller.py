@@ -34,8 +34,9 @@ def add_transaction():
         new_transaction = transaction_service.add_transaction(transaction)
         if new_transaction:
             return jsonify({'message': 'Transaction added successfully'}), 201
+        else:
+            return jsonify({'message': 'Transaction not found'}), 404
     except Exception as e:
-        print(e)
         return jsonify({'error': str(e)}), 500
 
 @transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
