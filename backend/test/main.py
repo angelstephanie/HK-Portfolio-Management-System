@@ -20,6 +20,12 @@ from backend.test.controllers.test_Portfolio_controller import TestPortfolioCont
 from backend.test.controllers.test_PortfolioSnap_controller import TestPortfolioSnapController
 from backend.test.controllers.test_Transaction_controller import TestTransactionController
 
+from backend.test.services.test_Asset_service import TestAssetService
+from backend.test.services.test_Holdings_service import TestHoldingsService
+from backend.test.services.test_Portfolio_service import TestPortfolioService
+from backend.test.services.test_PortfolioSnap_service import TestPortfolioSnapService
+from backend.test.services.test_Transaction_service import TestTransactionService
+
 def run_tests():
     # run database access tests
     test_database_access.run_tests()
@@ -44,7 +50,13 @@ def run_tests():
     TestPortfolioController().run()
     TestPortfolioSnapController().run()
     TestTransactionController().run()
-     
+    
+    # Run service tests
+    TestAssetService().run()
+    TestHoldingsService().run()
+    TestPortfolioService().run()
+    TestPortfolioSnapService().run()
+    TestTransactionService().run() 
     
 
 if __name__ == "__main__":
