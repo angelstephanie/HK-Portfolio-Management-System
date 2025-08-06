@@ -23,7 +23,7 @@ ChartJS.register(
   );
 
 export const options = {
-responsive: true,
+responsive: true, 
 plugins: {
     legend: {
     position: 'top',
@@ -38,7 +38,7 @@ plugins: {
 // Timeline options
 const timeOptions = ['5D', '1M', '3M', '1Y', 'Max'];
 
-const PerformanceChart = () => {
+const LineChart = ({chartData}) => {
     const [selectedTime, setSelectedTime] = useState('1Y');
 
     // Filter data based on the selected time range
@@ -90,4 +90,4 @@ const PerformanceChart = () => {
     );
 };
 
-export default PerformanceChart;
+export default LineChart;

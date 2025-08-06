@@ -6,7 +6,6 @@ import ArgonNavbar from './components/navBar';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HoldingsPage from './components/holdingsPage';
 import TransactionsPage from './components/transactionsPage';
-import MyComponent from './components/testing-endpoint/MyComponent';
 import Asset from './components/navbar-components/Asset';
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
           <Route path="/holdings" element={<HoldingsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/asset/:symbol" element={<Asset />} />
-          {/* <Route path="/mycomponent" element={<MyComponent/>} /> */}
           {/* Define other routes here as needed */}
         </Routes>
       </Router>
