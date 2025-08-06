@@ -39,6 +39,21 @@ def add_transaction():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@transaction_controller.route('/transactions/<int:transaction_id>', methods=['PUT'])
+def update_transaction(transaction_id):
+    try:
+        data = request.get_json()
+        data['transaction_id'] == transaction_id
+        data['type'] = TransactionType(data['type'])
+        transaction = Transaction(**data)
+        updated_transaction = transaction_service.update_transaction(transaction)
+        if updated_transaction:
+            return jsonify({'message': 'Transaction updated successfully'}), 201
+        else:
+            return jsonify({'message': 'Transaction not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # @transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
 # def delete_transaction(transaction_id):
 #     try:
