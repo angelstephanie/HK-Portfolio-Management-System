@@ -38,13 +38,13 @@ def add_transaction():
         print(e)
         return jsonify({'error': str(e)}), 500
 
-@transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
-def delete_transaction(transaction_id):
-    try:
-        result = transaction_service.delete_transaction(transaction_id)
-        if result:
-            return jsonify({'message': 'Transaction deleted successfully'}), 200
-        else:
-            return jsonify({'message': 'Transaction not found'}), 404
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# @transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
+# def delete_transaction(transaction_id):
+#     try:
+#         result = transaction_service.delete_transaction(transaction_id)
+#         if result:
+#             return jsonify({'message': 'Transaction deleted successfully'}), 200
+#         else:
+#             return jsonify({'message': 'Transaction not found'}), 404
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
