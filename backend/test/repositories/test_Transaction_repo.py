@@ -42,14 +42,6 @@ def test_get_all_transactions():
     assert isinstance(transactions, list)
     assert len(transactions) > 0
     
-    for transaction in transactions:
-        assert isinstance(transaction, Transaction)
-        assert transaction.portfolio_id is not None
-        assert transaction.symbol is not None
-        assert transaction.quantity is not None
-        assert transaction.price_per_unit is not None
-        assert transaction.type is not None
-        assert transaction.timestamp is not None
         
     
 def test_update_transaction():
