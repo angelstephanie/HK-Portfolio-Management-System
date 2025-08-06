@@ -3,6 +3,8 @@ import pandas as pd
 import json
 from datetime import datetime
 from backend.models.Asset import Asset, AssetType
+from pytz import timezone
+from tzlocal import get_localzone 
 
 class YahooFetcher:
     def __init__(self):                
@@ -105,15 +107,46 @@ class YahooFetcher:
             df = ticker.history(start=start, end=end)
             df.reset_index(inplace=True)
             df.drop(columns=['Open', 'High', 'Low', 'Volume','Dividends', 'Stock Splits'], inplace=True, errors='ignore')
+            df['Close'] = df['Close'].round(2)
             df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
             df = df.set_index('Date')['Close'].to_dict()
+            print(f"✅ Retrieved historical prices for {symbol} from {start} to {end}")
             return df
         except Exception as e:
             print(f"[Error] Failed to fetch historical data for '{symbol}': {e}")
+            return pd.DataFrame()
+    
+    def fetchPriceWithinDay(self, symbol: str, period: int):
+        """
+        Download day time intraday pricing information for a specific symbol of asset.
+
+        Parameters:
+        symbol (str): The asset symbol (e.g., 'AAPL', 'BTC-USD')
+        
+        Returns:
+        dict: A dictionary with datetime as keys and closing prices as values.
+        """
+        try:
+            ny_tz = timezone('US/Eastern')
+            print("local_tz",ny_tz)
+            df = yf.download(tickers = symbol, period= str(period) + "d", interval='30m',auto_adjust=True)
+            df.reset_index(inplace=True)
+            df.drop(columns=['Open', 'High', 'Low', 'Volume'], inplace=True, errors='ignore')
+            df['Close'] = df['Close'].round(2)
+            df['Datetime'] = df['Datetime'].dt.tz_convert(ny_tz)
+
+            df['Datetime'] = df['Datetime'].dt.strftime("%Y-%m-%d %H:%M:%S")
+            df = df.set_index('Datetime')['Close'].to_dict()
+            
+            print(f"✅ Retrieved intraday prices for {symbol} for the last {period} days")
+            return df[symbol]
+        except Exception as e:
+            print(f"[Error] Failed to fetch intraday data for '{symbol}': {e}")
             return pd.DataFrame()
 
 if __name__ == "__main__":
     # Example usage
     fetcher = YahooFetcher()
-    df = fetcher.fetchPriceByRange("AAPL", "2023-01-01", "2023-10-01")
+    df = fetcher.fetchPriceWithinDay("AAPL" ,1)
+    # df = fetcher.fetchPriceByRange("MSFT", "2023-01-01", "2023-10-01")
     print(df)
