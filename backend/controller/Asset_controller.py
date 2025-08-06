@@ -59,3 +59,11 @@ def get_price_by_range(symbol, date):
         return jsonify(price)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@asset_controller.route('/assets/<string:symbol>/historicprice/<int:period>', methods=['GET'])
+def get_price_within_day(symbol, period):
+    try:
+        price = asset_service.get_price_within_day(symbol, period)
+        return jsonify(price)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
