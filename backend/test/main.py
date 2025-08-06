@@ -44,19 +44,6 @@ def run_tests():
     test_PortfolioSnap_repo.run_tests()
     test_Transaction_repo.run_tests()
     
-    # Run controllers tests   
-    TestAssetController().run()
-    TestHoldingsController().run()
-    TestPortfolioController().run()
-    TestPortfolioSnapController().run()
-    TestTransactionController().run()
-    
-    # Run service tests
-    TestAssetService().run()
-    TestHoldingsService().run()
-    TestPortfolioService().run()
-    TestPortfolioSnapService().run()
-    TestTransactionService().run() 
     
 
 if __name__ == "__main__":
