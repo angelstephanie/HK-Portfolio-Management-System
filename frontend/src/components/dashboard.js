@@ -4,12 +4,13 @@ import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
 import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
+import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
   const navigate = useNavigate();
-  const handleChange = () => {
-    navigate('/mycomponent');
-  };
+  // const handleChange = () => {
+  //   navigate('/mycomponent');
+  // };
 
   return (
     <div className="container py-4">
@@ -54,7 +55,10 @@ export default function PortfolioDashboard() {
         <div className="col-md-4 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Watchlist Performance</h5>
+              <h5 className="card-title">Your Watchlist</h5>
+              <p style={{ fontSize: '1rem', color: '#555', marginBottom: '20px' }}>
+                    Add to your watchlist to track their performance.
+              </p>
               <Watchlist/>
             </div>
           </div>
@@ -67,7 +71,8 @@ export default function PortfolioDashboard() {
           <div className="card shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Recent Activity Feed</h5>
-              <p className="text-muted">[Table Placeholder]</p>
+              <RecentActivityFeed />
+              <p> </p>
             </div>
           </div>
         </div>
@@ -80,7 +85,7 @@ export default function PortfolioDashboard() {
           </div>
         </div>
       </div>
-      <button onClick={handleChange}>MyComponent</button>
+      {/* <button onClick={handleChange}>MyComponent</button> */}
     </div>
   );
 }
