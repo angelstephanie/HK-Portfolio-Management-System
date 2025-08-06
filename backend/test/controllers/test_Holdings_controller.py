@@ -43,3 +43,11 @@ class TestHoldingsController(unittest.TestCase):
         response = self.app.test_client().delete('/holdings/1')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['message'], 'Holding deleted successfully')
+        
+    @patch('backend.service.Holdings_service.HoldingsService.update_holding')
+    def test_update_holding(self, mock_update_holding):
+        """Test the delete holding endpoint."""
+        mock_update_holding.return_value = 1
+        response = self.app.test_client().put('/holdings')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['message'], 'Holding updated successfully')
