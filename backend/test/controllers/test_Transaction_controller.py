@@ -15,7 +15,7 @@ class TestTransactionController(unittest.TestCase):
     @patch('backend.service.Transaction_service.TransactionService.get_all_transactions')
     def test_get_all_transactions(self, mock_get_all_transactions):
         """Test the get all transactions endpoint."""
-        mock_get_all_transactions.return_value = [MagicMock(to_dict=lambda: {'transaction_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'})]
+        mock_get_all_transactions.return_value = [{'transaction_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'}]
         response = self.app.test_client().get('/transactions')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json, list)
