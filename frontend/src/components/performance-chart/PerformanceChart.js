@@ -31,7 +31,6 @@ plugins: {
     },
     title: {
     display: false,
-    text: 'Portfolio Performance Chart',
     },
 },
 };
@@ -66,7 +65,8 @@ const PerformanceChart = () => {
 
     return (
         <div className="performance-chart">
-            <div className="time-options">
+            <div className="text-muted mb-3">Last Updated: 9:30 AM GMT+8</div>
+            <div className="time-options mb-3">
                 {timeOptions.map(option => (
                     <button
                         key={option}

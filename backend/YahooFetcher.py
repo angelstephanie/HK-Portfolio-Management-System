@@ -114,7 +114,7 @@ class YahooFetcher:
             return df
         except Exception as e:
             print(f"[Error] Failed to fetch historical data for '{symbol}': {e}")
-            return pd.DataFrame()
+            return None
     
     def fetchPriceWithinDay(self, symbol: str, period: int):
         """
@@ -142,7 +142,7 @@ class YahooFetcher:
             return df[symbol]
         except Exception as e:
             print(f"[Error] Failed to fetch intraday data for '{symbol}': {e}")
-            return pd.DataFrame()
+            return None
 
 if __name__ == "__main__":
     # Example usage

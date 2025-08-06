@@ -1,0 +1,51 @@
+.recent-activity-feed .card {
+    margin-top: 20px;
+    border-radius: 12px;
+}
+
+.recent-activity-feed .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.transaction-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.transaction-item .transaction-date {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.transaction-item .transaction-type {
+    font-weight: bold;
+}
+
+.transaction-item .buy {
+    color: green;
+}
+
+.transaction-item .sell {
+    color: red;
+}
+
+.transaction-details {
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.transaction-details .asset-name {
+    font-weight: bold;
+}
+
+.transaction-details .transaction-amount {
+    color: #555;
+}
+
+.transaction-total {
+    margin-top: 5px;
+    font-size: 1.1rem;
+    color: #333;
+}

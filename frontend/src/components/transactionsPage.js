@@ -3,6 +3,7 @@ import transactionsDataJSON from '../assets/transactions.json';
 import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataFilterBar from './dataFilter';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TransactionsPage = () => {
   const [filterInput, setFilterInput] = useState('');
@@ -10,9 +11,17 @@ const TransactionsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
+  const handleRowClick = (row) => {
+  if (row.symbol) {
+    navigate(`/asset/${row.symbol}`);
+  }
+  };
+
   const columns = [
-    { header: 'Portfolio ID', accessor: 'portfolio_id' },
     { header: 'Asset', accessor: 'symbol' },
+    { header: 'Name', accessor: 'name' },
     { header: 'Date', accessor: 'timestamp' },
     { header: 'Quantity', accessor: 'quantity' },
     { header: 'Price/Unit', accessor: 'price_per_unit' },
@@ -29,7 +38,15 @@ const TransactionsPage = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setTransactionsData(data);
+
+        const enrichedData = data.map(item => {
+            return {
+              ...item,  
+              quantity: item.quantity.toFixed(2),  
+            };
+          });
+          setTransactionsData(enrichedData);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -61,7 +78,7 @@ const TransactionsPage = () => {
           {!loading && !error && (
             <>
               <DataFilterBar filterInput={filterInput} setFilterInput={setFilterInput} />
-              <DataTable columns={columns} data={transactionsData} globalFilter={filterInput} />
+              <DataTable columns={columns} data={transactionsData} globalFilter={filterInput} onRowClick={handleRowClick}/>
             </>
           )}
         </Card.Body>
