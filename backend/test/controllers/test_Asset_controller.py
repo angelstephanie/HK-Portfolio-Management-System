@@ -52,6 +52,14 @@ class TestAssetController(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'2023-01-03': 123.47061920166016, '2023-01-04': 124.74411010742188, '2023-01-05': 123.4212646484375, '2023-01-06': 127.96244049072266})
     
+    @patch('backend.service.Asset_service.AssetService.get_price_within_day')
+    def test_get_price_within_day(self, mock_get_price_within_day):
+        """Test the get closing price endpoint"""
+        mock_get_price_within_day.return_value = {'2025-08-05 09:30:00': 203.37, '2025-08-05 10:00:00': 204.53, '2025-08-05 10:30:00': 204.23, '2025-08-05 11:00:00': 204.63, '2025-08-05 11:30:00': 203.92, '2025-08-05 12:00:00': 203.71, '2025-08-05 12:30:00': 203.85, '2025-08-05 13:00:00': 204.04, '2025-08-05 13:30:00': 204.03, '2025-08-05 14:00:00': 203.87, '2025-08-05 14:30:00': 203.58, '2025-08-05 15:00:00': 203.34, '2025-08-05 15:30:00': 202.93}
+        response = self.app.test_client().get('/assets/AAPL/historicprice/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'2025-08-05 09:30:00': 203.37, '2025-08-05 10:00:00': 204.53, '2025-08-05 10:30:00': 204.23, '2025-08-05 11:00:00': 204.63, '2025-08-05 11:30:00': 203.92, '2025-08-05 12:00:00': 203.71, '2025-08-05 12:30:00': 203.85, '2025-08-05 13:00:00': 204.04, '2025-08-05 13:30:00': 204.03, '2025-08-05 14:00:00': 203.87, '2025-08-05 14:30:00': 203.58, '2025-08-05 15:00:00': 203.34, '2025-08-05 15:30:00': 202.93})
+
     # def run_tests(self):
     #     unittest.TextTestRunner().run(unittest.makeSuite(self.__class__))
     #     print("All asset controller tests pass")
