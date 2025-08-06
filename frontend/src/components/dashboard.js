@@ -4,6 +4,7 @@ import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
 import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
+import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
   const navigate = useNavigate();
@@ -70,7 +71,8 @@ export default function PortfolioDashboard() {
           <div className="card shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Recent Activity Feed</h5>
-              <p className="text-muted">[Table Placeholder]</p>
+              <RecentActivityFeed />
+              <p> </p>
             </div>
           </div>
         </div>

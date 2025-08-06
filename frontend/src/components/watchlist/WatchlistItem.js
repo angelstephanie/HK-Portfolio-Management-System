@@ -10,7 +10,7 @@ const WatchlistItem = ({item}) => {
             padding: '15px',
             backgroundColor: '#f5f5f5ff',
             borderRadius: '12px',
-            boxShadow: '0 4px 8px rgba(240, 240, 240, 0.05)',
+            boxShadow: '0 4px 8px rgba(249, 249, 249, 0.01)',
             marginTop: '3px'
         }}>
             <p className="text text-header" style={{ color: "#3E5EBD", fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '12px' }}>
