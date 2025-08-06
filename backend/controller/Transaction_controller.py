@@ -10,7 +10,7 @@ transaction_service = TransactionService()
 def get_all_transactions():
     try:
         transactions = transaction_service.get_all_transactions()
-        return jsonify([transaction.to_dict() for transaction in transactions]), 200
+        return jsonify([transaction for transaction in transactions]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

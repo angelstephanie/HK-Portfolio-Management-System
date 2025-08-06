@@ -1,6 +1,6 @@
 class Holdings:
     def __init__(self, portfolio_id: int, symbol: str,
-                 quantity: float, avg_buy_price: float, holding_id: int = None):
+                 quantity: int, avg_buy_price: float, holding_id: int = None):
         self.__holding_id = holding_id
         self.__portfolio_id = portfolio_id
         self.__symbol = symbol
