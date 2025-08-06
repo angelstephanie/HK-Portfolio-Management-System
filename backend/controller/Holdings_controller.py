@@ -45,3 +45,16 @@ def delete_holding(holding_id):
             return jsonify({'message': 'Holding not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@holdings_controller.route('/holdings', methods=['PUT'])
+def update_holding():
+    try:
+        holding_data = request.json
+        holding = Holdings(**holding_data)
+        updated_holding = holdings_service.update_holding(holding)
+        if updated_holding:
+            return jsonify({'message': 'Holding updated successfully'}), 200
+        else:
+            return jsonify({'message': 'Holding not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

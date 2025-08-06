@@ -7,7 +7,7 @@ class PortfolioService:
     def get_portfolio_by_id(self, portfolio_id: int):
         if not portfolio_id:
             raise ValueError("portfolio_id cannot be empty")
-        if not isinstance(int,portfolio_id):
+        if not isinstance(portfolio_id, int):
             raise TypeError("portfolio_id must be an int")
         
         return self.portfolio_repo.get_portfolio_by_id(portfolio_id)
@@ -18,7 +18,7 @@ class PortfolioService:
     def update_portfolio(self, portfolio):
         if not portfolio:
             raise ValueError("portfolio cannot be empty")
-        if not isinstance(Portfolio,portfolio):
+        if not isinstance(portfolio, Portfolio):
             raise TypeError("portfolio must be a object of Portfolio")
         
         return self.portfolio_repo.update_portfolio(portfolio)
