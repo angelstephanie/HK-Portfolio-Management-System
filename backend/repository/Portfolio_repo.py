@@ -111,5 +111,5 @@ class Portfolio_repo:
             return portfolios
         except Exception as e:
             print(f"❌ Error retrieving all portfolios: {e}")
-            return []
+            return None
 
