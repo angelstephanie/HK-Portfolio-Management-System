@@ -64,7 +64,7 @@ class Transaction_repo:
             return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting transaction: {e}")
-            return
+            return None
         
         
     
@@ -123,5 +123,5 @@ class Transaction_repo:
         
         except Exception as e:
             print(f"❌ Error retrieving all transactions: {e}")
-            return []
+            return None
     

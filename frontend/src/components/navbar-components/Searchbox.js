@@ -1,18 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 
 const Searchbox = () => {
     const navigate = useNavigate();
-    const searchOptions = [
-        {value: "GOOGL", label: "Google"},
-        {value: "AAPL", label: "Apple"},
-        {value: "AMZN", label: "Amazon"},
-        {value: "MSFT", label: "Microsoft"},
-        {value: "TSLA", label: "Tesla"},
-        {value: "FB", label: "Facebook"},
-        {value: "NFLX", label: "Netflix"},
-    ];
+    const [searchOptions, setSearchOptions] = useState([]);
+
+    useEffect(() => {
+        // Fetch search options 
+        fetch('http://127.0.0.1:5000/assets')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const options = data.map(item => ({ value: item.symbol, label: item.name }));
+                setSearchOptions(options);
+            })
+            .catch(error => {
+                console.error('Error fetching search options:', error);
+            });
+    }, []);
     
     const [selectedOption, setSelectedOption] = useState(null);
     const handleChange= (selectedOption) => {
@@ -28,7 +38,6 @@ const Searchbox = () => {
           options={searchOptions}
           value={selectedOption}
           onChange={handleChange}
-          className="w-30"
           placeholder="Search"
           isClearable
           isSearchable

@@ -91,7 +91,7 @@ class PortfolioSnap_repo:
             return portfolio_snaps
         except Exception as e:
             print(f"❌ Error retrieving all PortfolioSnaps: {e}")
-            return []
+            return None
     
     def delete_portfolio_snap(self, portfolio_id: int, snapshot_date: datetime):
         """Delete a portfolio snapshot by portfolio ID and snapshot date."""

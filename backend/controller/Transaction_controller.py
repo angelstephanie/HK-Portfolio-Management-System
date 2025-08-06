@@ -1,5 +1,6 @@
+from datetime import datetime
 from flask import Blueprint, request, jsonify
-from backend.models.Transaction import Transaction
+from backend.models.Transaction import Transaction, TransactionType
 from backend.service.Transaction_service import TransactionService
 
 transaction_controller = Blueprint('transaction_controller', __name__)
@@ -28,11 +29,13 @@ def get_transaction_by_id(transaction_id):
 def add_transaction():
     try:
         data = request.get_json()
+        data['type'] = TransactionType(data['type'])
         transaction = Transaction(**data)
         new_transaction = transaction_service.add_transaction(transaction)
         if new_transaction:
             return jsonify({'message': 'Transaction added successfully'}), 201
     except Exception as e:
+        print(e)
         return jsonify({'error': str(e)}), 500
 
 @transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])

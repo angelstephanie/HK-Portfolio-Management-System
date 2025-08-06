@@ -88,7 +88,7 @@ class Holdings_repo:
             return holdings_list
         except Exception as e:
             print(f"❌ Error retrieving all Holdings: {e}")
-            return []
+            return None
     
     def get_holdings_by_holding_id(self, holding_id: int) -> Holdings:
         """Retrieve a holding by its holding_id. No need to add it into other layers"""
@@ -137,4 +137,4 @@ class Holdings_repo:
             return holdings_list
         except Exception as e:
             print(f"❌ Error retrieving all Holdings: {e}")
-            return []
+            return None

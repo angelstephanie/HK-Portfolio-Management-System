@@ -56,7 +56,10 @@ def update_asset(symbol):
 def get_price_by_range(symbol, date):
     try:
         price = asset_service.get_price_by_range(symbol, date)
-        return jsonify(price)
+        if price:
+            return jsonify(price), 200
+        else:
+            return jsonify({'message': 'Historic price could not be fetched'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
@@ -64,6 +67,9 @@ def get_price_by_range(symbol, date):
 def get_price_within_day(symbol, period):
     try:
         price = asset_service.get_price_within_day(symbol, period)
-        return jsonify(price)
+        if price:
+            return jsonify(price), 200
+        else:
+            return jsonify({'message': 'Historic price could not be fetched'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500

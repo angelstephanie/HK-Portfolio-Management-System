@@ -74,9 +74,9 @@ def test_delete_portfolio():
 
 def run_tests():
     setup()
+    test_add_portfolio()
     test_get_portfolio_by_id()
     test_get_all_portfolios()
-    test_add_portfolio()
     test_update_portfolio()
     test_delete_portfolio()
     print("All tests in Portfolio repository passed!")
