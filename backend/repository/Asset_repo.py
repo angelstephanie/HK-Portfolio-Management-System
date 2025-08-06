@@ -142,7 +142,7 @@ class Asset_repo:
             return assets
         except Exception as e:
             print(f"❌ Error retrieving all assets: {e}")
-            return []
+            return None
     
 
     
