@@ -37,7 +37,7 @@ class HoldingsService:
             raise ValueError("Total quantity cannot be zero")
         
         holding.avg_buy_price = (
-        (existing_holding.avg_buy_price * existing_holding.quantity) +
+        (Decimal(existing_holding.avg_buy_price) * existing_holding.quantity) +
         (Decimal(holding.avg_buy_price) * holding.quantity)
         ) / total_quantity
         holding.quantity = total_quantity

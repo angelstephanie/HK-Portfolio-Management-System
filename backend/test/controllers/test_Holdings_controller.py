@@ -15,7 +15,7 @@ class TestHoldingsController(unittest.TestCase):
     @patch('backend.service.Holdings_service.HoldingsService.get_all_holdings')
     def test_get_all_holdings(self, mock_get_all_holdings):
         """Test the get all holdings endpoint."""
-        mock_get_all_holdings.return_value = [MagicMock(to_dict=lambda: {'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})]
+        mock_get_all_holdings.return_value = [{'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0}]
         response = self.app.test_client().get('/holdings')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json, list)
