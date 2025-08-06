@@ -3,7 +3,7 @@ import { FaSort, FaSortUp, FaSortDown, FaTimes } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/dataTable.css';
 
-const DataTable = ({ columns, data, globalFilter }) => {
+const DataTable = ({ columns, data, globalFilter, onRowClick }) => {
   const portfolios = useMemo(() => {
     const grouped = {};
     data.forEach((item) => {
@@ -104,7 +104,7 @@ const DataTable = ({ columns, data, globalFilter }) => {
             </p>
           ) : (
             sortedData.map((row, idx) => (
-              <div key={idx} className="row-card" style={{ gridColumn: `span ${columns.length}` }}>
+              <div key={idx} className="row-card" style={{ gridColumn: `span ${columns.length}` }} onClick={() => onRowClick && onRowClick(row)}>
                 <div className="row-card-grid" style={columnGridStyle}>
                   {columns.map((col) => (
                     <div key={col.accessor} className="row-cell">

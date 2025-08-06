@@ -3,12 +3,21 @@ import transactionsDataJSON from '../assets/transactions.json';
 import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataFilterBar from './dataFilter';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TransactionsPage = () => {
   const [filterInput, setFilterInput] = useState('');
   const [transactionsData, setTransactionsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleRowClick = (row) => {
+  if (row.symbol) {
+    navigate(`/asset/${row.symbol}`);
+  }
+  };
 
   const columns = [
     { header: 'Asset', accessor: 'symbol' },
@@ -69,7 +78,7 @@ const TransactionsPage = () => {
           {!loading && !error && (
             <>
               <DataFilterBar filterInput={filterInput} setFilterInput={setFilterInput} />
-              <DataTable columns={columns} data={transactionsData} globalFilter={filterInput} />
+              <DataTable columns={columns} data={transactionsData} globalFilter={filterInput} onRowClick={handleRowClick}/>
             </>
           )}
         </Card.Body>

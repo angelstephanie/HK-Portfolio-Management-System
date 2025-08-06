@@ -3,8 +3,18 @@ import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataTable from './dataTable';
 import DataFilterBar from './dataFilter';
 import holdingsDataJSON from '../assets/holdings.json';
+import { useNavigate } from 'react-router-dom';
 
 const HoldingsPage = () => {
+
+  const navigate = useNavigate();
+
+  const handleRowClick = (row) => {
+  if (row.symbol) {
+    navigate(`/asset/${row.symbol}`);
+  }
+  };
+
   const [filterInput, setFilterInput] = useState('');
   const [holdingsData, setHoldingsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +84,7 @@ const HoldingsPage = () => {
           {!loading && !error && (
             <>
               <DataFilterBar filterInput={filterInput} setFilterInput={setFilterInput} />
-              <DataTable columns={columns} data={holdingsData} globalFilter={filterInput} />
+              <DataTable columns={columns} data={holdingsData} globalFilter={filterInput} onRowClick={handleRowClick} />
             </>
           )}
         </Card.Body>
