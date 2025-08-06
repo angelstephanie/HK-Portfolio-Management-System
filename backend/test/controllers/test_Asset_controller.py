@@ -1,5 +1,5 @@
 import unittest
-from flask import Flask
+from flask import Flask, jsonify
 from unittest.mock import patch, MagicMock
 from backend.controller.Asset_controller import asset_controller
 from backend.service.Asset_service import AssetService
@@ -43,6 +43,14 @@ class TestAssetController(unittest.TestCase):
         response = self.app.test_client().put('/assets/AAPL', json={'name': 'Apple Inc.', 'type': 'stock', 'current_price': 155.0, 'opening_price': 150.0, 'last_updated': '2023-10-01'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['message'], 'Asset updated successfully')
+        
+    @patch('backend.service.Asset_service.AssetService.get_price_by_range')
+    def test_get_price_by_range(self, mock_get_price_by_range):
+        """Test the get closing price endpoint"""
+        mock_get_price_by_range.return_value = {'2023-01-03': 123.47061920166016, '2023-01-04': 124.74411010742188, '2023-01-05': 123.4212646484375, '2023-01-06': 127.96244049072266}
+        response = self.app.test_client().get('/assets/AAPL/historicprice/2023-01-03')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'2023-01-03': 123.47061920166016, '2023-01-04': 124.74411010742188, '2023-01-05': 123.4212646484375, '2023-01-06': 127.96244049072266})
     
     # def run_tests(self):
     #     unittest.TextTestRunner().run(unittest.makeSuite(self.__class__))
