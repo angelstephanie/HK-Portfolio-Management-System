@@ -72,9 +72,9 @@ def test_delete_holding():
 
 def run_tests():
     setup()
+    test_add_holding()
     test_get_holdings_by_id()
     test_get_all_holdings()
-    test_add_holding()
     test_update_holding()
     test_delete_holding()
     print("All tests in Holdings repository passed!")
