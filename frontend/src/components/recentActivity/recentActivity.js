@@ -6,7 +6,6 @@ const RecentActivityFeed = () => {
     const [transactions, setTransactions] = useState([]);
 
     // Fetch transactions from the JSON file
-    debugger;
     useEffect(() => {
         // Assuming transactions.json is in the 'src/assets' folder
         fetch('./assets/transactions.json')

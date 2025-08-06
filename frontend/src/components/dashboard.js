@@ -2,14 +2,13 @@ import React from 'react';
 import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
-import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
 import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
 
   return (
-    <div className="container-fluid py-4">
+    <div className="container py-4">
       {/* Summary */}
       <div className="row mb-4">
         <div className="col-12">
