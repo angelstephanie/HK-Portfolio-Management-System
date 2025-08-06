@@ -9,7 +9,7 @@ holdings_service = HoldingsService()
 def get_all_holdings():
     try:
         holdings = holdings_service.get_all_holdings()
-        return jsonify([holding.to_dict() for holding in holdings]), 200
+        return jsonify([holding for holding in holdings]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -32,6 +32,8 @@ def add_holding():
         new_holding = holdings_service.add_holding(holding)
         if new_holding:
             return jsonify({'message': 'Holding added successfully'}), 201
+        else:
+            return jsonify({'message': 'Holding not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -41,6 +43,19 @@ def delete_holding(holding_id):
         result = holdings_service.delete_holding(holding_id)
         if result:
             return jsonify({'message': 'Holding deleted successfully'}), 200
+        else:
+            return jsonify({'message': 'Holding not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@holdings_controller.route('/holdings', methods=['PUT'])
+def update_holding():
+    try:
+        holding_data = request.json
+        holding = Holdings(**holding_data)
+        updated_holding = holdings_service.update_holding(holding)
+        if updated_holding:
+            return jsonify({'message': 'Holding updated successfully'}), 200
         else:
             return jsonify({'message': 'Holding not found'}), 404
     except Exception as e:

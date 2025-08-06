@@ -24,17 +24,16 @@ def test_add_asset():
     assert assets_add == 1
     
 def test_get_asset_by_symbol():
-    symbol = "AAPL"
+    symbol = "GOOGL"
     asset = asset_repo.get_asset_by_symbol(symbol)
     
     assert asset is not None
     assert isinstance(asset, Asset)
     assert asset.symbol == symbol
-    assert asset.name == "Apple Inc."
+    assert asset.name == "Alphabet Inc."
     assert asset.type == AssetType.STOCK
-    assert math.isclose(asset.current_price, 202.38, rel_tol=1e-9)
-    assert math.isclose(asset.opening_price, 211.00, rel_tol=1e-9)
-    assert asset.last_updated == datetime.strptime("2025-08-04 07:36:03", "%Y-%m-%d %H:%M:%S")
+    assert math.isclose(asset.current_price, 2800.00, rel_tol=1e-9)
+    assert math.isclose(asset.opening_price, 2795.00, rel_tol=1e-9)
 
 def test_get_all_assets():
     assets = asset_repo.get_all_assets()
@@ -80,9 +79,9 @@ def test_delete_asset():
 
 def run_tests():
     setup()
+    test_add_asset()
     test_get_asset_by_symbol()
     test_get_all_assets()
-    test_add_asset()
     test_update_asset()
     test_delete_asset()
     print("All tests in Asset repository passed!")

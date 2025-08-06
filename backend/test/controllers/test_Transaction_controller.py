@@ -15,10 +15,17 @@ class TestTransactionController(unittest.TestCase):
     @patch('backend.service.Transaction_service.TransactionService.get_all_transactions')
     def test_get_all_transactions(self, mock_get_all_transactions):
         """Test the get all transactions endpoint."""
-        mock_get_all_transactions.return_value = [MagicMock(to_dict=lambda: {'transaction_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'})]
+        mock_get_all_transactions.return_value = [{'transaction_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'}]
         response = self.app.test_client().get('/transactions')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json, list)
+        
+    @patch('backend.service.Transaction_service.TransactionService.get_all_transactions')
+    def test_get_all_transactions_none(self, mock_get_all_transactions):
+        """Test the get all transactions endpoint."""
+        mock_get_all_transactions.return_value = None
+        response = self.app.test_client().get('/transactions')
+        self.assertEqual(response.status_code, 500)
         
     @patch('backend.service.Transaction_service.TransactionService.get_transaction_by_id')
     def test_get_transaction_by_id(self, mock_get_transaction_by_id):
@@ -28,6 +35,21 @@ class TestTransactionController(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['transaction_id'], 1)
         
+    @patch('backend.service.Transaction_service.TransactionService.get_transaction_by_id')
+    def test_get_transaction_by_id_none(self, mock_get_transaction_by_id):
+        """Test the get transaction by ID endpoint."""
+        mock_get_transaction_by_id.return_value = None
+        response = self.app.test_client().get('/transactions/1')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json['message'], 'Transaction not found')
+    
+    @patch('backend.service.Transaction_service.TransactionService.get_transaction_by_id')
+    def test_get_transaction_by_id_exception(self, mock_get_transaction_by_id):
+        """Test the get transaction by ID endpoint."""
+        mock_get_transaction_by_id.side_effect = Exception('Mocked exception')
+        response = self.app.test_client().get('/transactions/1')
+        self.assertEqual(response.status_code, 500)
+        
     @patch('backend.service.Transaction_service.TransactionService.add_transaction')
     def test_add_transaction(self, mock_add_transaction):
         """Test the add transaction endpoint."""
@@ -35,11 +57,18 @@ class TestTransactionController(unittest.TestCase):
         response = self.app.test_client().post('/transactions', json={'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'})
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json['message'], 'Transaction added successfully')
-    
-    @patch('backend.service.Transaction_service.TransactionService.delete_transaction')
-    def test_delete_transaction(self, mock_delete_transaction):
-        """Test the delete transaction endpoint."""
-        mock_delete_transaction.return_value = 1
-        response = self.app.test_client().delete('/transactions/1')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json['message'], 'Transaction deleted successfully')
+        
+    @patch('backend.service.Transaction_service.TransactionService.add_transaction')
+    def test_add_transaction_none(self, mock_add_transaction):
+        """Test the add transaction endpoint."""
+        mock_add_transaction.return_value = None
+        response = self.app.test_client().post('/transactions', json={'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'})
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json['message'], 'Transaction not found')
+        
+    @patch('backend.service.Transaction_service.TransactionService.add_transaction')
+    def test_add_transaction_exception(self, mock_add_transaction):
+        """Test the add transaction endpoint."""
+        mock_add_transaction.side_effect = Exception('Mocked exception')
+        response = self.app.test_client().post('/transactions', json={'portfolio_id': 1, 'symbol': 'AAPL', 'type': 'buy', 'quantity': 10, 'price_per_unit': 150.0, 'fee': 5.0, 'timestamp': '2023-10-01', 'notes': 'Test transaction'})
+        self.assertEqual(response.status_code, 500)

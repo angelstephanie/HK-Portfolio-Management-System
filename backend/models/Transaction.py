@@ -8,7 +8,7 @@ class TransactionType(Enum):
     
 class Transaction:
     def __init__(self, portfolio_id: int, symbol: str,
-                 type: TransactionType, quantity: float, price_per_unit: float, transaction_id: int = None, fee: float = 0.0,
+                 type: TransactionType, quantity: int, price_per_unit: float, transaction_id: int = None, fee: float = 0.0,
                  timestamp: datetime = None, notes: str = ""):
         self.__transaction_id = transaction_id
         self.__portfolio_id = portfolio_id

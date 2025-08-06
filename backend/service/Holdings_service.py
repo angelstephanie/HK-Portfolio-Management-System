@@ -1,5 +1,6 @@
 from backend.repository.Holdings_repo import Holdings_repo  
 from backend.models.Holdings import Holdings
+from decimal import Decimal
 class HoldingsService:
     def __init__(self):
         self.holdings_repo = Holdings_repo()
@@ -10,6 +11,9 @@ class HoldingsService:
         if not isinstance(holding, Holdings):
             raise TypeError("Holding must be a Holdings object")
         
+        if self.holdings_repo.get_holdings_by_symbol(holding.symbol):
+            raise ValueError("Holding with this symbol already exists in the portfolio")
+        
         return self.holdings_repo.add_holding(holding)
     
     def get_holdings_by_id(self, portfolio_id: int):
@@ -19,6 +23,29 @@ class HoldingsService:
             raise TypeError("Portfolio_id must be an int")
         
         return self.holdings_repo.get_holdings_by_id(portfolio_id)
+
+    def update_holding(self, holding: Holdings):
+        if not holding:
+            raise ValueError("Holding cannot be empty")
+        if not isinstance(holding, Holdings):
+            raise TypeError("Holding must be a Holdings object")
+        
+        # Calculate the new average buying price
+        existing_holding = self.holdings_repo.get_holdings_by_holding_id(holding.holding_id)
+        if not existing_holding:
+            raise ValueError("Holding does not exist")
+
+        total_quantity = existing_holding.quantity + holding.quantity
+        if total_quantity == 0:
+            raise ValueError("Total quantity cannot be zero")
+        
+        holding.avg_buy_price = (
+        (Decimal(existing_holding.avg_buy_price) * existing_holding.quantity) +
+        (Decimal(holding.avg_buy_price) * holding.quantity)
+        ) / total_quantity
+        holding.quantity = total_quantity
+        
+        return self.holdings_repo.update_holding(holding)
     
     def get_all_holdings(self):
         return self.holdings_repo.get_all_holdings()

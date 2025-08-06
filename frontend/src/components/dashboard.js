@@ -2,17 +2,12 @@ import React from 'react';
 import Watchlist from './watchlist/Watchlist';
 import PerformanceChart from './performance-chart/PerformanceChart';
 import PortfolioPieChart from './portfolioPieChart';
-import { useNavigate } from 'react-router-dom';
 import TopMovers from './topMovers';
+import RecentActivityFeed from './recentActivity/recentActivity';
 
 export default function PortfolioDashboard() {
-  const navigate = useNavigate();
-  const handleChange = () => {
-    navigate('/mycomponent');
-  };
-
   return (
-    <div className="container py-4">
+    <div className="container-fluid py-4">
       {/* Summary */}
       <div className="row mb-4">
         <div className="col-12">
@@ -33,41 +28,53 @@ export default function PortfolioDashboard() {
         </div>
       </div>
 
-      {/* Main Cards */}
-      <div className="row">
-        <div className="col-md-4 mb-4">
+      {/* Main Cards: Asset Allocation and Performance Chart on the first line */}
+      <div className="row mb-4">
+        <div className="col-md-6 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Asset Allocation</h5>
-              <PortfolioPieChart/>
+              <PortfolioPieChart />
             </div>
           </div>
         </div>
-        <div className="col-md-4 mb-4">
+        <div className="col-md-6 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Market Top Movers</h5>
-              <TopMovers/>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4 mb-4">
-          <div className="card h-100 shadow-sm">
-            <div className="card-body">
-              <h5 className="card-title">Watchlist Performance</h5>
-              <Watchlist/>
+              <h5 className="card-title">Performance Chart</h5>
+              <PerformanceChart />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Row */}
+      {/* Second Row: Portfolio Top Movers, Watchlist, Recent Activity Feed */}
       <div className="row">
-        <div className="col-md-6 mb-4">
-          <div className="card shadow-sm">
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Portfolio Top Movers</h5>
+              <TopMovers />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Your Watchlist</h5>
+              <p style={{ fontSize: '1rem', color: '#555', marginBottom: '20px' }}>
+                Add to your watchlist to track their performance.
+              </p>
+              <Watchlist />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Recent Activity Feed</h5>
-              <p className="text-muted">[Table Placeholder]</p>
+              <RecentActivityFeed />
+              <p> </p>
             </div>
           </div>
         </div>
@@ -80,7 +87,6 @@ export default function PortfolioDashboard() {
           </div>
         </div>
       </div>
-      <button onClick={handleChange}>MyComponent</button>
     </div>
   );
 }
