@@ -54,7 +54,10 @@ export default function PortfolioDashboard() {
         <div className="col-md-4 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Watchlist Performance</h5>
+              <h5 className="card-title">Your Watchlist</h5>
+              <p style={{ fontSize: '1rem', color: '#555', marginBottom: '20px' }}>
+                    Add to your watchlist to track their performance.
+              </p>
               <Watchlist/>
             </div>
           </div>
