@@ -7,7 +7,7 @@ import WatchlistItem from './WatchlistItem';
 const Watchlist = () => {
 
     return (
-        <Container fluid className="border border-secondary rounded">
+        <Container fluid >
             <Row>
                 {assets.map((item, index) => (
                             <WatchlistItem item={item} key={item.symbol} />

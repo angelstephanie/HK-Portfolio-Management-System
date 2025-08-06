@@ -59,7 +59,7 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
             try {
                 // Check ig we sell or buy assets
                 const responseHoldings = await fetch(`${endpoint}/holdings`, {
-                    method: 'POST',
+                    method: totalHoldings > 0 ? 'PUT' : 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(holdingsData),
                 });

@@ -30,17 +30,7 @@ def add_transaction():
     try:
         data = request.get_json()
         data['type'] = TransactionType(data['type'])
-        print("Trans type", type(data['type']), data['type'].value)
-        
-        transaction = Transaction(portfolio_id=data['portfolio_id'],
-                                  symbol=data['symbol'],
-                                  type='buy',
-                                  quantity=data['quantity'],
-                                  price_per_unit=data['price_per_unit'],
-                                  fee=data['fee'], 
-                                  timestamp="2024-10-22",
-                                  notes=data['notes'])
-        print("Transaction: ", transaction)
+        transaction = Transaction(**data)
         new_transaction = transaction_service.add_transaction(transaction)
         if new_transaction:
             return jsonify({'message': 'Transaction added successfully'}), 201

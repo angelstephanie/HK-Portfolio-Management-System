@@ -14,7 +14,8 @@ const Asset = () => {
         "name": null, 
         "opening_price": null, 
         "symbol": null, 
-        "type": null });
+        "type": null,
+        "holding_id": null});
     
     const [totalHoldings, setTotalHoldings] = useState(0);
 
@@ -33,7 +34,7 @@ const Asset = () => {
             .catch(error => {
                 console.log('Error fetching asset data:', error.message);
             });
-        }, []);
+        }, [symbol, endpoint]);
 
     useEffect(() => {
         // Fetch total holdings data
@@ -52,6 +53,7 @@ const Asset = () => {
                     let noHoldings = 0;
                     data.forEach(holding => {
                         if (holding.symbol === symbol) {
+
                             noHoldings += parseInt(holding.quantity);
                             console.log(`Holdings for ${symbol}:`, noHoldings);
                         }
@@ -63,7 +65,37 @@ const Asset = () => {
             .catch(error => {
                 console.log('Error fetching asset data:', error.message);
             });
-        }, [symbol, endpoint]);
+        }, [symbol, endpoint, totalHoldings]);
+
+        // useEffect(() => {
+        //     // Fetch total holdings data
+        //     fetch(`${endpoint}/assets/${symbol}/historicprice/${}`)
+        //         .then(response => {
+        //             if (response.ok && totalHoldings === 0) {
+        //                 return response.json();
+        //             }
+        //             if (!response.ok) {
+        //             throw new Error(`HTTP error! status: ${response.status}`);
+        //             }
+        //         })
+        //         .then(data => {
+        //             if (totalHoldings === 0) {
+        //                 console.log('Holdings Data:', data);
+        //                 let noHoldings = 0;
+        //                 data.forEach(holding => {
+        //                     if (holding.symbol === symbol) {
+        //                         noHoldings += parseInt(holding.quantity);
+        //                         console.log(`Holdings for ${symbol}:`, noHoldings);
+        //                     }
+        //                 });
+        //                 setTotalHoldings(noHoldings);
+        //             }
+        //             console.log('Total Holdings:', totalHoldings);
+        //         })
+        //         .catch(error => {
+        //             console.log('Error fetching asset data:', error.message);
+        //         });
+        //     }, [symbol, endpoint]);
 
     return (
         <div className="container py-4">
