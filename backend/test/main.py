@@ -44,9 +44,11 @@ def run_tests():
     test_PortfolioSnap_repo.run_tests()
     test_Transaction_repo.run_tests()
 
-    # Run controllers tests   
+    # Run controllers and services tests   
     test_loader = unittest.TestLoader()
-    test_suite = test_loader.discover('backend/test/controllers', pattern='test_*.py')
+    controllers_test_suite = test_loader.discover('backend/test/controllers', pattern='test_*.py')
+    services_test_suite = test_loader.discover('backend/test/services', pattern='test_*.py')
+    test_suite = unittest.TestSuite([controllers_test_suite, services_test_suite])
     test_runner = unittest.TextTestRunner()
     test_runner.run(test_suite)
 
