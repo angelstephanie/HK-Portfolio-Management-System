@@ -19,7 +19,7 @@ function App() {
           <Route path="/holdings" element={<HoldingsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/asset/:symbol" element={<Asset />} />
-          <Route path="/mycomponent" element={<MyComponent/>} />
+          {/* <Route path="/mycomponent" element={<MyComponent/>} /> */}
           {/* Define other routes here as needed */}
         </Routes>
       </Router>

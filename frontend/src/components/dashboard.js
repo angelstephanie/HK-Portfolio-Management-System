@@ -7,9 +7,9 @@ import TopMovers from './topMovers';
 
 export default function PortfolioDashboard() {
   const navigate = useNavigate();
-  const handleChange = () => {
-    navigate('/mycomponent');
-  };
+  // const handleChange = () => {
+  //   navigate('/mycomponent');
+  // };
 
   return (
     <div className="container py-4">
@@ -83,7 +83,7 @@ export default function PortfolioDashboard() {
           </div>
         </div>
       </div>
-      <button onClick={handleChange}>MyComponent</button>
+      {/* <button onClick={handleChange}>MyComponent</button> */}
     </div>
   );
 }
