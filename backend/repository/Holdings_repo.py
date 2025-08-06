@@ -116,23 +116,29 @@ class Holdings_repo:
             return None
         
 
-    def get_all_holdings(self) -> list[Holdings]:
+    def get_all_holdings(self):
         """Retrieve all holdings from the database."""
         try:
             cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM Holdings")
+            cursor.execute("SELECT * FROM Holdings LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()
             
             holdings_list = []
             for row in rows:
-                holdings_list.append(Holdings(
-                    holding_id=row[0],
-                    portfolio_id=row[1],
-                    symbol=row[2],
-                    quantity=row[3],
-                    avg_buy_price=row[4]
-                ))
+                holding_dict = {}
+                holding_dict['symbol'] = row[0]
+                holding_dict['holding_id'] = row[1]
+                holding_dict['portfolio_id'] = row[2]
+                holding_dict['quantity'] = row[3]
+                holding_dict['avg_buy_price'] = row[4]
+                holding_dict['name'] = row[5]
+                holding_dict['type'] = row[6]
+                holding_dict['current_price'] = row[7]
+                holding_dict['opening_price'] = row[8]
+                holding_dict['last_updated'] = row[9]
+                holdings_list.append(holding_dict)
+                
             print(f"✅ Retrieved {len(holdings_list)} Holdings")
             return holdings_list
         except Exception as e:

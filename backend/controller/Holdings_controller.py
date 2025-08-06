@@ -9,7 +9,7 @@ holdings_service = HoldingsService()
 def get_all_holdings():
     try:
         holdings = holdings_service.get_all_holdings()
-        return jsonify([holding.to_dict() for holding in holdings]), 200
+        return jsonify([holding for holding in holdings]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

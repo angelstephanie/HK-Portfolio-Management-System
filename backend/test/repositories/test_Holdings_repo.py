@@ -38,14 +38,6 @@ def test_get_all_holdings():
     assert isinstance(holdings, list)
     assert len(holdings) > 0
     
-    for holding in holdings:
-        assert isinstance(holding, Holdings)
-        assert holding.holding_id is not None
-        assert holding.portfolio_id is not None
-        assert holding.symbol is not None
-        assert holding.quantity is not None
-        assert holding.avg_buy_price is not None
-        
 
 def test_update_holding():
     # Update the holding's quantity

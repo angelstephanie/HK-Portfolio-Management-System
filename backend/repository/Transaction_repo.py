@@ -83,7 +83,7 @@ class Transaction_repo:
                     portfolio_id=row[1],
                     symbol=row[2],
                     type=TransactionType(row[3]),
-                    quantity=row[4],
+                    quantity=int(row[4]),
                     price_per_unit=row[5],
                     fee=row[6],
                     timestamp=row[7],
@@ -101,23 +101,30 @@ class Transaction_repo:
         """Retrieve all transactions from the database."""
         try:
             cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM Transactions")
+            cursor.execute("SELECT * FROM Transactions LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()
             
             transactions = []
             for row in rows:
-                transactions.append(Transaction(
-                    transaction_id=row[0],
-                    portfolio_id=row[1],
-                    symbol=row[2],
-                    type=TransactionType(row[3]),
-                    quantity=row[4],
-                    price_per_unit=row[5],
-                    fee=row[6] if row[6] is not None else 0.0,
-                    timestamp=row[7],
-                    notes=row[8] if row[8] is not None else ""
-                ))
+                transaction_dict = {}
+                transaction_dict['symbol'] = row[0]
+                transaction_dict['transaction_id'] = row[1]
+                transaction_dict['portfolio_id'] = row[2]
+                transaction_dict['type'] = row[3]
+                transaction_dict['quantity'] = int(row[4])
+                transaction_dict['price_per_unit'] = row[5]
+                transaction_dict['fee'] = row[6] if row[6] is not None else 0.0
+                transaction_dict['timestamp'] = row[7]
+                transaction_dict['notes'] = row[8] if row[8] is not None else ""
+                transaction_dict['name'] = row[9]
+                transaction_dict['type'] = row[10]
+                transaction_dict['current_price'] = row[11]
+                transaction_dict['opening_price'] = row[12]
+                transaction_dict['last_updated'] = row[13]
+                
+                transactions.append(transaction_dict)
+                
             print(f"✅ Retrieved {len(transactions)} transactions")
             return transactions
         
