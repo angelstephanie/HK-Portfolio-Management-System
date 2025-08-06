@@ -76,3 +76,13 @@ class AssetService:
             raise ValueError("Start date and end date cannot be empty")
         
         return self.yahooFetcher.fetchPriceByRange(symbol, start_date, end_date)
+    
+    def get_price_within_day(self, symbol: str, period: int):
+        if not symbol:
+            raise ValueError("Symbol cannot be empty")
+        if not isinstance(symbol, str):
+            raise TypeError("Symbol must be a string")
+        if int(period) <= 0:
+            raise ValueError("Period must be a positive integer")
+        
+        return self.yahooFetcher.fetchPriceWithinDay(symbol, period)
