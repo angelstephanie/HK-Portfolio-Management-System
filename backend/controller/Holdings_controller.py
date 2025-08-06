@@ -32,6 +32,8 @@ def add_holding():
         new_holding = holdings_service.add_holding(holding)
         if new_holding:
             return jsonify({'message': 'Holding added successfully'}), 201
+        else:
+            return jsonify({'message': 'Holding not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
