@@ -38,14 +38,11 @@ def run_tests():
     test_PortfolioSnap_repo.run_tests()
     test_Transaction_repo.run_tests()
     
-    # Run controllers tests   
-    TestAssetController().run()
-    TestHoldingsController().run()
-    TestPortfolioController().run()
-    TestPortfolioSnapController().run()
-    TestTransactionController().run()
-     
-    
+    # # Run controllers tests   
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('backend/test/controllers', pattern='test_*.py')
+    test_runner = unittest.TextTestRunner()
+    test_runner.run(test_suite)
 
 if __name__ == "__main__":
     run_tests()
