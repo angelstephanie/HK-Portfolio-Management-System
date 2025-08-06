@@ -6,7 +6,6 @@ const RecentActivityFeed = () => {
     const [transactions, setTransactions] = useState([]);
 
     // Fetch transactions from the JSON file
-    debugger;
     useEffect(() => {
         // Assuming transactions.json is in the 'src/assets' folder
         fetch('./assets/transactions.json')
@@ -17,7 +16,7 @@ const RecentActivityFeed = () => {
 
     return (
         <div className="recent-activity-feed">
-            <ListGroup variant="flush">
+            <ListGroup variant="flush">git
                 {transactions.length > 0 ? (
                     transactions.map((transaction, index) => (
                         <ListGroup.Item key={index} className="transaction-item">

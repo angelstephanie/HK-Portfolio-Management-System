@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 
-const BuySellAsset = ({ asset, totalHoldings }) => {
+const BuySellAsset = ({ asset, holdings }) => {
     const endpoint = `http://127.0.0.1:5000`;
     const [activeTab, setActiveTab] = useState('Buy');
     const [limitPrice, setLimitPrice] = useState(asset.current_price || '');
     const [quantity, setQuantity] = useState(1);
     const [dateTime, setDateTime] = useState(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
     const [notes, setNotes] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLimitPrice(asset.current_price);
@@ -25,18 +27,18 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
 
     const submitTransaction = async () => {
         const holdingsData = {
-            holding_id: null, //need to modify
+            holding_id: holdings.holding_id, //need to modify
             portfolio_id: 1,
             symbol: asset.symbol,
-            quantity: quantity,
-            avg_buy_price: limitPrice,
+            quantity: parseInt(quantity),
+            avg_buy_price: parseInt(limitPrice),
         };
         const transactionData = {
             portfolio_id: 1,
             symbol: asset.symbol,
             type: activeTab.toLowerCase(),
-            quantity: quantity,
-            price_per_unit: limitPrice,
+            quantity: parseInt(quantity),
+            price_per_unit: parseInt(limitPrice),
             fee: 0.01,
             notes: '',
             timestamp: format(new Date(dateTime), "yyyy-MM-dd HH:mm:ss"),
@@ -59,7 +61,7 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
             try {
                 // Check ig we sell or buy assets
                 const responseHoldings = await fetch(`${endpoint}/holdings`, {
-                    method: totalHoldings > 0 ? 'PUT' : 'POST',
+                    method: holdings.totalHoldings > 0 ? 'PUT' : 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(holdingsData),
                 });
@@ -70,6 +72,7 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
     
                 const result = await responseHoldings.json();
                 alert('Transaction submitted successfully:', result);
+                navigate('/holdings')
             } catch (error) {
                 alert('Failed to submit transaction:', error);
             }
@@ -97,7 +100,7 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
                     <form onSubmit={handleSubmission}>
                         {[
                             { label: 'Limit Price (US$)', id: 'limitPrice', type: 'number', value: limitPrice, setter: setLimitPrice, step: '0.01', min: '0' },
-                            { label: 'Quantity', id: 'quantity', type: 'number', value: quantity, setter: setQuantity, step: '1', min: '0', max: activeTab === 'Sell' ? totalHoldings : undefined },
+                            { label: 'Quantity', id: 'quantity', type: 'number', value: quantity, setter: setQuantity, step: '1', min: '0', max: activeTab === 'Sell' ? holdings.totalHoldings : undefined },
                             { label: 'Date Time', id: 'dateTime', type: 'datetime-local', value: dateTime, setter: setDateTime },
                             { label: 'Notes', id: 'notes', type: 'text', value: notes, setter: setNotes, placeholder: '...' }
                         ].map(({ label, id, type, value, setter, ...rest }) => (
@@ -126,7 +129,7 @@ const BuySellAsset = ({ asset, totalHoldings }) => {
                             {activeTab === 'Sell' && (
                                 <div className='d-flex justify-content-between'>
                                     <p>Position (Shares): </p>
-                                    <p>{totalHoldings}</p>
+                                    <p>{holdings.totalHoldings}</p>
                                 </div>
                             )}
                         </div>
