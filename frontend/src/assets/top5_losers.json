@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "DOGE-USD",
+        "name": "Dogecoin USD",
+        "type": "crypto",
+        "current_price": 0.18,
+        "opening_price": 0.23,
+        "price_change": -0.05,
+        "price_change_percentage": -21.74,
+        "last_updated": "2025-07-28 09:52:45"
+    },
+    {
+        "symbol": "TLT",
+        "name": "iShares 20+ Year Treasury Bond",
+        "type": "bond",
+        "current_price": 82.15,
+        "opening_price": 86.43,
+        "price_change": -4.28,
+        "price_change_percentage": -4.95,
+        "last_updated": "2025-07-28 09:52:46"
+    },
+    {
+        "symbol": "IEF",
+        "name": "iShares 7-10 Year Treasury Bond",
+        "type": "bond",
+        "current_price": 90.21,
+        "opening_price": 94.74,
+        "price_change": -4.53,
+        "price_change_percentage": -4.78,
+        "last_updated": "2025-07-28 09:52:46"
+    },
+    {
+        "symbol": "BND",
+        "name": "Vanguard Total Bond Market ETF",
+        "type": "bond",
+        "current_price": 69.88,
+        "opening_price": 73.12,
+        "price_change": -3.24,
+        "price_change_percentage": -4.43,
+        "last_updated": "2025-07-28 09:52:46"
+    },
+    {
+        "symbol": "AGG",
+        "name": "iShares Core U.S. Aggregate Bond",
+        "type": "bond",
+        "current_price": 93.67,
+        "opening_price": 98.45,
+        "price_change": -4.78,
+        "price_change_percentage": -4.86,
+        "last_updated": "2025-07-28 09:52:46"
+    }
+]

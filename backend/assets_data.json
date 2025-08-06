@@ -1,0 +1,154 @@
+[
+    {
+        "symbol": "AAPL",
+        "name": "Apple Inc.",
+        "type": "stock",
+        "opening_price": 211.9,
+        "current_price": 209.05,
+        "last_updated": "2025-07-31T03:51:10.973131"
+    },
+    {
+        "symbol": "MSFT",
+        "name": "Microsoft Corporation",
+        "type": "stock",
+        "opening_price": 515.56,
+        "current_price": 513.24,
+        "last_updated": "2025-07-31T03:51:11.041602"
+    },
+    {
+        "symbol": "GOOG",
+        "name": "Alphabet Inc.",
+        "type": "stock",
+        "opening_price": 196.3,
+        "current_price": 197.44,
+        "last_updated": "2025-07-31T03:51:11.132294"
+    },
+    {
+        "symbol": "TSLA",
+        "name": "Tesla, Inc.",
+        "type": "stock",
+        "opening_price": 322.19,
+        "current_price": 319.04,
+        "last_updated": "2025-07-31T03:51:11.239339"
+    },
+    {
+        "symbol": "AMZN",
+        "name": "Amazon.com, Inc.",
+        "type": "stock",
+        "opening_price": 231.64,
+        "current_price": 230.19,
+        "last_updated": "2025-07-31T03:51:11.339797"
+    },
+    {
+        "symbol": "SPY",
+        "name": "SPDR S&P 500",
+        "type": "etf",
+        "opening_price": 635.92,
+        "current_price": 634.46,
+        "last_updated": "2025-07-31T03:51:11.426597"
+    },
+    {
+        "symbol": "QQQ",
+        "name": "Invesco QQQ Trust, Series 1",
+        "type": "etf",
+        "opening_price": 568.17,
+        "current_price": 568.02,
+        "last_updated": "2025-07-31T03:51:11.502296"
+    },
+    {
+        "symbol": "VTI",
+        "name": "Vanguard Total Stock Market ETF",
+        "type": "etf",
+        "opening_price": 313.19,
+        "current_price": 312.25,
+        "last_updated": "2025-07-31T03:51:11.620506"
+    },
+    {
+        "symbol": "ARKK",
+        "name": "ARK Innovation ETF",
+        "type": "etf",
+        "opening_price": 75.3,
+        "current_price": 75.65,
+        "last_updated": "2025-07-31T03:51:11.695131"
+    },
+    {
+        "symbol": "DIA",
+        "name": "SPDR Dow Jones Industrial Avera",
+        "type": "etf",
+        "opening_price": 446.71,
+        "current_price": 444.76,
+        "last_updated": "2025-07-31T03:51:11.790648"
+    },
+    {
+        "symbol": "BTC-USD",
+        "name": "Bitcoin USD",
+        "type": "crypto",
+        "opening_price": 117830.02,
+        "current_price": 118470.78,
+        "last_updated": "2025-07-31T03:51:11.866404"
+    },
+    {
+        "symbol": "ETH-USD",
+        "name": "Ethereum USD",
+        "type": "crypto",
+        "opening_price": 3808.89,
+        "current_price": 3861.12,
+        "last_updated": "2025-07-31T03:51:11.963440"
+    },
+    {
+        "symbol": "SOL-USD",
+        "name": "Solana USD",
+        "type": "crypto",
+        "opening_price": 177.7,
+        "current_price": 180.29,
+        "last_updated": "2025-07-31T03:51:12.076124"
+    },
+    {
+        "symbol": "XRP-USD",
+        "name": "XRP USD",
+        "type": "crypto",
+        "opening_price": 3.1,
+        "current_price": 3.14,
+        "last_updated": "2025-07-31T03:51:12.166414"
+    },
+    {
+        "symbol": "DOGE-USD",
+        "name": "Dogecoin USD",
+        "type": "crypto",
+        "opening_price": 0.22,
+        "current_price": 0.22,
+        "last_updated": "2025-07-31T03:51:12.260607"
+    },
+    {
+        "symbol": "TLT",
+        "name": "iShares 20+ Year Treasury Bond ",
+        "type": "bond",
+        "opening_price": 86.75,
+        "current_price": 86.87,
+        "last_updated": "2025-07-31T03:51:12.331779"
+    },
+    {
+        "symbol": "IEF",
+        "name": "iShares 7-10 Year Treasury Bond",
+        "type": "bond",
+        "opening_price": 94.82,
+        "current_price": 94.82,
+        "last_updated": "2025-07-31T03:51:12.444569"
+    },
+    {
+        "symbol": "BND",
+        "name": "Vanguard Total Bond Market ETF",
+        "type": "bond",
+        "opening_price": 73.19,
+        "current_price": 73.19,
+        "last_updated": "2025-07-31T03:51:12.572309"
+    },
+    {
+        "symbol": "AGG",
+        "name": "iShares Core U.S. Aggregate Bon",
+        "type": "bond",
+        "opening_price": 98.67,
+        "current_price": 98.57,
+        "last_updated": "2025-07-31T03:51:12.638041"
+    }
+]

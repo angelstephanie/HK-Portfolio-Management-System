@@ -1,0 +1,52 @@
+[
+    {
+        "symbol":"AAPL",
+        "name":"Apple Inc.",
+        "type":"stock",
+        "current_price":213.88,
+        "opening_price":210.00,
+        "price_change":3.88,
+        "price_change_percentage":1.85,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"MSFT",
+        "name":"Microsoft Corporation",
+        "type":"stock",
+        "current_price":513.71,
+        "opening_price":505.00,
+        "price_change":8.71,
+        "price_change_percentage":1.73,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"GOOG",
+        "name":"Alphabet Inc.",
+        "type":"stock",
+        "current_price":194.08,
+        "opening_price":190.00,
+        "price_change":4.08,
+        "price_change_percentage":2.15,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"TSLA",
+        "name":"Tesla, Inc.",
+        "type":"stock",
+        "current_price":316.06,
+        "opening_price":310.00,
+        "price_change":6.06,
+        "price_change_percentage":1.95,
+        "last_updated":"2025-07-28 09:52:45"
+    },
+    {
+        "symbol":"AMZN",
+        "name":"Amazon.com, Inc.",
+        "type":"stock",
+        "current_price":232.70,
+        "opening_price":227.00,
+        "price_change":5.70,
+        "price_change_percentage":2.51,
+        "last_updated":"2025-07-28 09:52:45"
+    }
+]

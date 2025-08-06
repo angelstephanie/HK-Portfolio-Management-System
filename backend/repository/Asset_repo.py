@@ -1,11 +1,11 @@
-from models.Asset import Asset, AssetType
-from repository.database_access import get_database_connection
+from backend.models.Asset import Asset, AssetType
+from backend.repository.database_access import get_database_connection
 
 class Asset_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    @staticmethod
+
     def create_asset_table(self):
         """Create the Asset table in the database if it does not exist."""
         try:
@@ -26,31 +26,37 @@ class Asset_repo:
         except Exception as e:
             print(f"❌ Error creating Asset table: {e}")
     
-    @staticmethod
+
     def add_asset(self, asset: Asset):
         """Add a new asset to the database."""
         try:
             cursor = self.connection.cursor()
             cursor.execute("""
-                INSERT INTO Assets (symbol, name, type, current_price, last_updated)
-                VALUES (%s, %s, %s, %s, %s)
-                ON DUPLICATE KEY UPDATE
-                    name = VALUES(name),
-                    type = VALUES(type),
-                    current_price = VALUES(current_price),
-                    opening_price = VALUES(opening_price),
-                    last_updated = VALUES(last_updated)
-            """, (asset.symbol, asset.name, asset.type.value, asset.current_price, asset.opening_price, asset.last_updated))
+                            INSERT INTO Assets (symbol, name, type, current_price, opening_price, last_updated)
+                            VALUES (%s, %s, %s, %s, %s, %s)
+                            """, (
+                                asset.symbol,
+                                asset.name,
+                                asset.type.value,
+                                asset.current_price,
+                                asset.opening_price,
+                                asset.last_updated
+                            ))
+
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Asset added/updated: {asset.symbol}")
+            print(f"✅ Asset added/updated: {asset}")
+            
+            return affected_rows if affected_rows > 0 else None
+        
         except Exception as e:
             print(f"❌ Error adding/updating asset: {e}")
+            return None
             
-        return affected_rows if affected_rows > 0 else None
+        
     
-    @staticmethod
+
     def update_asset(self, asset: Asset):
         """Update an existing asset in the database."""
         try:
@@ -63,13 +69,15 @@ class Asset_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Asset updated: {asset.symbol}")
+            print(f"✅ Asset updated: {asset}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating asset: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
     
-    @staticmethod       
+     
     def delete_asset(self, symbol: str):
         """Delete an asset by its symbol."""
         try:
@@ -79,49 +87,62 @@ class Asset_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Asset deleted: {symbol}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting asset: {e}") 
+            return None
         
-        return affected_rows if affected_rows > 0 else None
     
-    @staticmethod
+
     def get_asset_by_symbol(self, symbol: str) -> Asset:
         """Retrieve an asset by its symbol."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
-        row = cursor.fetchone()
-        cursor.close()
-        
-        if row:
-            return Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            )
-        return None
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Assets WHERE symbol = %s", (symbol,))
+            row = cursor.fetchone()
+            cursor.close()
+            
+            if row:
+                return Asset(
+                    symbol=row[0],
+                    name=row[1],
+                    type=AssetType(row[2]),
+                    current_price=row[3],
+                    opening_price=row[4],
+                    last_updated=row[5]
+                )
+            else:
+                print(f"❌ No asset found with symbol: {symbol}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving asset: {e}")
+            return None
     
-    @staticmethod
+
     def get_all_assets(self) -> list[Asset]:
         """Retrieve all assets from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Assets")
-        rows = cursor.fetchall()
-        cursor.close()
-        
-        assets = []
-        for row in rows:
-            assets.append(Asset(
-                symbol=row[0],
-                name=row[1],
-                type=AssetType(row[2]),
-                current_price=row[3],
-                opening_price=row[4],
-                last_updated=row[5]
-            ))
-        return assets
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Assets")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            assets = []
+            for row in rows:
+                assets.append(Asset(
+                    symbol=row[0],
+                    name=row[1],
+                    type=AssetType(row[2]),
+                    current_price=row[3],
+                    opening_price=row[4],
+                    last_updated=row[5]
+                ))
+            print(f"✅ Retrieved {len(assets)} assets")
+            return assets
+        except Exception as e:
+            print(f"❌ Error retrieving all assets: {e}")
+            return []
     
 
     

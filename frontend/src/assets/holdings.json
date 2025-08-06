@@ -1,0 +1,23 @@
+[
+  {
+    "holding_id": 1,
+    "portfolio_id": 101,
+    "symbol": "AAPL",
+    "quantity": 20,
+    "avg_buy_price": 145.0
+  },
+  {
+    "holding_id": 2,
+    "portfolio_id": 101,
+    "symbol": "TSLA",
+    "quantity": 5,
+    "avg_buy_price": 700.0
+  },
+  {
+    "holding_id": 3,
+    "portfolio_id": 101,
+    "symbol": "BTC",
+    "quantity": 0.5,
+    "avg_buy_price": 28000.0
+  }
+]

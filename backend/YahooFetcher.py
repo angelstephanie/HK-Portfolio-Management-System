@@ -2,25 +2,17 @@ import yfinance as yf
 import pandas as pd
 import json
 from datetime import datetime
-from models.Asset import Asset, AssetType
-from repository.Asset_repo import Asset_repo
+from backend.models.Asset import Asset, AssetType
+from pytz import timezone
+from tzlocal import get_localzone 
 
 class YahooFetcher:
-    def __init__(self, symbols: str, username: str, password: str, schema: str):        
-        """
-        symbols: json file name
-        username: MySQL username (e.g., 'root')
-        password: MySQL password
-        schema: MySQL schema/database name (e.g., 'HongKongHackathon')
-        """
-        self.username = username
-        self.password = password
-        self.schema = schema
+    def __init__(self):                
         with open('asset_info.json', "r") as f:
             self.asset_dict = json.load(f)
 
     
-    def fetchByAssetType(self, asset_type: str = None) -> pd.DataFrame:
+    def fetchByAssetType(self, asset_type: str = None):
         """
         Download current pricing information for specific type of asset.
         
@@ -42,9 +34,14 @@ class YahooFetcher:
                     info = ticker.info
 
                     name = info.get('shortName', 'N/A')
-                    price = info.get('regularMarketPrice', None)
-                    now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-                    results_asset = Asset(symbol=symbol,name=name, type=AssetType(asset), current_price=round(price, 2) if price else None, last_updated=now)
+                    current_price = info.get('regularMarketPrice', None)
+                    opening_price = info.get('regularMarketOpen', None)
+                    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    results_asset = Asset(symbol=symbol,name=name, 
+                                          type=AssetType(asset), 
+                                          current_price=round(current_price, 2) if current_price else None, 
+                                          opening_price=round(opening_price) if opening_price else None, 
+                                          last_updated=now)
                     result_assets.append(results_asset)
 
                 except Exception as e:
@@ -54,7 +51,7 @@ class YahooFetcher:
 
         return result_assets
     
-    def fetchBySymbol(self, symbol: str, asset_type: str) -> dict:
+    def fetchBySymbol(self, symbol: str):
         """
         Download current pricing information for specific symbol of asset.
 
@@ -65,48 +62,91 @@ class YahooFetcher:
         Returns:
         Asset: An Asset object containing the fetched data.
         """
+        asset_type = None
+        for type in self.asset_dict.keys():
+            if symbol in self.asset_dict[type]:
+                asset_type = type
+                break
+        if not asset_type:
+            raise ValueError(f"Symbol '{symbol}' not found in asset_info.json")
+        
         try:
             ticker = yf.Ticker(symbol)
             info = ticker.info
 
             name = info.get('shortName', 'N/A')
-            price = info.get('regularMarketPrice', None)
-            now = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            current_price = info.get('regularMarketPrice', None)
+            opening_price = info.get('regularMarketOpen', None)
+            now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-            results_asset = Asset(symbol=symbol,name=name, type=AssetType(asset_type), current_price=round(price, 2) if price else None, last_updated=now)
+            results_asset = Asset(symbol=symbol,name=name, 
+                                          type=AssetType(asset_type), 
+                                          current_price=round(current_price, 2) if current_price else None, 
+                                          opening_price=round(opening_price) if opening_price else None, 
+                                          last_updated=now)
             return results_asset
 
         except Exception as e:
             print(f"[Error] Failed to fetch data for '{symbol}': {e}")
             return None
-        
     
-        ## just for testing purpose
-    def saveTodb(self, asserts):
-        
-        asserts_repo = Asset_repo()
-        try:
-            for asset in asserts:
-                asserts_repo.add_asset(asset)
-            print("✅ All assets saved to the database successfully.")
-        except Exception as e:
-            print(f"❌ Failed to save assets to the database: {e}")
-        
-        print(asserts_repo.get_asset_by_symbol('AAPL'))
-            
+    def fetchPriceByRange(self, symbol:str, start: str, end: str):
+        """
+        Download historical pricing information for a specific symbol of asset within a date range.
 
-    def run(self):
-        """
-        Fetch current price data from Yahoo and save into asset table.
-        """
-       # Download all assets across all types listed in asset_info.json
-        df_all_assets = self.fetchByAssetType()
-        print(df_all_assets)
+        Parameters:
+        symbol (str): The asset symbol (e.g., 'AAPL', 'BTC-USD')
+        start (str): Start date in 'YYYY-MM-DD' format
+        end (str): End date in 'YYYY-MM-DD' format
         
-        # # save to database
-        self.saveTodb(df_all_assets)
+        Returns:
+        dict: A dictionary with dates as keys and closing prices as values.
+        """
+        try:
+            ticker = yf.Ticker(symbol)
+            df = ticker.history(start=start, end=end)
+            df.reset_index(inplace=True)
+            df.drop(columns=['Open', 'High', 'Low', 'Volume','Dividends', 'Stock Splits'], inplace=True, errors='ignore')
+            df['Close'] = df['Close'].round(2)
+            df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
+            df = df.set_index('Date')['Close'].to_dict()
+            print(f"✅ Retrieved historical prices for {symbol} from {start} to {end}")
+            return df
+        except Exception as e:
+            print(f"[Error] Failed to fetch historical data for '{symbol}': {e}")
+            return pd.DataFrame()
+    
+    def fetchPriceWithinDay(self, symbol: str, period: int):
+        """
+        Download day time intraday pricing information for a specific symbol of asset.
+
+        Parameters:
+        symbol (str): The asset symbol (e.g., 'AAPL', 'BTC-USD')
+        
+        Returns:
+        dict: A dictionary with datetime as keys and closing prices as values.
+        """
+        try:
+            ny_tz = timezone('US/Eastern')
+            print("local_tz",ny_tz)
+            df = yf.download(tickers = symbol, period= str(period) + "d", interval='30m',auto_adjust=True)
+            df.reset_index(inplace=True)
+            df.drop(columns=['Open', 'High', 'Low', 'Volume'], inplace=True, errors='ignore')
+            df['Close'] = df['Close'].round(2)
+            df['Datetime'] = df['Datetime'].dt.tz_convert(ny_tz)
+
+            df['Datetime'] = df['Datetime'].dt.strftime("%Y-%m-%d %H:%M:%S")
+            df = df.set_index('Datetime')['Close'].to_dict()
+            
+            print(f"✅ Retrieved intraday prices for {symbol} for the last {period} days")
+            return df[symbol]
+        except Exception as e:
+            print(f"[Error] Failed to fetch intraday data for '{symbol}': {e}")
+            return pd.DataFrame()
 
 if __name__ == "__main__":
     # Example usage
-    fetcher = YahooFetcher(symbols='asset_info.json', username='root', password='n3u3da!', schema='HongKongHackathon')
-    fetcher.run()
+    fetcher = YahooFetcher()
+    df = fetcher.fetchPriceWithinDay("AAPL" ,1)
+    # df = fetcher.fetchPriceByRange("MSFT", "2023-01-01", "2023-10-01")
+    print(df)

@@ -1,0 +1,68 @@
+[
+  {
+    "transaction_id": 3,
+    "portfolio_id": 101,
+    "symbol": "GOOGL",
+    "type": "buy",
+    "quantity": 5,
+    "price_per_unit": 2800,
+    "fee": 5.0,
+    "timestamp": "2025-08-01T12:45:00",
+    "notes": "Long-term investment"
+  },
+  {
+    "transaction_id": 4,
+    "portfolio_id": 101,
+    "symbol": "AMZN",
+    "type": "buy",
+    "quantity": 3,
+    "price_per_unit": 3500,
+    "fee": 6.0,
+    "timestamp": "2025-08-03T09:00:00",
+    "notes": "E-commerce growth"
+  },
+  {
+    "transaction_id": 5,
+    "portfolio_id": 101,
+    "symbol": "ETH",
+    "type": "buy",
+    "quantity": 2,
+    "price_per_unit": 2200,
+    "fee": 3.0,
+    "timestamp": "2025-08-04T14:15:00",
+    "notes": "Crypto diversification"
+  },
+  {
+    "transaction_id": 6,
+    "portfolio_id": 101,
+    "symbol": "TSLA",
+    "type": "sell",
+    "quantity": 2,
+    "price_per_unit": 750,
+    "fee": 5.0,
+    "timestamp": "2025-08-05T16:00:00",
+    "notes": "Profit-taking"
+  },
+  {
+    "transaction_id": 7,
+    "portfolio_id": 101,
+    "symbol": "NVDA",
+    "type": "buy",
+    "quantity": 7,
+    "price_per_unit": 190,
+    "fee": 2.5,
+    "timestamp": "2025-08-06T11:30:00",
+    "notes": "Tech sector expansion"
+  },
+  {
+    "transaction_id": 8,
+    "portfolio_id": 101,
+    "symbol": "ETH",
+    "type": "sell",
+    "quantity": 1,
+    "price_per_unit": 2500,
+    "fee": 3.0,
+    "timestamp": "2025-08-07T10:00:00",
+    "notes": "Partial liquidation"
+  }
+]

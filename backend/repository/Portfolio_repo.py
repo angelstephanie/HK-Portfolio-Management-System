@@ -1,30 +1,11 @@
-from models.Portfolio import Portfolio
-from repository.database_access import get_database_connection
+from backend.models.Portfolio import Portfolio
+from backend.repository.database_access import get_database_connection
 
 class Portfolio_repo:
     def __init__(self):
         self.connection = get_database_connection()
 
-    @staticmethod
-    def create_portfolio_table(self):
-        """Create the Portfolio table in the database if it does not exist."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS Portfolios (
-                    portfolio_id INT AUTO_INCREMENT PRIMARY KEY,
-                    name VARCHAR(100) NOT NULL,
-                    description TEXT,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                );
-            """)
-            self.connection.commit()
-            cursor.close()
-            print("✅ Portfolio table created successfully.")
-        except Exception as e:
-            print(f"❌ Error creating Portfolio table: {e}")
 
-    @staticmethod
     def add_portfolio(self, portfolio: Portfolio):
         """Add a new portfolio to the database."""
         try:
@@ -34,16 +15,19 @@ class Portfolio_repo:
                 VALUES (%s, %s, %s)
             """, (portfolio.name, portfolio.description, portfolio.created_at))
             self.connection.commit()
-            portfolio.portfolio_id(cursor.lastrowid)
+            portfolio.portfolio_id = cursor.lastrowid
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Portfolio added: {portfolio.name}")
+            print(f"✅ Portfolio added: {portfolio}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error adding portfolio: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
+        
     
-    @staticmethod
+
     def update_portfolio(self, portfolio: Portfolio):
         """Update an existing portfolio in the database."""
         try:
@@ -56,13 +40,16 @@ class Portfolio_repo:
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Portfolio updated: {portfolio.name}")
+            print(f"✅ Portfolio updated: {portfolio}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error updating portfolio: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
+        
 
-    @staticmethod
+
     def delete_portfolio(self, portfolio_id: int):
         """Delete a portfolio by its ID."""
         try:
@@ -72,43 +59,57 @@ class Portfolio_repo:
             affected_rows = cursor.rowcount
             cursor.close()
             print(f"✅ Portfolio deleted: {portfolio_id}")
+            
+            return affected_rows if affected_rows > 0 else None
         except Exception as e:
             print(f"❌ Error deleting portfolio: {e}")
+            return None
         
-        return affected_rows if affected_rows > 0 else None
+        
     
-    @staticmethod    
+ 
     def get_portfolio_by_id(self, portfolio_id: int) -> Portfolio:
         """Retrieve a portfolio by its ID."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Portfolios WHERE portfolio_id = %s", (portfolio_id,))
-        row = cursor.fetchone()
-        cursor.close()
-        
-        if row:
-            return Portfolio(
-                name=row[1],
-                created_at=row[3],
-                portfolio_id=row[0],
-                description=row[2] if row[2] is not None else ""
-            )
-        return None
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Portfolios WHERE portfolio_id = %s", (portfolio_id,))
+            row = cursor.fetchone()
+            cursor.close()
+            
+            if row:
+                return Portfolio(
+                    name=row[1],
+                    created_at=row[3],
+                    portfolio_id=row[0],
+                    description=row[2] if row[2] is not None else ""
+                )
+            else:
+                print(f"❌ No Portfolio found with ID: {portfolio_id}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving Portfolio: {e}")
+            return None
 
-    @staticmethod
+
     def get_all_portfolios(self) -> list[Portfolio]:
         """Retrieve all portfolios from the database."""
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Portfolios")
-        rows = cursor.fetchall()
-        cursor.close()
-        
-        portfolios = []
-        for row in rows:
-            portfolios.append(Portfolio(
-                name=row[1],
-                created_at=row[3],
-                portfolio_id=row[0],
-                description=row[2] if row[2] is not None else ""
-            ))
-        return portfolios
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Portfolios")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            portfolios = []
+            for row in rows:
+                portfolios.append(Portfolio(
+                    name=row[1],
+                    created_at=row[3],
+                    portfolio_id=row[0],
+                    description=row[2] if row[2] is not None else ""
+                ))
+            print(f"✅ Retrieved {len(portfolios)} Portfolios")
+            return portfolios
+        except Exception as e:
+            print(f"❌ Error retrieving all portfolios: {e}")
+            return []
 
