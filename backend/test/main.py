@@ -1,3 +1,5 @@
+import unittest
+
 import backend.test.repositories.test_database_access as test_database_access
 
 import backend.test.models.test_Transaction as test_Transaction
@@ -47,4 +49,5 @@ def run_tests():
 
 if __name__ == "__main__":
     run_tests()
+    # unittest.main()
     print("All tests passed successfully!")
