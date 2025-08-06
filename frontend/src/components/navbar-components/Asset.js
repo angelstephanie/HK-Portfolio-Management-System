@@ -6,7 +6,7 @@ import BuySellAsset from './BuySellAsset';
 
 const Asset = () => {
     const {symbol} = useParams();
-    const endpoint = `http://127.0.0.1:5000/assets/${symbol}`;
+    const endpoint = `http://127.0.0.1:5000`;
 
     const [assetData, setAssetData] = useState({
         "current_price": null, 
@@ -15,10 +15,12 @@ const Asset = () => {
         "opening_price": null, 
         "symbol": null, 
         "type": null });
+    
+    const [totalHoldings, setTotalHoldings] = useState(0);
 
     useEffect(() => {
         // Fetch asset data based on the symbol
-        fetch(endpoint)
+        fetch(`${endpoint}/assets/${symbol}`)
             .then(response => {
                 if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -31,7 +33,37 @@ const Asset = () => {
             .catch(error => {
                 console.log('Error fetching asset data:', error.message);
             });
-        }, [endpoint]);
+        }, []);
+
+    useEffect(() => {
+        // Fetch total holdings data
+        fetch(`${endpoint}/holdings/1`)
+            .then(response => {
+                if (response.ok && totalHoldings === 0) {
+                    return response.json();
+                }
+                if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            })
+            .then(data => {
+                if (totalHoldings === 0) {
+                    console.log('Holdings Data:', data);
+                    let noHoldings = 0;
+                    data.forEach(holding => {
+                        if (holding.symbol === symbol) {
+                            noHoldings += parseInt(holding.quantity);
+                            console.log(`Holdings for ${symbol}:`, noHoldings);
+                        }
+                    });
+                    setTotalHoldings(noHoldings);
+                }
+                console.log('Total Holdings:', totalHoldings);
+            })
+            .catch(error => {
+                console.log('Error fetching asset data:', error.message);
+            });
+        }, [symbol, endpoint]);
 
     return (
         <div className="container py-4">
@@ -43,6 +75,7 @@ const Asset = () => {
                     <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
                         {assetData.name}
                     </h6>
+                    {/* ADD A SAVE TO WATCHLIST BTN */}
                     <h2 className="fw-semibold mb-0 text-dark">{assetData.symbol}</h2>
                     </div>
                     <div className="text-end">
@@ -57,7 +90,7 @@ const Asset = () => {
             {/* Render asset data here */}
             <div className="row mt-4">
                 <div className="col-md-7 mb-4">
-                <div className="card h-100 shadow-sm">
+                <div className="card shadow-sm">
                     <div className="card-body">
                     <h6 className="card-title">Performance Chart</h6>
                     <LineChart chartData={portfolioPerformanceData} />
@@ -65,10 +98,10 @@ const Asset = () => {
                 </div>
                 </div>
                 <div className="col-md-5 mb-4">
-                <div className="card h-100 shadow-sm">
+                <div className="card shadow-sm">
                     <div className="card-body">
                     <h6 className="card-title">Trade</h6>
-                    <BuySellAsset price={assetData.current_price}/>
+                    <BuySellAsset className="card-text" asset={assetData} totalHoldings={totalHoldings}/>
                     </div>
                 </div>
                 </div>

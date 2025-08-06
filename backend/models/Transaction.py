@@ -54,6 +54,7 @@ class Transaction:
 
     @type.setter
     def type(self, value):
+        print("A")
         if not isinstance(value, TransactionType):
             raise ValueError("type must be an instance of TransactionType Enum")
         self.__type = value
@@ -92,6 +93,7 @@ class Transaction:
 
     @timestamp.setter
     def timestamp(self, value):
+        print("B")
         if not isinstance(value, datetime):
             raise ValueError("timestamp must be a datetime object")
         self.__timestamp = value
@@ -113,6 +115,7 @@ class Transaction:
     
     def to_dict(self):
         """Convert the transaction to a dictionary."""
+        print("C")
         return {
             "transaction_id": self.transaction_id,
             "portfolio_id": self.portfolio_id,
