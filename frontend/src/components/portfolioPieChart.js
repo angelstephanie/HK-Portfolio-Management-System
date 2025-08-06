@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, Spinner } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -9,9 +9,7 @@ const FILTER_OPTIONS = [
     { value: 'asset', label: 'Asset' }
 ];
 
-// Dummy fetch function, replace with actual API call
 const fetchPortfolioData = async () => {
-    // Example data structure
     return [
         { asset: 'AAPL', assetType: 'Stock', amount: 5000 },
         { asset: 'GOOGL', assetType: 'Stock', amount: 3000 },
@@ -22,7 +20,7 @@ const fetchPortfolioData = async () => {
     ];
 };
 
-const getPieChartData = (portfolio, filter) => {
+const getPieChartData = (portfolio, filter, activeIndex) => {
     const dataMap = {};
     if (filter === 'assetType') {
         portfolio.forEach(item => {
@@ -33,9 +31,19 @@ const getPieChartData = (portfolio, filter) => {
             dataMap[item.asset] = (dataMap[item.asset] || 0) + item.amount;
         });
     }
+
     const labels = Object.keys(dataMap);
     const data = Object.values(dataMap);
-    return { labels, data };
+
+    const backgroundColor = labels.map((_, index) => {
+        if (activeIndex === null || activeIndex === index) {
+            return COLORS[index % COLORS.length]; // Full color
+        } else {
+            return COLORS[index % COLORS.length] + '55'; // Dull (add alpha 0.33)
+        }
+    });
+
+    return { labels, data, backgroundColor };
 };
 
 const COLORS = [
@@ -47,38 +55,29 @@ function PortfolioPieChart() {
     const [filter, setFilter] = useState('assetType');
     const [portfolio, setPortfolio] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const chartRef = useRef(null);
 
     useEffect(() => {
-        // setLoading(true);
         fetchPortfolioData().then(data => {
             setPortfolio(data);
             setLoading(false);
         });
     }, []);
 
-    const { labels, data } = getPieChartData(portfolio, filter);
+    const { labels, data, backgroundColor } = getPieChartData(portfolio, filter, activeIndex);
 
     const chartData = {
         labels,
         datasets: [
             {
                 data,
-                backgroundColor: COLORS.slice(0, labels.length),
+                backgroundColor,
                 borderColor: '#fff',
                 borderWidth: 2
             }
         ]
     };
-
-// function getTopNLabels(num, data, labels){
-//     const topValues = [...data].sort((a, b) => b - a).slice(0, num);
-//     const selectedIndexes = data
-//     .map((value, index) => ({ value, index }))
-//     .filter(item => topValues.includes(item.value))
-//     .map(item => item.index);
-//     const selectedLabels = labels.filter((_, index) => selectedIndexes.includes(index));
-//     return selectedLabels.slice(0, num);
-// }
 
     return (
         <>
@@ -90,60 +89,63 @@ function PortfolioPieChart() {
                     ))}
                 </Form.Select>
             </Form.Group>
-            <br></br>
+            <br />
             {loading ? (
                 <div className="text-center">
                     <Spinner animation="border" variant="primary" />
                 </div>
             ) : (
                 <Pie
+                    ref={chartRef}
                     className="pie-chart-container"
                     data={chartData}
                     options={{
+                        onHover: (event, chartElement) => {
+                            if (chartElement.length > 0) {
+                                setActiveIndex(chartElement[0].index);
+                            } else {
+                                setActiveIndex(null);
+                            }
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true,
+                            duration: 800,
+                            easing: 'easeOutQuart'
+                        },
                         plugins: {
                             legend: {
-                                display: true,
                                 position: 'bottom',
-                                labels: { color: '#333', font: { size: 14 },
-                                    generateLabels: function(chart) {
-                                        const labels = chart.data.labels || [];
-                                        const dataset = chart.data.datasets[0] || {};
-                                        const backgroundColors = dataset.backgroundColor || [];
-                                        const data = dataset.data || [];
-
-                                        // Get topN indexes by value
-                                        const topN = 5;
-                                        const topIndexes = data
-                                            .map((value, index) => ({ value, index }))
-                                            .sort((a, b) => b.value - a.value)
-                                            .slice(0, topN)
-                                            .map(item => item.index);
-
-                                        // Build all legend labels manually
-                                        const allLabels = labels.map((label, index) => ({
-                                            text: label,
-                                            fillStyle: backgroundColors[index] || 'gray',
-                                            strokeStyle: '#fff',
-                                            lineWidth: 2,
-                                            hidden: false,
-                                            index: index
-                                        }));
-
-                                        // Filter to only top N indexes
-                                        return allLabels.filter(label => topIndexes.includes(label.index));
-                                        }
-                            }
+                                labels: {
+                                    color: '#333',
+                                    font: { size: 14 },
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
                             },
                             tooltip: {
+                                backgroundColor: '#ffffff',
+                                titleColor: '#333',
+                                bodyColor: '#333',
+                                borderColor: '#ccc',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8,
                                 callbacks: {
-                                    label: function(context) {
+                                    label: function (context) {
                                         const value = context.parsed;
                                         return `${context.label}: $${value.toLocaleString()}`;
                                     }
                                 }
                             }
-                        }
+                        },
+                        layout: {
+                            padding: 20
+                        },
+                        cutout: '50%',
+                        hoverOffset: 30
                     }}
+
                 />
             )}
         </>

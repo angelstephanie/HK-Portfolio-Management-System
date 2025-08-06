@@ -11,8 +11,8 @@ const TransactionsPage = () => {
   const [error, setError] = useState(null);
 
   const columns = [
-    { header: 'Portfolio ID', accessor: 'portfolio_id' },
     { header: 'Asset', accessor: 'symbol' },
+    { header: 'Name', accessor: 'name' },
     { header: 'Date', accessor: 'timestamp' },
     { header: 'Quantity', accessor: 'quantity' },
     { header: 'Price/Unit', accessor: 'price_per_unit' },
@@ -29,7 +29,15 @@ const TransactionsPage = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setTransactionsData(data);
+
+        const enrichedData = data.map(item => {
+            return {
+              ...item,  
+              quantity: item.quantity.toFixed(2),  
+            };
+          });
+          setTransactionsData(enrichedData);
+
       } catch (err) {
         setError(err.message);
       } finally {
