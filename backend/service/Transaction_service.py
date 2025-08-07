@@ -15,7 +15,8 @@ class TransactionService:
         
         current_holdings = self.holdings_repo.get_holdings_by_symbol(transaction.symbol)
         if not current_holdings:
-            raise ValueError("Holding not found for the given holding_id")
+            self.holdings_repo.add_holding(Holdings(portfolio_id=transaction.portfolio_id, symbol=transaction.symbol, quantity=0, avg_buy_price=0))
+            current_holdings = self.holdings_repo.get_holdings_by_symbol(transaction.symbol)
         
         current_quantity = current_holdings.quantity
         

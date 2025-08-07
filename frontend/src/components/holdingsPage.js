@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataTable from './dataTable';
 import DataFilterBar from './dataFilter';
-import holdingsDataJSON from '../assets/holdings.json';
 import { useNavigate } from 'react-router-dom';
 
 const HoldingsPage = () => {
