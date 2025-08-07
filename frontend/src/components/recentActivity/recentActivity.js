@@ -1,9 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
-import transactionsData from '../../assets/transactions.json';
+import { useEffect, useState } from 'react';
+import { ListGroup, Spinner, Alert } from 'react-bootstrap';
+import './style.css';
 
 const RecentActivityFeed = () => {
-    const [transactions, setTransactions] = useState(transactionsData || []);
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/transactions');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                setTransactions(data || []);
+            } catch (err) {
+                setError(err.message || 'Failed to fetch transactions.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTransactions();
+    }, []);
+
+    if (loading) {
+        return <Spinner animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner>;
+    }
+
+    if (error) {
+        return <Alert variant="danger">{error}</Alert>;
+    }
 
     return (
         <div className="recent-activity-feed">
