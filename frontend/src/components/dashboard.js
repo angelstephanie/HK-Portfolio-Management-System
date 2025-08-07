@@ -32,7 +32,7 @@ export default function PortfolioDashboard() {
         setHoldings(holdingsData);
 
         if (portfoliosData.length > 0) {
-          setSelectedPortfolioId(portfoliosData[0].id);
+          setSelectedPortfolioId(portfoliosData[0].portfolio_id);
         }
 
         setLoading(false);
@@ -91,8 +91,8 @@ export default function PortfolioDashboard() {
                     style={{ width: '250px' }}
                   >
                     {portfolios.map(p => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
+                      <option key={p.portfolio_id} value={p.portfolio_id}>
+                        {p.portfolio_id}
                       </option>
                     ))}
                   </Form.Select>
