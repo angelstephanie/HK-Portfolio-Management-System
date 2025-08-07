@@ -38,39 +38,40 @@ const RecentActivityFeed = () => {
         <div className="recent-activity-feed">
             <ListGroup variant="flush">
                 {transactions.length > 0 ? (
-                    transactions.map((transaction, index) => {
-                        // Calculate the total value manually
-                        const totalValue = (transaction.quantity * transaction.price_per_unit) + transaction.fee;
-                        
-                        // Format the timestamp into a human-readable format
-                        const transactionDate = new Date(transaction.timestamp).toLocaleDateString();
+                    [...transactions]
+                        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Newest first
+                        .slice(0, 4) // Only show the 4 most recent
+                        .map((transaction, index) => {
+                            const totalValue = (transaction.quantity * transaction.price_per_unit) + transaction.fee;
+                            const transactionDate = new Date(transaction.timestamp).toLocaleDateString();
 
-                        return (
-                            <ListGroup.Item key={index} className="transaction-item">
-                                <div className="d-flex justify-content-between">
-                                    <span className="transaction-date">{transactionDate}</span>
-                                    <span className={`transaction-type ${transaction.type === 'buy' ? 'buy' : 'sell'}`}>
-                                        {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
-                                    </span>
-                                </div>
-                                <div className="transaction-details">
-                                    <span className="asset-name">{transaction.symbol}</span>
-                                    <span className="transaction-amount">
-                                        {transaction.quantity} @ ${transaction.price_per_unit}
-                                    </span>
-                                    <div className="transaction-total">
-                                        <strong>Total Value: </strong>${totalValue}
+                            return (
+                                <ListGroup.Item key={index} className="transaction-item">
+                                    <div className="d-flex justify-content-between">
+                                        <span className="transaction-date">{transactionDate}</span>
+                                        <span className={`transaction-type ${transaction.type === 'buy' ? 'buy' : 'sell'}`}>
+                                            {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                                        </span>
                                     </div>
-                                </div>
-                            </ListGroup.Item>
-                        );
-                    })
+                                    <div className="transaction-details">
+                                        <span className="asset-name">{transaction.symbol}</span>
+                                        <span className="transaction-amount">
+                                            {transaction.quantity} @ ${transaction.price_per_unit}
+                                        </span>
+                                        <div className="transaction-total">
+                                            <strong>Total Value: </strong>${totalValue}
+                                        </div>
+                                    </div>
+                                </ListGroup.Item>
+                            );
+                        })
                 ) : (
                     <ListGroup.Item>No recent transactions.</ListGroup.Item>
                 )}
             </ListGroup>
         </div>
     );
+
 };
 
 export default RecentActivityFeed;
