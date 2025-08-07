@@ -44,9 +44,6 @@ const BuySellAsset = ({ asset, holdings }) => {
             timestamp: format(new Date(dateTime), "yyyy-MM-dd HH:mm:ss"),
         };
 
-        console.log(`Transaction Data:`, transactionData);
-        console.log(`Holdings Data:`, holdingsData);   
-
         try {
             const responseTransaction = await fetch(`${endpoint}/transactions`, {
                 method: 'POST',

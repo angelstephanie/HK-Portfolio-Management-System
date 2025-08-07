@@ -12,6 +12,7 @@ export default function PortfolioDashboard() {
   const [portfolios, setPortfolios] = useState([]);
   const [holdings, setHoldings] = useState([]);
   const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
+  const [portfolioSnaps, setPortfolioSnaps] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,6 +21,7 @@ export default function PortfolioDashboard() {
       try {
         const portfolioRes = await fetch('http://127.0.0.1:5000/portfolios');
         const holdingsRes = await fetch('http://127.0.0.1:5000/holdings');
+        const portfolioSnapsRes = await fetch('http://127.0.0.1:5000/portfolio_snaps');
 
         if (!portfolioRes.ok || !holdingsRes.ok) {
           throw new Error('Failed to fetch portfolio or holdings data.');
@@ -27,9 +29,11 @@ export default function PortfolioDashboard() {
 
         const portfoliosData = await portfolioRes.json();
         const holdingsData = await holdingsRes.json();
+        const portfolioSnapsData = await portfolioSnapsRes.json();
 
         setPortfolios(portfoliosData);
         setHoldings(holdingsData);
+        setPortfolioSnaps(portfolioSnapsData);
 
         if (portfoliosData.length > 0) {
           setSelectedPortfolioId(portfoliosData[0].portfolio_id);
@@ -44,6 +48,23 @@ export default function PortfolioDashboard() {
 
     fetchData();
   }, []);
+
+  const filteredHoldings = holdings.filter(
+    (holding) => holding.portfolio_id === selectedPortfolioId
+  );
+
+  let totalValue = 0;
+  let totalCost = 0;
+
+  filteredHoldings.forEach((holding) => {
+    const value = holding.quantity * holding.current_price;
+    const cost = holding.quantity * holding.avg_buy_price;
+    totalValue += value;
+    totalCost += cost;
+  });
+
+  const absolutePL = totalValue - totalCost;
+  const percentagePL = totalCost !== 0 ? (absolutePL / totalCost) * 100 : 0;
 
   const handlePortfolioChange = (e) => {
     setSelectedPortfolioId(Number(e.target.value));
@@ -69,7 +90,10 @@ export default function PortfolioDashboard() {
                       Total Portfolio Value
                     </h6>
                     <h2 className="fw-semibold mb-0 text-dark">
-                      18000000
+                      {totalValue.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                      })}
                     </h2>
                   </div>
 
@@ -77,9 +101,16 @@ export default function PortfolioDashboard() {
                     <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
                       P&L
                     </h6>
-                    <h5 className={`mb-0 ${20 >= 0 ? 'text-success' : 'text-danger'}`}>
-                      {20 >= 0 ? '+' : ''}
-                      20%
+                    <h5 className={`mb-0 ${percentagePL >= 0 ? 'text-success' : 'text-danger'}`}>
+                      {percentagePL >= 0 ? '+' : ''}
+                      {percentagePL.toFixed(2)}%
+                      &nbsp;(
+                      {absolutePL >= 0 ? '+' : ''}
+                      {absolutePL.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                      )
                     </h5>
                   </div>
                 </div>
@@ -121,8 +152,8 @@ export default function PortfolioDashboard() {
         <div className="col-md-6 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Performance Chart</h5>
-              <PerformanceChart />
+              <h5 className="card-title">Performance Chart (in %)</h5>
+              <PerformanceChart portfolioSnaps={portfolioSnaps} />
             </div>
           </div>
         </div>

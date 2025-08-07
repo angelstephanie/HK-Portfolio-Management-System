@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -38,30 +38,107 @@ plugins: {
 // Timeline options
 const timeOptions = ['5D', '1M', '3M', '1Y', 'Max'];
 
-const PerformanceChart = () => {
-    const [selectedTime, setSelectedTime] = useState('1Y');
+// Helper to format DD/MM
+const formatDayMonth = (dateStr) => {
+    const date = new Date(dateStr);
+    return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`;
+};
 
-    // Filter data based on the selected time range
-    const filteredData = portfolioPerformanceData.slice(
-        selectedTime === '5D' ? -5 :
-        selectedTime === '1M' ? -30 :
-        selectedTime === '3M' ? -90 :
-        selectedTime === '1Y' ? -365 : 0
+const getFilteredData = (selectedTime, portfolioSnaps) => {
+    if (selectedTime === '5D') return portfolioSnaps.slice(-5);
+    if (selectedTime === '1M') return portfolioSnaps.slice(-30);
+    if (selectedTime === '3M') return portfolioSnaps.slice(-90);
+    if (selectedTime === '1Y') return portfolioSnaps.slice(-365);
+    if (selectedTime === 'Max') return portfolioSnaps;
+    return portfolioSnaps;
+};
+
+const PerformanceChart = ({portfolioSnaps}) => {
+    
+    const [selectedTime, setSelectedTime] = useState('5D');
+   
+    const filteredData = useMemo(
+        () => getFilteredData(selectedTime, portfolioSnaps),
+        [selectedTime, portfolioSnaps]
     );
 
-    const labels = filteredData.map(entry => entry.date);
+    // Neat, non-overlapping labels formatting
+    const labels = useMemo(() => {
+        const arrLen = filteredData.length;
+        // For 5D: show day/month for first, last, and every 10th
+        if (selectedTime === '5D') {
+            return filteredData.map((entry, i) => formatDayMonth(entry.snapshot_date));
+        }
+        // For >= 1M: show DD/MM for first, last, and every Nth to reduce clutter
+        let interval = 7; // default every 7th for 1M, 3M
+        if (selectedTime === '1Y') interval = 31;
+        if (selectedTime === 'Max') interval = Math.ceil(arrLen / 12); // max 12 labels for Max
+
+        return filteredData.map((entry, i) =>
+            (i === 0 || i % interval === 0)
+                ? formatDayMonth(entry.snapshot_date)
+                : ''
+        );
+    }, [filteredData, selectedTime]);
+
     const data = {
         labels,
         datasets: [
             {
                 label: 'Total Asset Value',
-                data: filteredData.map(entry => entry.totalAssetValue),
+                data: filteredData.map(entry => (entry.cash_value - entry.invested_value)/entry.invested_value * 100),
                 borderColor: '#3E5EBD',
                 backgroundColor: 'rgba(83, 120, 199, 0.2)',
                 radius: 0
             },
         ],
     };
+
+    // Chart options with dynamic ticks and reduced overlapping
+    const options = useMemo(() => ({
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    callback: function(value, index) {
+                        return labels[index] || '';
+                    },
+                    color: '#666',
+                    font: {
+                        size: 10,
+                        weight: 'bold'
+                    },
+                    maxRotation: 0,
+                    minRotation: 0,
+                },
+                grid: {
+                    display: false,
+                    drawBorder: false
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#666',
+                    font: {
+                        size: 11,
+                    }
+                },
+                grid: {
+                    color: '#eee'
+                }
+            }
+        }
+    }), [labels]);
 
     return (
         <div className="performance-chart">
