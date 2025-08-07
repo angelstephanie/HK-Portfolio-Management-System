@@ -220,6 +220,6 @@ class TestHoldingsService(unittest.TestCase):
             self.holdings_service.delete_holding()
             
     def test_delete_holding_non_int(self):
-        """Test the update holding service method, when holding_id is not of Int type."""
+        """Test the delete holding service method, when holding_id is not of Int type."""
         with self.assertRaises(TypeError):
             self.holdings_service.delete_holding("1")
