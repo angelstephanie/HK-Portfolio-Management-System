@@ -4,29 +4,44 @@ import LineChart from '../performance-chart/lineChart';
 import BuySellAsset from './BuySellAsset';
 
 const Asset = () => {
-    const {symbol} = useParams();
+    const { symbol } = useParams();
     const endpoint = `http://127.0.0.1:5000`;
 
     const [assetData, setAssetData] = useState({
-        "current_price": null, 
-        "last_updated": null, 
-        "name": null, 
-        "opening_price": null, 
-        "symbol": null, 
-        "type": null
+        current_price: null,
+        last_updated: null,
+        name: null,
+        opening_price: null,
+        symbol: null,
+        type: null,
     });
-    
+
     const [holdings, setHoldings] = useState({
-        "holding_id": null, 
-        "totalHoldings": 0
+        holding_id: null,
+        totalHoldings: 0,
     });
 
     const [hourlyPrice, setHourlyPrice] = useState([]);
     const [dailyPrice, setDailyPrice] = useState([]);
+    const [saved, setSaved] = useState(false);
+
+    const [loading, setLoading] = useState({
+        asset: true,
+        holdings: true,
+        prices: true,
+        watchlist: true,
+    });
+
+    const [error, setError] = useState({
+        asset: null,
+        holdings: null,
+        prices: null,
+        watchlist: null,
+    });
+
     const threeYearsAgo = useMemo(() => {
-        const today = new Date();
         const date = new Date();
-        date.setFullYear(today.getFullYear() - 3);
+        date.setFullYear(date.getFullYear() - 3);
         return date;
     }, []);
 
@@ -37,184 +52,173 @@ const Asset = () => {
         return `${year}-${month}-${day}`;
     };
 
-    const [saved, setSaved] = useState(false);
-
-    // Fetch asset data based on the symbol
     useEffect(() => {
+        setLoading(prev => ({ ...prev, asset: true }));
         fetch(`${endpoint}/assets/${symbol}`)
             .then(response => {
-                if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return response.json();
             })
             .then(data => {
                 setAssetData(data);
+                setError(prev => ({ ...prev, asset: null }));
             })
-            .catch(error => {
-                console.log('Error fetching asset data:', error.message);
+            .catch(err => {
+                setError(prev => ({ ...prev, asset: err.message }));
+            })
+            .finally(() => {
+                setLoading(prev => ({ ...prev, asset: false }));
             });
-        }, [symbol, endpoint]);
+    }, [symbol, endpoint]);
 
-    // Fetch total holdings data
     useEffect(() => {
+        setLoading(prev => ({ ...prev, holdings: true }));
         fetch(`${endpoint}/holdings/1`)
             .then(response => {
-                if (response.ok && holdings.totalHoldings === 0) {
-                    return response.json();
-                }
-                if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
             })
             .then(data => {
-                if (holdings.totalHoldings === 0) {
-                    data.forEach(holding => {
-                        if (holding.symbol === symbol) {
-                            setHoldings({
-                                holding_id: holding.holding_id,
-                                totalHoldings: parseInt(holding.quantity)
-                            });
-                        }
+                const found = data.find(h => h.symbol === symbol);
+                if (found) {
+                    setHoldings({
+                        holding_id: found.holding_id,
+                        totalHoldings: parseInt(found.quantity),
                     });
                 }
+                setError(prev => ({ ...prev, holdings: null }));
             })
-            .catch(error => {
-                console.log('Error fetching asset data:', error.message);
+            .catch(err => {
+                setError(prev => ({ ...prev, holdings: err.message }));
+            })
+            .finally(() => {
+                setLoading(prev => ({ ...prev, holdings: false }));
             });
-        }, [symbol, endpoint, holdings]);
+    }, [symbol, endpoint]);
 
-    // Fetch asset price for linechart
     useEffect(() => {
-        fetch(`${endpoint}/assets/${symbol}/historicprice/5`)
-        .then(response => response.json())
-        .then(data => { 
-            const priceData = [];
-            Object.entries(data).forEach(([key, value]) => {
-                priceData.push({
-                    date: key,
-                    price: value
-                });
-            });
-            setHourlyPrice(priceData);
+        setLoading(prev => ({ ...prev, prices: true }));
+        Promise.all([
+            fetch(`${endpoint}/assets/${symbol}/historicprice/5`).then(res => res.json()),
+            fetch(`${endpoint}/assets/${symbol}/historicprice/${formatDate(threeYearsAgo)}`).then(res => res.json())
+        ])
+        .then(([hourData, dayData]) => {
+            const formatPriceData = (data) => Object.entries(data).map(([key, val]) => ({ date: key, price: val }));
+            setHourlyPrice(formatPriceData(hourData));
+            setDailyPrice(formatPriceData(dayData));
+            setError(prev => ({ ...prev, prices: null }));
         })
-        .catch(error => {
-            console.log('Error fetching hourly price data:', error.message);
-        });
-
-        fetch(`${endpoint}/assets/${symbol}/historicprice/${formatDate(threeYearsAgo)}`)
-        .then(response => response.json())
-        .then(data => {
-            const priceData = [];
-            Object.entries(data).forEach(([key, value]) => {
-                priceData.push({
-                    date: key,
-                    price: value
-                });
-            });
-            setDailyPrice(priceData);
+        .catch(err => {
+            setError(prev => ({ ...prev, prices: err.message }));
         })
-        .catch(error => {
-            console.log('Error fetching daily price data:', error.message);
+        .finally(() => {
+            setLoading(prev => ({ ...prev, prices: false }));
         });
     }, [endpoint, symbol, threeYearsAgo]);
 
-
-    // Check if the asset is already saved in bookmarks
     useEffect(() => {
+        setLoading(prev => ({ ...prev, watchlist: true }));
         fetch(`${endpoint}/watchlist`)
             .then(response => response.json())
             .then(data => {
                 const isSaved = data.some(bookmark => bookmark.symbol === symbol);
                 setSaved(isSaved);
+                setError(prev => ({ ...prev, watchlist: null }));
             })
-            .catch(error => {
-                console.log('Error fetching bookmarks:', error.message);
+            .catch(err => {
+                setError(prev => ({ ...prev, watchlist: err.message }));
+            })
+            .finally(() => {
+                setLoading(prev => ({ ...prev, watchlist: false }));
             });
     }, [endpoint, symbol]);
 
-    
     const handleSaveToWatchlist = () => {
-        if (saved) {
-            //Remove from watchlist
-            fetch(`${endpoint}/watchlist/${symbol}`, {
-                method: 'DELETE',
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-            })
-        } else {
-            //Add to watchlist
-            fetch(`${endpoint}/watchlist`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({symbol: symbol}),
-            }).then(response => {
-                if (!response.ok) { 
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-            })
-        }
-        setSaved(!saved);
-    }
-    
+        const method = saved ? 'DELETE' : 'POST';
+        const url = saved ? `${endpoint}/watchlist/${symbol}` : `${endpoint}/watchlist`;
+        const body = saved ? null : JSON.stringify({ symbol });
+
+        fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body,
+        })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            setSaved(!saved);
+        })
+        .catch(err => {
+            alert(`Error updating watchlist: ${err.message}`);
+        });
+    };
+
     return (
         <div className="container py-4">
             {/* Header */}
             <div className="row mb-4">
                 <div className="col-12">
-                <div className="d-flex justify-content-between align-items-center bg-white">
-                    <div>
-                    <h6 className="text-uppercase text-muted mb-1" style={{width: 'max-content', letterSpacing: '1px' }}>
-                        {assetData.name}
-                    </h6>
-                    <h2 className="fw-semibold mb-0 text-dark">{assetData.symbol}</h2>
-                    </div>
-                    <div className='container d-flex justify-content-end align-items-center' style={{paddingRight: '0'}}>
-                        <div className="text-end">
-                            <h3 className={`text-uppercase ${assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'} mb-1`} style={{ letterSpacing: '1px' }}>
-                                US$ {assetData.current_price}
-                            </h3>
-                            <h6 className={`mb-0 ${assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'}`}> {assetData.opening_price !== 0 ? (((assetData.current_price - assetData.opening_price)/assetData.opening_price) * 100).toFixed(2) : 0}%</h6>
-                        </div>
+                    <div className="d-flex justify-content-between align-items-center bg-white">
                         <div>
-                            {/* ADD A SAVE TO WATCHLIST BTN */}
-                            <button onClick={handleSaveToWatchlist} style={{ background: 'none', border: 'none', cursor: 'pointer', marginRight: '0'}}>
-                                <img src={saved ? require("../../assets/icons/solid_bookmark.svg").default : require("../../assets/icons/regular_bookmark.svg").default} alt="Watchlist Icon" className="ms-2" style={{width: '2.5em'}}/>
+                            <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
+                                {loading.asset ? "Loading..." : assetData.name}
+                            </h6>
+                            <h2 className="fw-semibold mb-0 text-dark">{assetData.symbol}</h2>
+                        </div>
+                        <div className="d-flex align-items-center">
+                            <div className="text-end me-2">
+                                <h3 className={`text-uppercase ${assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'} mb-1`}>
+                                    {loading.asset ? "..." : `US$ ${assetData.current_price}`}
+                                </h3>
+                                <h6 className={assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'}>
+                                    {loading.asset ? "" :
+                                        `${assetData.opening_price !== 0 ? (((assetData.current_price - assetData.opening_price)/assetData.opening_price) * 100).toFixed(2) : 0}%`}
+                                </h6>
+                            </div>
+                            <button onClick={handleSaveToWatchlist} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                                <img
+                                    src={saved ? require("../../assets/icons/solid_bookmark.svg").default : require("../../assets/icons/regular_bookmark.svg").default}
+                                    alt="Watchlist Icon"
+                                    style={{ width: '2.5em' }}
+                                />
                             </button>
                         </div>
                     </div>
-                </div>
+                    {error.asset && <p className="text-danger mt-2">Error loading asset: {error.asset}</p>}
                 </div>
             </div>
-            {/* Render asset data here */}
+
+            {/* Main content */}
             <div className="row mt-4">
                 <div className="col-md-7 mb-4">
-                <div className="card shadow-sm">
-                    <div className="card-body">
-                    <h6 className="card-title">Performance Chart</h6>
-                    {(hourlyPrice.length === 0 || dailyPrice.length === 0)
-                        ? <p className="card-text">Loading chart data...</p>
-                        : <LineChart hourlyData={hourlyPrice} dailyData={dailyPrice} timeSelection={true}/>
-                    }
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h6 className="card-title">Performance Chart</h6>
+                            {loading.prices
+                                ? <p className="text-muted">Loading chart data...</p>
+                                : error.prices
+                                    ? <p className="text-danger">Error loading chart: {error.prices}</p>
+                                    : <LineChart hourlyData={hourlyPrice} dailyData={dailyPrice} timeSelection={true} />
+                            }
+                        </div>
                     </div>
                 </div>
-                </div>
+
                 <div className="col-md-5 mb-4">
-                <div className="card shadow-sm">
-                    <div className="card-body">
-                    <h6 className="card-title">Trade</h6>
-                    <BuySellAsset className="card-text" asset={assetData} holdings={holdings}/>
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h6 className="card-title">Trade</h6>
+                            {loading.holdings
+                                ? <p className="text-muted">Loading holdings...</p>
+                                : error.holdings
+                                    ? <p className="text-danger">Error loading holdings: {error.holdings}</p>
+                                    : <BuySellAsset className="card-text" asset={assetData} holdings={holdings} />
+                            }
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Asset;
