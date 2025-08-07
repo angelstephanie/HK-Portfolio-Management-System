@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -40,17 +40,12 @@ const COLORS = [
     '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab'
 ];
 
-function PortfolioPieChart({portfolioId, holdings}) {
+function PortfolioPieChart({holdings}) {
     const [filter, setFilter] = useState('type');
-    const [portfolioHoldings, setPortfolioHoldings] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
     const chartRef = useRef(null);
 
-    useEffect(() => {
-        setPortfolioHoldings(holdings.filter(h => h.portfolio_id === portfolioId));
-    }, [portfolioId, holdings]);
-
-    const { labels, data, backgroundColor } = getPieChartData(portfolioHoldings, filter, activeIndex);
+    const { labels, data, backgroundColor } = getPieChartData(holdings, filter, activeIndex);
     
     const chartData = {
         labels,
@@ -75,7 +70,7 @@ function PortfolioPieChart({portfolioId, holdings}) {
                 </Form.Select>
             </Form.Group>
 
-            {portfolioHoldings.length === 0 ? (
+            {holdings.length === 0 ? (
                 <p className="text-center text-muted">No holdings for this portfolio.</p>
             ) : (
                 <Pie
