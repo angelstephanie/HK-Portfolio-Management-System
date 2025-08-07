@@ -50,6 +50,12 @@ CREATE TABLE IF NOT EXISTS PortfolioSnaps (
                     PRIMARY KEY (portfolio_id, snapshot_date)
                 );
 
+CREATE TABLE IF NOT EXISTS Watchlists (
+                    symbol VARCHAR(20) NOT NULL,
+                    FOREIGN KEY (symbol) REFERENCES Assets(symbol),
+                    PRIMARY KEY (symbol)
+                );
+                
 INSERT INTO Portfolios (name, description)
                 VALUES ('Default', "This is the default portfolio");
 INSERT INTO Holdings (portfolio_id, symbol, quantity, avg_buy_price)
