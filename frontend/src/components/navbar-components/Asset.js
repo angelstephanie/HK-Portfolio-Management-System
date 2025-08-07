@@ -176,10 +176,10 @@ const Asset = () => {
                     </div>
                     <div className='container d-flex justify-content-end align-items-center' style={{paddingRight: '0'}}>
                         <div className="text-end">
-                            <h3 className="text-uppercase text-success mb-1" style={{ letterSpacing: '1px' }}>
+                            <h3 className={`text-uppercase ${assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'} mb-1`} style={{ letterSpacing: '1px' }}>
                                 US$ {assetData.current_price}
                             </h3>
-                            <h6 className="mb-0 text-success">+4.2%</h6>
+                            <h6 className={`mb-0 ${assetData.current_price >= assetData.opening_price ? 'text-success' : 'text-danger'}`}> {assetData.opening_price !== 0 ? (((assetData.current_price - assetData.opening_price)/assetData.opening_price) * 100).toFixed(2) : 0}%</h6>
                         </div>
                         <div>
                             {/* ADD A SAVE TO WATCHLIST BTN */}

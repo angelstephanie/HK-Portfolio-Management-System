@@ -38,7 +38,7 @@ const TopMovers = ({holdings}) => {
   useEffect(() => {
     if (Array.isArray(holdings) && holdings.length > 0) {
       const enrichedData = holdings.map(item => {
-      const price_change_percentage = (item.current_price - item.opening_price) * item.quantity;
+      const price_change_percentage = item.opening_price !== 0 ? ((item.current_price - item.opening_price)/item.opening_price) * 100: 0;
         return {
           ...item,
           price_change_percentage: price_change_percentage.toFixed(2),
@@ -132,8 +132,8 @@ const TopMovers = ({holdings}) => {
             <div>
               <strong>{item.symbol}</strong>
               <div className="text-muted small">{item.name}</div>
-            </div>
-            <div className={`fw-medium ${item.price_change_percentage >= 0 ? 'text-success' : 'text-danger'}`}>
+            </div>${item.price_change_percentage >= 0 ? 'text-success' : 'text-danger'}
+            <div className={`fw-medium `}>
               {item.price_change_percentage >= 0 ? '+' : ''}
               {item.price_change_percentage}%
             </div>
