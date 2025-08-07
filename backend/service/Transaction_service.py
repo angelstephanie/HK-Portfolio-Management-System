@@ -19,10 +19,13 @@ class TransactionService:
             current_holdings = self.holdings_repo.get_holdings_by_symbol(transaction.symbol)
         
         current_quantity = current_holdings.quantity
-        
+                
         if transaction.type is TransactionType.BUY:
             updated_quantity = current_quantity + transaction.quantity
-            updated_holding = Holdings(portfolio_id = current_holdings.portfolio_id, symbol= current_holdings.symbol, quantity=updated_quantity, avg_buy_price=transaction.price_per_unit, holding_id=current_holdings.holding_id)
+            current_total_price = current_holdings.avg_buy_price * current_quantity + transaction.price_per_unit * transaction.quantity
+
+            buy_updated_avg_buy_price = current_total_price / updated_quantity
+            updated_holding = Holdings(portfolio_id = current_holdings.portfolio_id, symbol= current_holdings.symbol, quantity=updated_quantity, avg_buy_price=buy_updated_avg_buy_price, holding_id=current_holdings.holding_id)
             self.holdings_repo.update_holding(updated_holding)
             
         elif transaction.type is TransactionType.SELL:
@@ -30,11 +33,13 @@ class TransactionService:
                 raise ValueError("Insufficient quantity to sell")
             
             updated_quantity = current_quantity - transaction.quantity
+            current_total_price = current_holdings.avg_buy_price * current_quantity - transaction.price_per_unit * transaction.quantity
+            sell_updated_avg_buy_price = current_total_price / updated_quantity
             
             if updated_quantity == 0:
                 self.holdings_repo.delete_holding(current_holdings.holding_id)
             else:
-                updated_holding = Holdings(portfolio_id = current_holdings.portfolio_id, symbol= current_holdings.symbol, quantity=updated_quantity, avg_buy_price=transaction.price_per_unit, holding_id=current_holdings.holding_id)
+                updated_holding = Holdings(portfolio_id = current_holdings.portfolio_id, symbol= current_holdings.symbol, quantity=updated_quantity, avg_buy_price=sell_updated_avg_buy_price, holding_id=current_holdings.holding_id)
                 self.holdings_repo.update_holding(updated_holding)
             
         return self.transaction_repo.add_transaction(transaction)

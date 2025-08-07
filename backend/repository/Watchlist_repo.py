@@ -30,6 +30,7 @@ class Watchlist_repo:
         """Retrieve all assets in the watchlist."""
         try:
             cursor = self.connection.cursor()
+            self.connection.commit()
             cursor.execute("SELECT * FROM Watchlist LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()

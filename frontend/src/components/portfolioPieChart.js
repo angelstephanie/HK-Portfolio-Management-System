@@ -112,7 +112,9 @@ function PortfolioPieChart({holdings}) {
                                 callbacks: {
                                     label: function (context) {
                                         const value = context.parsed;
-                                        return `${context.label}: $${value.toLocaleString()}`;
+                                        const total = context.chart._metasets[context.datasetIndex].total;
+                                        const percentage = ((value/total)*100).toFixed(2);
+                                        return `${context.label}: $${value.toLocaleString()} (${percentage}%)`; 
                                     }
                                 }
                             }

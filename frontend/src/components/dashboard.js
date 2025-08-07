@@ -12,6 +12,7 @@ export default function PortfolioDashboard() {
   const [portfolios, setPortfolios] = useState([]);
   const [holdings, setHoldings] = useState([]);
   const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
+  const [portfolioSnaps, setPortfolioSnaps] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,6 +21,7 @@ export default function PortfolioDashboard() {
       try {
         const portfolioRes = await fetch('http://127.0.0.1:5000/portfolios');
         const holdingsRes = await fetch('http://127.0.0.1:5000/holdings');
+        const portfolioSnapsRes = await fetch('http://127.0.0.1:5000/portfolio_snaps');
 
         if (!portfolioRes.ok || !holdingsRes.ok) {
           throw new Error('Failed to fetch portfolio or holdings data.');
@@ -27,9 +29,11 @@ export default function PortfolioDashboard() {
 
         const portfoliosData = await portfolioRes.json();
         const holdingsData = await holdingsRes.json();
+        const portfolioSnapsData = await portfolioSnapsRes.json();
 
         setPortfolios(portfoliosData);
         setHoldings(holdingsData);
+        setPortfolioSnaps(portfolioSnapsData);
 
         if (portfoliosData.length > 0) {
           setSelectedPortfolioId(portfoliosData[0].portfolio_id);
@@ -147,8 +151,8 @@ export default function PortfolioDashboard() {
         <div className="col-md-6 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Performance Chart</h5>
-              <PerformanceChart />
+              <h5 className="card-title">Performance Chart (in %)</h5>
+              <PerformanceChart portfolioSnaps={portfolioSnaps} />
             </div>
           </div>
         </div>

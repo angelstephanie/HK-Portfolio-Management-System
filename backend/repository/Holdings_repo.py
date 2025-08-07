@@ -145,6 +145,7 @@ class Holdings_repo:
         """Retrieve all holdings from the database."""
         try:
             cursor = self.connection.cursor()
+            self.connection.commit()
             cursor.execute("SELECT * FROM Holdings LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()
@@ -163,7 +164,6 @@ class Holdings_repo:
                 holding_dict['opening_price'] = row[8]
                 holding_dict['last_updated'] = row[9]
                 holdings_list.append(holding_dict)
-                
             print(f"✅ Retrieved {len(holdings_list)} Holdings")
             return holdings_list
         except Exception as e:

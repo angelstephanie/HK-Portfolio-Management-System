@@ -79,8 +79,6 @@ const LineChart = ({ hourlyData, dailyData, timeSelection }) => {
         );
     }, [filteredData, selectedTime]);
 
-    console.log("Labels: ", labels);
-
     const data = {
         labels,
         datasets: [
