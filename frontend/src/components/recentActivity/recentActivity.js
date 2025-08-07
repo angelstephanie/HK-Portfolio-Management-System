@@ -7,7 +7,7 @@ const RecentActivityFeed = () => {
 
     return (
         <div className="recent-activity-feed">
-            <ListGroup variant="flush">git
+            <ListGroup variant="flush">
                 {transactions.length > 0 ? (
                     transactions.map((transaction, index) => {
                         // Calculate the total value manually
