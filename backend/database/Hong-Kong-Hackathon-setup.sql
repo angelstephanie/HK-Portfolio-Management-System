@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Assets(
 CREATE TABLE IF NOT EXISTS Holdings (
                     holding_id INT AUTO_INCREMENT PRIMARY KEY,
                     portfolio_id INT NOT NULL,
-                    symbol VARCHAR(20) NOT NULL,
+                    symbol VARCHAR(20) NOT NULL UNIQUE,
                     quantity DECIMAL(15, 6) NOT NULL, 
                     avg_buy_price DECIMAL(15, 2) NOT NULL,
                     FOREIGN KEY (portfolio_id) REFERENCES Portfolios(portfolio_id),

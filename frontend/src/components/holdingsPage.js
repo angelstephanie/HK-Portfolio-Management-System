@@ -3,18 +3,32 @@ import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataTable from './dataTable';
 import DataFilterBar from './dataFilter';
 import holdingsDataJSON from '../assets/holdings.json';
+import { useNavigate } from 'react-router-dom';
 
 const HoldingsPage = () => {
+
+  const navigate = useNavigate();
+
+  const handleRowClick = (row) => {
+  if (row.symbol) {
+    navigate(`/asset/${row.symbol}`);
+  }
+  };
+
   const [filterInput, setFilterInput] = useState('');
-  const [holdingsData, setTransactionsData] = useState([]);
+  const [holdingsData, setHoldingsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const columns = [
-    { header: 'Portfolio ID', accessor: 'portfolio_id' },
     { header: 'Asset', accessor: 'symbol' },
+    { header: 'Name', accessor: 'name' },
+    { header: 'Asset Type', accessor: 'type' },
     { header: 'Quantity', accessor: 'quantity' },
     { header: 'Avg Buy Price', accessor: 'avg_buy_price' },
+    { header: 'Current Price', accessor: 'current_price' },
+    { header: 'P&L (Absolute)', accessor: 'pl_absolute' },
+    { header: 'P&L (%)', accessor: 'pl_percentage' },
   ];
 
   useEffect(() => {
@@ -25,7 +39,20 @@ const HoldingsPage = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data = await response.json();
-          setTransactionsData(data);
+
+          const enrichedData = data.map(item => {
+            const absolutePL = (item.current_price - item.avg_buy_price) * item.quantity;
+            const percentagePL = item.avg_buy_price !== 0 
+              ? ((item.current_price - item.avg_buy_price) / item.avg_buy_price) * 100 
+              : 0;
+            return {
+              ...item,
+              quantity: parseInt(item.quantity).toFixed(2),  
+              pl_absolute: absolutePL.toFixed(2),  
+              pl_percentage: `${percentagePL.toFixed(2)}%`
+            };
+          });
+          setHoldingsData(enrichedData);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -57,7 +84,7 @@ const HoldingsPage = () => {
           {!loading && !error && (
             <>
               <DataFilterBar filterInput={filterInput} setFilterInput={setFilterInput} />
-              <DataTable columns={columns} data={holdingsData} globalFilter={filterInput} />
+              <DataTable columns={columns} data={holdingsData} globalFilter={filterInput} onRowClick={handleRowClick} />
             </>
           )}
         </Card.Body>

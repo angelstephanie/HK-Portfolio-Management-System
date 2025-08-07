@@ -12,7 +12,7 @@
   },
   {
     "transaction_id": 4,
-    "portfolio_id": 101,
+    "portfolio_id": 102,
     "symbol": "AMZN",
     "type": "buy",
     "quantity": 3,
@@ -23,7 +23,7 @@
   },
   {
     "transaction_id": 5,
-    "portfolio_id": 101,
+    "portfolio_id": 103,
     "symbol": "ETH",
     "type": "buy",
     "quantity": 2,

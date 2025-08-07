@@ -1,3 +1,5 @@
 .pie-chart-container {
-  max-height: 500px;;
+  width: 100%;    
+  margin: 0 auto;
+  max-width: 500px; /* optional max width */
 }

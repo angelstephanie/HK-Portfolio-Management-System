@@ -11,6 +11,9 @@ class HoldingsService:
         if not isinstance(holding, Holdings):
             raise TypeError("Holding must be a Holdings object")
         
+        if self.holdings_repo.get_holdings_by_symbol(holding.symbol):
+            raise ValueError("Holding with this symbol already exists in the portfolio")
+        
         return self.holdings_repo.add_holding(holding)
     
     def get_holdings_by_id(self, portfolio_id: int):

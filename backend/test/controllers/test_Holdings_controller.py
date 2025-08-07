@@ -21,9 +21,9 @@ class TestHoldingsController(unittest.TestCase):
         self.assertIsInstance(response.json, list)
         
     @patch('backend.service.Holdings_service.HoldingsService.get_all_holdings')
-    def test_get_all_holdings_none(self, mock_get_all_holdings_none):
+    def test_get_all_holdings_none(self, mock_get_all_holdings):
         """Test the get all holdings endpoint."""
-        mock_get_all_holdings_none.return_value = None
+        mock_get_all_holdings.return_value = None
         response = self.app.test_client().get('/holdings')
         self.assertEqual(response.status_code, 500)
         
@@ -36,17 +36,17 @@ class TestHoldingsController(unittest.TestCase):
         self.assertTrue(all(holding['portfolio_id'] == 1 for holding in response.json))
         
     @patch('backend.service.Holdings_service.HoldingsService.get_holdings_by_id')
-    def test_get_holdings_by_id_none(self, mock_get_holdings_by_id_none):
+    def test_get_holdings_by_id_none(self, mock_get_holdings_by_id):
         """Test the get holdings by id endpoint."""
-        mock_get_holdings_by_id_none.return_value = None
+        mock_get_holdings_by_id.return_value = None
         response = self.app.test_client().get('/holdings/1')
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json['message'], 'Portfolio not found')
     
     @patch('backend.service.Holdings_service.HoldingsService.get_holdings_by_id')
-    def test_get_holdings_by_id_exception(self, mock_get_holdings_by_id_exception):
+    def test_get_holdings_by_id_exception(self, mock_get_holdings_by_id):
         """Test the get holdings by id endpoint."""
-        mock_get_holdings_by_id_exception.side_effect = Exception('Mocked exception')
+        mock_get_holdings_by_id.side_effect = Exception('Mocked exception')
         response = self.app.test_client().get('/holdings/1')
         self.assertEqual(response.status_code, 500)
         
@@ -59,17 +59,17 @@ class TestHoldingsController(unittest.TestCase):
         self.assertEqual(response.json['message'], 'Holding added successfully')
         
     @patch('backend.service.Holdings_service.HoldingsService.add_holding')
-    def test_add_holding_none(self, mock_add_holding_none):
+    def test_add_holding_none(self, mock_add_holding):
         """Test the add holding endpoint."""
-        mock_add_holding_none.return_value = None
+        mock_add_holding.return_value = None
         response = self.app.test_client().post('/holdings', json={'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json['message'], 'Holding not found')
         
     @patch('backend.service.Holdings_service.HoldingsService.add_holding')
-    def test_add_holding_exception(self, mock_add_holding_exception):
+    def test_add_holding_exception(self, mock_add_holding):
         """Test the add holding endpoint."""
-        mock_add_holding_exception.side_effect = Exception('Mocked exception')
+        mock_add_holding.side_effect = Exception('Mocked exception')
         response = self.app.test_client().post('/holdings',json={'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})
         self.assertEqual(response.status_code, 500)
         
@@ -82,16 +82,16 @@ class TestHoldingsController(unittest.TestCase):
         self.assertEqual(response.json['message'], 'Holding updated successfully')
     
     @patch('backend.service.Holdings_service.HoldingsService.update_holding')
-    def test_update_holding_none(self, mock_update_holding_none):
+    def test_update_holding_none(self, mock_update_holding):
         """Test the update holding endpoint."""
-        mock_update_holding_none.return_value = None
+        mock_update_holding.return_value = None
         response = self.app.test_client().put('/holdings', json={'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json['message'], 'Holding not found')
         
     @patch('backend.service.Holdings_service.HoldingsService.update_holding')
-    def test_update_holding_exception(self, mock_update_holding_exception):
+    def test_update_holding_exception(self, mock_update_holding):
         """Test the update holding endpoint."""
-        mock_update_holding_exception.side_effect = Exception('Mocked exception')
+        mock_update_holding.side_effect = Exception('Mocked exception')
         response = self.app.test_client().put('/holdings', json={'holding_id': 1, 'portfolio_id': 1, 'symbol': 'AAPL', 'quantity': 10, 'avg_buy_price': 150.0})
         self.assertEqual(response.status_code, 500)

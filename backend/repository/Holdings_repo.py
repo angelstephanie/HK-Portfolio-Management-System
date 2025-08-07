@@ -115,6 +115,31 @@ class Holdings_repo:
             print(f"❌ Error retrieving Holding: {e}")
             return None
         
+    def get_holdings_by_symbol(self, symbol: str) -> Holdings:
+        """Retrieve holdings by symbol."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Holdings WHERE symbol = %s", (symbol,))
+            row = cursor.fetchone()
+            cursor.close()
+            
+            if row:
+                holding = Holdings(
+                    holding_id=row[0],
+                    portfolio_id=row[1],
+                    symbol=row[2],
+                    quantity=row[3],
+                    avg_buy_price=row[4]
+                )
+                print(f"✅ Retrieved Holding: {holding}")
+                return holding
+            else:
+                print(f"❌ No Holding found with symbol {symbol}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving Holding: {e}")
+            return None
+        
 
     def get_all_holdings(self):
         """Retrieve all holdings from the database."""
