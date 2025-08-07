@@ -57,25 +57,6 @@ const BuySellAsset = ({ asset, holdings }) => {
             if (!responseTransaction.ok) {
                 throw new Error(`Error: ${responseTransaction.statusText}`);
             }
-
-            try {
-                // Check ig we sell or buy assets
-                const responseHoldings = await fetch(`${endpoint}/holdings`, {
-                    method: holdings.totalHoldings > 0 ? 'PUT' : 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(holdingsData),
-                });
-    
-                if (!responseHoldings.ok) {
-                    throw new Error(`Error: ${responseHoldings.statusText}`);
-                }
-    
-                const result = await responseHoldings.json();
-                alert('Transaction submitted successfully:', result);
-                navigate('/holdings')
-            } catch (error) {
-                alert('Failed to submit transaction:', error);
-            }
         } catch (error) {
             alert('Failed to submit transaction:', error);
         }
