@@ -132,8 +132,8 @@ const TopMovers = ({holdings}) => {
             <div>
               <strong>{item.symbol}</strong>
               <div className="text-muted small">{item.name}</div>
-            </div>${item.price_change_percentage >= 0 ? 'text-success' : 'text-danger'}
-            <div className={`fw-medium `}>
+            </div>
+            <div className={`fw-medium ${item.price_change_percentage >= 0 ? 'text-success' : 'text-danger'}`}>
               {item.price_change_percentage >= 0 ? '+' : ''}
               {item.price_change_percentage}%
             </div>
