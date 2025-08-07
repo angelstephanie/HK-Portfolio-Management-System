@@ -49,3 +49,18 @@ class Watchlist_repo:
         except Exception as e:
             print(f"❌ Error retrieving watchlist: {e}")
             return None
+    
+    def remove_asset_from_watchlist(self, symbol: str):
+        """Remove an asset symbol from the watchlist."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("DELETE FROM Watchlist WHERE symbol = %s", (symbol,))
+            self.connection.commit()
+            affected_rows = cursor.rowcount
+            cursor.close()
+            print(f"✅ Asset removed from watchlist: {symbol}")
+            
+            return affected_rows if affected_rows > 0 else None
+        except Exception as e:
+            print(f"❌ Error removing asset from watchlist: {e}")
+            return None
