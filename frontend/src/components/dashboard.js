@@ -143,8 +143,7 @@ export default function PortfolioDashboard() {
             <div className="card-body">
               <h5 className="card-title">Asset Allocation</h5>
               <PortfolioPieChart 
-                portfolioId={selectedPortfolioId}
-                holdings={holdings} 
+                holdings={filteredHoldings} 
               />
             </div>
           </div>
@@ -165,7 +164,9 @@ export default function PortfolioDashboard() {
           <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Portfolio Top Movers</h5>
-              <TopMovers />
+              <TopMovers 
+                holdings={filteredHoldings} 
+              />
             </div>
           </div>
         </div>
