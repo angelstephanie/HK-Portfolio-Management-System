@@ -54,6 +54,8 @@ const BuySellAsset = ({ asset, holdings }) => {
             if (!responseTransaction.ok) {
                 throw new Error(`Error: ${responseTransaction.statusText}`);
             }
+            alert('Transaction submitted successfully!');
+            navigate('/holdings')
         } catch (error) {
             alert('Failed to submit transaction:', error);
         }
