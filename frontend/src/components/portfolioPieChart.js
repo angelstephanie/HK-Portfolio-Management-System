@@ -1,33 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Form, Spinner } from 'react-bootstrap';
+import { useState, useRef } from 'react';
+import { Form } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../styles/portfolioPieChart.css';
 
 const FILTER_OPTIONS = [
-    { value: 'assetType', label: 'Asset Type' },
-    { value: 'asset', label: 'Asset' }
+    { value: 'type', label: 'Asset Type' },
+    { value: 'symbol', label: 'Asset' }
 ];
 
-const fetchPortfolioData = async () => {
-    return [
-        { asset: 'AAPL', assetType: 'Stock', amount: 5000 },
-        { asset: 'GOOGL', assetType: 'Stock', amount: 3000 },
-        { asset: 'US Treasury', assetType: 'Bond', amount: 2000 },
-        { asset: 'BTC', assetType: 'Crypto', amount: 1000 },
-        { asset: 'ETH', assetType: 'Crypto', amount: 500 },
-        { asset: 'AMD', assetType: 'Stock', amount: 1500 }
-    ];
-};
-
-const getPieChartData = (portfolio, filter, activeIndex) => {
+const getPieChartData = (holdingsData, filter, activeIndex) => {
     const dataMap = {};
     if (filter === 'assetType') {
-        portfolio.forEach(item => {
+        holdingsData.forEach(item => {
             dataMap[item.assetType] = (dataMap[item.assetType] || 0) + item.amount;
         });
     } else if (filter === 'asset') {
-        portfolio.forEach(item => {
+        holdingsData.forEach(item => {
             dataMap[item.asset] = (dataMap[item.asset] || 0) + item.amount;
         });
     }
@@ -51,21 +40,13 @@ const COLORS = [
     '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ab'
 ];
 
-function PortfolioPieChart() {
-    const [filter, setFilter] = useState('assetType');
-    const [portfolio, setPortfolio] = useState([]);
-    const [loading, setLoading] = useState(true);
+function PortfolioPieChart({portfolioId, holdings}) {
+    const [filter, setFilter] = useState('type');
     const [activeIndex, setActiveIndex] = useState(null);
     const chartRef = useRef(null);
 
-    useEffect(() => {
-        fetchPortfolioData().then(data => {
-            setPortfolio(data);
-            setLoading(false);
-        });
-    }, []);
-
-    const { labels, data, backgroundColor } = getPieChartData(portfolio, filter, activeIndex);
+    const portfolioHoldings = holdings.filter(h => h.portfolioId === portfolioId);
+    const { labels, data, backgroundColor } = getPieChartData(portfolioHoldings, filter, activeIndex);
 
     const chartData = {
         labels,
@@ -89,11 +70,9 @@ function PortfolioPieChart() {
                     ))}
                 </Form.Select>
             </Form.Group>
-            <br />
-            {loading ? (
-                <div className="text-center">
-                    <Spinner animation="border" variant="primary" />
-                </div>
+
+            {portfolioHoldings.length === 0 ? (
+                <p className="text-center text-muted">No holdings for this portfolio.</p>
             ) : (
                 <Pie
                     ref={chartRef}
@@ -145,7 +124,6 @@ function PortfolioPieChart() {
                         cutout: '50%',
                         hoverOffset: 30
                     }}
-
                 />
             )}
         </>
