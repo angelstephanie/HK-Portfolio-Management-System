@@ -118,7 +118,7 @@ class Transaction_repo:
                 transaction_dict['timestamp'] = row[7]
                 transaction_dict['notes'] = row[8] if row[8] is not None else ""
                 transaction_dict['name'] = row[9]
-                transaction_dict['type'] = row[10]
+                transaction_dict['assetType'] = row[10]
                 transaction_dict['current_price'] = row[11]
                 transaction_dict['opening_price'] = row[12]
                 transaction_dict['last_updated'] = row[13]
