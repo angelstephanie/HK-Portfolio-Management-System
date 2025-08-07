@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -11,13 +11,13 @@ const FILTER_OPTIONS = [
 
 const getPieChartData = (holdingsData, filter, activeIndex) => {
     const dataMap = {};
-    if (filter === 'assetType') {
+    if (filter === 'type') {
         holdingsData.forEach(item => {
-            dataMap[item.assetType] = (dataMap[item.assetType] || 0) + item.amount;
+            dataMap[item.type] = (dataMap[item.type] || 0) + item.avg_buy_price * item.quantity;
         });
-    } else if (filter === 'asset') {
+    } else if (filter === 'symbol') {
         holdingsData.forEach(item => {
-            dataMap[item.asset] = (dataMap[item.asset] || 0) + item.amount;
+            dataMap[item.symbol] = (dataMap[item.symbol] || 0) + item.avg_buy_price * item.quantity;
         });
     }
 
@@ -42,12 +42,16 @@ const COLORS = [
 
 function PortfolioPieChart({portfolioId, holdings}) {
     const [filter, setFilter] = useState('type');
+    const [portfolioHoldings, setPortfolioHoldings] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
     const chartRef = useRef(null);
 
-    const portfolioHoldings = holdings.filter(h => h.portfolioId === portfolioId);
-    const { labels, data, backgroundColor } = getPieChartData(portfolioHoldings, filter, activeIndex);
+    useEffect(() => {
+        setPortfolioHoldings(holdings.filter(h => h.portfolio_id === portfolioId));
+    }, [portfolioId, holdings]);
 
+    const { labels, data, backgroundColor } = getPieChartData(portfolioHoldings, filter, activeIndex);
+    
     const chartData = {
         labels,
         datasets: [
