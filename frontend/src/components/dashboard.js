@@ -152,7 +152,7 @@ export default function PortfolioDashboard() {
         <div className="col-md-6 mb-4">
           <div className="card h-100 shadow-sm">
             <div className="card-body">
-              <h5 className="card-title">Performance Chart</h5>
+              <h5 className="card-title">Performance Chart (in %)</h5>
               <PerformanceChart portfolioSnaps={portfolioSnaps} />
             </div>
           </div>
