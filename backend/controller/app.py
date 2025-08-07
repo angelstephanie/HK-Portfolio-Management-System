@@ -5,6 +5,7 @@ from backend.controller.Holdings_controller import holdings_controller
 from backend.controller.Portfolio_controller import portfolio_controller
 from backend.controller.Transaction_controller import transaction_controller
 from backend.controller.PortfolioSnap_controller import portfolio_snap_controller
+from backend.controller.Watchlist_controller import watchlist_controller
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -15,6 +16,7 @@ app.register_blueprint(holdings_controller)
 app.register_blueprint(portfolio_controller)   
 app.register_blueprint(transaction_controller)
 app.register_blueprint(portfolio_snap_controller)
+app.register_blueprint(watchlist_controller)
 
 @app.route('/')
 def home():

@@ -50,7 +50,8 @@ export default function PortfolioDashboard() {
   };
 
   return (
-    <div className="container-fluid py-4">
+    <div className="container py-4">
+      {/* Summary */}
       <div className="row mb-4">
         <div className="col-12">
           <div className="d-flex align-items-center bg-white p-4 rounded shadow-sm border">
@@ -152,14 +153,14 @@ export default function PortfolioDashboard() {
           <div className="card h-100 shadow-sm">
             <div className="card-body">
               <h5 className="card-title">Recent Activity Feed</h5>
-              <RecentActivityFeed />
+              {/* <RecentActivityFeed /> */}
               <p> </p>
             </div>
           </div>
         </div>
       </div>
       </>
-      )};
+      )}
     </div>
   );
 }
