@@ -57,3 +57,11 @@ class TransactionService:
             raise TypeError("transaction_id must be an int")
         
         return self.transaction_repo.delete_transaction(transaction_id)
+    
+    def update_transaction(self, transaction):
+        if not transaction:
+            raise ValueError("Transaction cannot be empty")
+        if not isinstance(transaction, Transaction):
+            raise TypeError("Transaction must be a object of Transaction")
+
+        return self.transaction_repo.update_transaction(transaction)    
