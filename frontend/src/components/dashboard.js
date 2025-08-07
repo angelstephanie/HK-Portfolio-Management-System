@@ -46,7 +46,7 @@ export default function PortfolioDashboard() {
   }, []);
 
   const handlePortfolioChange = (e) => {
-    setSelectedPortfolioId(e.target.value);
+    setSelectedPortfolioId(Number(e.target.value));
   };
 
   return (

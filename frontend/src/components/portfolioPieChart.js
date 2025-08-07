@@ -41,8 +41,6 @@ const COLORS = [
 ];
 
 function PortfolioPieChart({portfolioId, holdings}) {
-    console.log(holdings);
-    console.log(portfolioId);
     const [filter, setFilter] = useState('type');
     const [portfolioHoldings, setPortfolioHoldings] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
@@ -52,10 +50,7 @@ function PortfolioPieChart({portfolioId, holdings}) {
         setPortfolioHoldings(holdings.filter(h => h.portfolio_id === portfolioId));
     }, [portfolioId, holdings]);
 
-    console.log('Filtered Holdings:', portfolioHoldings);
-
     const { labels, data, backgroundColor } = getPieChartData(portfolioHoldings, filter, activeIndex);
-
     
     const chartData = {
         labels,
