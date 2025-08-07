@@ -49,6 +49,23 @@ export default function PortfolioDashboard() {
     fetchData();
   }, []);
 
+  const filteredHoldings = holdings.filter(
+    (holding) => holding.portfolio_id === selectedPortfolioId
+  );
+
+  let totalValue = 0;
+  let totalCost = 0;
+
+  filteredHoldings.forEach((holding) => {
+    const value = holding.quantity * holding.current_price;
+    const cost = holding.quantity * holding.avg_buy_price;
+    totalValue += value;
+    totalCost += cost;
+  });
+
+  const absolutePL = totalValue - totalCost;
+  const percentagePL = totalCost !== 0 ? (absolutePL / totalCost) * 100 : 0;
+
   const handlePortfolioChange = (e) => {
     setSelectedPortfolioId(Number(e.target.value));
   };
@@ -73,7 +90,10 @@ export default function PortfolioDashboard() {
                       Total Portfolio Value
                     </h6>
                     <h2 className="fw-semibold mb-0 text-dark">
-                      18000000
+                      {totalValue.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                      })}
                     </h2>
                   </div>
 
@@ -81,9 +101,16 @@ export default function PortfolioDashboard() {
                     <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
                       P&L
                     </h6>
-                    <h5 className={`mb-0 ${20 >= 0 ? 'text-success' : 'text-danger'}`}>
-                      {20 >= 0 ? '+' : ''}
-                      20%
+                    <h5 className={`mb-0 ${percentagePL >= 0 ? 'text-success' : 'text-danger'}`}>
+                      {percentagePL >= 0 ? '+' : ''}
+                      {percentagePL.toFixed(2)}%
+                      &nbsp;(
+                      {absolutePL >= 0 ? '+' : ''}
+                      {absolutePL.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                      )
                     </h5>
                   </div>
                 </div>
