@@ -2,8 +2,10 @@ import Col from 'react-bootstrap/Col';
 import "../../styles/watchlist.css";
 import LineChart from '../performance-chart/lineChart';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const WatchlistItem = ({item}) => {
+    const navigate = useNavigate();
     const difference = parseFloat(item.current_price) - parseFloat(item.opening_price);
     const percentageChange = ((difference / parseFloat(item.opening_price)) * 100).toFixed(2);
 
@@ -26,9 +28,14 @@ const WatchlistItem = ({item}) => {
             });
     }, [item]);
 
+    const handleClick = () => {
+        const path = `/asset/${item.symbol}`;
+        navigate(path);
+    }
+
 
     return (
-    <Col xs={12} className="mb-3 row">
+    <Col xs={12} className="mb-3 row" onClick={handleClick} style={{ cursor: 'pointer' }}>
         <div className="col-6" style={{
             padding: '15px',
             boxShadow: '0 4px 8px rgba(249, 249, 249, 0.01)',

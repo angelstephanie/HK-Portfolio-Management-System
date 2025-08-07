@@ -144,7 +144,6 @@ const Asset = () => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                console.log('Asset removed from watchlist');
             })
         } else {
             //Add to watchlist
@@ -158,7 +157,6 @@ const Asset = () => {
                 if (!response.ok) { 
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                console.log('Asset added to watchlist');
             })
         }
         setSaved(!saved);
