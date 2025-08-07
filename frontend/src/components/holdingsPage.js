@@ -62,7 +62,7 @@ const HoldingsPage = () => {
     }, []);
 
   return (
-    <Container className="py-4">
+    <Container fluid className="py-4 px-5">
       <Card className="shadow-sm">
         <Card.Body>
           <h4 className="mb-4">Holdings</h4>
