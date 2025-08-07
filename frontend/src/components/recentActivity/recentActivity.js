@@ -54,7 +54,7 @@ const RecentActivityFeed = () => {
                                         </span>
                                     </div>
                                     <div className="transaction-details">
-                                        <span className="asset-name">{transaction.symbol}</span>
+                                        <span className="asset-name">{transaction.symbol} </span>
                                         <span className="transaction-amount">
                                             {transaction.quantity} @ ${transaction.price_per_unit}
                                         </span>
