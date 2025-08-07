@@ -4,27 +4,6 @@ from backend.repository.database_access import get_database_connection
 class Asset_repo:
     def __init__(self):
         self.connection = get_database_connection()
-
-
-    def create_asset_table(self):
-        """Create the Asset table in the database if it does not exist."""
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT Assets EXISTS(
-                    symbol VARCHAR(20) PRIMARY KEY,
-                    name VARCHAR(100) NOT NULL,
-                    type ENUM('stock', 'crypto', 'etf', 'bond'),
-                    current_price DECIMAL(15, 2),
-                    opening_price DECIMAL(15, 2),
-                    last_updated TIMESTAMP
-                );
-            """)
-            self.connection.commit()
-            cursor.close()
-            print("✅ Asset table created successfully.")
-        except Exception as e:
-            print(f"❌ Error creating Asset table: {e}")
     
 
     def add_asset(self, asset: Asset):
@@ -142,7 +121,7 @@ class Asset_repo:
             return assets
         except Exception as e:
             print(f"❌ Error retrieving all assets: {e}")
-            return []
+            return None
     
 
     

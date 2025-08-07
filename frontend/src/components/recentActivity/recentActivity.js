@@ -4,10 +4,9 @@ import transactionsData from '../../assets/transactions.json';
 
 const RecentActivityFeed = () => {
     const [transactions, setTransactions] = useState(transactionsData || []);
-
     return (
         <div className="recent-activity-feed">
-            <ListGroup variant="flush">
+            <ListGroup variant="flush">git
                 {transactions.length > 0 ? (
                     transactions.map((transaction, index) => {
                         // Calculate the total value manually

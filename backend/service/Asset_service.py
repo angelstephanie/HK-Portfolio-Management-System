@@ -1,10 +1,12 @@
 from backend.repository.Asset_repo import Asset_repo
 from backend.YahooFetcher import YahooFetcher
 from backend.models.Asset import Asset
+from backend.repository.Watchlist_repo import Watchlist_repo
 from datetime import datetime
 class AssetService:
     def __init__(self):
         self.asset_repo = Asset_repo()
+        self.watchlist_repo = Watchlist_repo()
         self.yahooFetcher = YahooFetcher()
             
     def get_asset_by_symbol(self, symbol: str):
@@ -43,6 +45,7 @@ class AssetService:
         if asset:
             check_asset = self.asset_repo.get_asset_by_symbol(asset.symbol)
             if check_asset is None:
+                self.watchlist_repo.add_asset2watchlist(asset.symbol)
                 return self.asset_repo.add_asset(asset)
             else:
                 return self.asset_repo.update_asset(asset)

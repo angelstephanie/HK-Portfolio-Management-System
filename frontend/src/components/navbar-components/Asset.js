@@ -14,10 +14,13 @@ const Asset = () => {
         "name": null, 
         "opening_price": null, 
         "symbol": null, 
-        "type": null,
-        "holding_id": null});
+        "type": null
+    });
     
-    const [totalHoldings, setTotalHoldings] = useState(0);
+    const [holdings, setHoldings] = useState({
+        "holding_id": null, 
+        "totalHoldings": 0
+    });
 
     useEffect(() => {
         // Fetch asset data based on the symbol
@@ -40,7 +43,7 @@ const Asset = () => {
         // Fetch total holdings data
         fetch(`${endpoint}/holdings/1`)
             .then(response => {
-                if (response.ok && totalHoldings === 0) {
+                if (response.ok && holdings.totalHoldings === 0) {
                     return response.json();
                 }
                 if (!response.ok) {
@@ -48,24 +51,23 @@ const Asset = () => {
                 }
             })
             .then(data => {
-                if (totalHoldings === 0) {
-                    console.log('Holdings Data:', data);
-                    let noHoldings = 0;
+                if (holdings.totalHoldings === 0) {
                     data.forEach(holding => {
                         if (holding.symbol === symbol) {
-
-                            noHoldings += parseInt(holding.quantity);
-                            console.log(`Holdings for ${symbol}:`, noHoldings);
+                            setHoldings({
+                                holding_id: holding.holding_id,
+                                totalHoldings: parseInt(holding.quantity)
+                            });
                         }
                     });
-                    setTotalHoldings(noHoldings);
                 }
-                console.log('Total Holdings:', totalHoldings);
+                console.log('Asset Data:', assetData);
+                console.log('Holdings Data:', holdings);
             })
             .catch(error => {
                 console.log('Error fetching asset data:', error.message);
             });
-        }, [symbol, endpoint, totalHoldings]);
+        }, [symbol, endpoint, holdings]);
 
         // useEffect(() => {
         //     // Fetch total holdings data
@@ -133,7 +135,7 @@ const Asset = () => {
                 <div className="card shadow-sm">
                     <div className="card-body">
                     <h6 className="card-title">Trade</h6>
-                    <BuySellAsset className="card-text" asset={assetData} totalHoldings={totalHoldings}/>
+                    <BuySellAsset className="card-text" asset={assetData} holdings={holdings}/>
                     </div>
                 </div>
                 </div>

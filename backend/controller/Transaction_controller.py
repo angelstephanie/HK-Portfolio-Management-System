@@ -10,7 +10,7 @@ transaction_service = TransactionService()
 def get_all_transactions():
     try:
         transactions = transaction_service.get_all_transactions()
-        return jsonify([transaction.to_dict() for transaction in transactions]), 200
+        return jsonify([transaction for transaction in transactions]), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -34,17 +34,18 @@ def add_transaction():
         new_transaction = transaction_service.add_transaction(transaction)
         if new_transaction:
             return jsonify({'message': 'Transaction added successfully'}), 201
-    except Exception as e:
-        print(e)
-        return jsonify({'error': str(e)}), 500
-
-@transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
-def delete_transaction(transaction_id):
-    try:
-        result = transaction_service.delete_transaction(transaction_id)
-        if result:
-            return jsonify({'message': 'Transaction deleted successfully'}), 200
         else:
             return jsonify({'message': 'Transaction not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# @transaction_controller.route('/transactions/<int:transaction_id>', methods=['DELETE'])
+# def delete_transaction(transaction_id):
+#     try:
+#         result = transaction_service.delete_transaction(transaction_id)
+#         if result:
+#             return jsonify({'message': 'Transaction deleted successfully'}), 200
+#         else:
+#             return jsonify({'message': 'Transaction not found'}), 404
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500

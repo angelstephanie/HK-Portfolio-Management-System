@@ -22,45 +22,66 @@ class TestPortfolioSnapController(unittest.TestCase):
             {'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0},
             {'portfolio_id': 1, 'snapshot_date': '2023-01-02', 'cash_value': 155000.0, 'invested_value': 250000.0}
             ])
+    
+    @patch.object(PortfolioSnapService, 'get_all_portfolio_snaps')
+    def test_get_all_portfolio_snaps_none(self, mock_get_all_portfolio_snaps):
+        """Test the get all portfolio snaps endpoint."""
+        mock_get_all_portfolio_snaps.return_value = None
+        response = self.app.test_client().get('/portfolio_snaps')
+        self.assertEqual(response.status_code, 500)    
 
     @patch.object(PortfolioSnapService, 'get_portfolio_snap_by_id')
-    def test_get_portfolio_snap_by_id_found(self, mock_get_portfolio_snap_by_id):
+    def test_get_portfolio_snap_by_id(self, mock_get_portfolio_snap_by_id):
         mock_get_portfolio_snap_by_id.return_value = MagicMock(to_dict=lambda: {'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
         response = self.client.get('/portfolio_snaps/1/2023-01-01')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
 
     @patch.object(PortfolioSnapService, 'get_portfolio_snap_by_id')
-    def test_get_portfolio_snap_by_id_not_found(self, mock_get_portfolio_snap_by_id):
+    def test_get_portfolio_snap_by_id_none(self, mock_get_portfolio_snap_by_id):
         mock_get_portfolio_snap_by_id.return_value = None
         response = self.client.get('/portfolio_snaps/1/2023-01-01')
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json, {'message': 'Portfolio Snap not found'})
 
     @patch.object(PortfolioSnapService, 'add_portfolio_snap')
-    def test_add_portfolio_snap_success(self, mock_add_portfolio_snap):
+    def test_add_portfolio_snap(self, mock_add_portfolio_snap):
         mock_add_portfolio_snap.return_value = True
         response = self.client.post('/portfolio_snaps', json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json, {'message': 'Portfolio Snap added successfully'})
 
     @patch.object(PortfolioSnapService, 'add_portfolio_snap')
-    def test_add_portfolio_snap_failure(self, mock_add_portfolio_snap):
-        mock_add_portfolio_snap.return_value = False
+    def test_add_portfolio_snap_none(self, mock_add_portfolio_snap):
+        mock_add_portfolio_snap.return_value = None
         response = self.client.post('/portfolio_snaps', json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json, {'message': 'Failed to add Portfolio Snap'})
+        
+    @patch.object(PortfolioSnapService, 'add_portfolio_snap')
+    def test_add_portfolio_snap_exception(self, mock_add_portfolio_snap):
+        """Test the add holding endpoint."""
+        mock_add_portfolio_snap.side_effect = Exception('Mocked exception')
+        response = self.app.test_client().post('/portfolio_snaps',json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
+        self.assertEqual(response.status_code, 500)
 
     @patch.object(PortfolioSnapService, 'update_portfolio_snap')
-    def test_update_portfolio_snap_success(self, mock_update_portfolio_snap):
+    def test_update_portfolio_snap(self, mock_update_portfolio_snap):
         mock_update_portfolio_snap.return_value = True
         response = self.client.put('/portfolio_snaps', json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'message': 'Portfolio Snap updated successfully'})
 
     @patch.object(PortfolioSnapService, 'update_portfolio_snap')
-    def test_update_portfolio_snap_not_found(self, mock_update_portfolio_snap):
-        mock_update_portfolio_snap.return_value = False
+    def test_update_portfolio_snap_none(self, mock_update_portfolio_snap):
+        mock_update_portfolio_snap.return_value = None
         response = self.client.put('/portfolio_snaps', json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json, {'message': 'Portfolio Snap not found'})
+    
+    @patch.object(PortfolioSnapService, 'update_portfolio_snap')
+    def test_update_portfolio_snap_exception(self, mock_update_portfolio_snap):
+        """Test the update portfolio endpoint."""
+        mock_update_portfolio_snap.side_effect = Exception('Mocked exception')
+        response = self.app.test_client().put('/portfolio_snaps', json={'portfolio_id': 1, 'snapshot_date': '2023-01-01', 'cash_value': 150000.0, 'invested_value': 200000.0})
+        self.assertEqual(response.status_code, 500)
