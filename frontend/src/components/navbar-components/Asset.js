@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import portfolioPerformanceData from '../../assets/portfolio_performance.json';
 import LineChart from '../performance-chart/lineChart';
 import BuySellAsset from './BuySellAsset';
+import bookmarks from '../../assets/bookmark.json';
 
 const Asset = () => {
     const {symbol} = useParams();
@@ -21,6 +22,8 @@ const Asset = () => {
         "holding_id": null, 
         "totalHoldings": 0
     });
+
+    const [saved, setSaved] = useState(false);
 
     useEffect(() => {
         // Fetch asset data based on the symbol
@@ -69,35 +72,39 @@ const Asset = () => {
             });
         }, [symbol, endpoint, holdings]);
 
-        // useEffect(() => {
-        //     // Fetch total holdings data
-        //     fetch(`${endpoint}/assets/${symbol}/historicprice/${}`)
-        //         .then(response => {
-        //             if (response.ok && totalHoldings === 0) {
-        //                 return response.json();
-        //             }
-        //             if (!response.ok) {
-        //             throw new Error(`HTTP error! status: ${response.status}`);
-        //             }
-        //         })
-        //         .then(data => {
-        //             if (totalHoldings === 0) {
-        //                 console.log('Holdings Data:', data);
-        //                 let noHoldings = 0;
-        //                 data.forEach(holding => {
-        //                     if (holding.symbol === symbol) {
-        //                         noHoldings += parseInt(holding.quantity);
-        //                         console.log(`Holdings for ${symbol}:`, noHoldings);
-        //                     }
-        //                 });
-        //                 setTotalHoldings(noHoldings);
-        //             }
-        //             console.log('Total Holdings:', totalHoldings);
-        //         })
-        //         .catch(error => {
-        //             console.log('Error fetching asset data:', error.message);
-        //         });
-        //     }, [symbol, endpoint]);
+        useEffect(() => {
+            // Check if the asset is already saved in bookmarks
+            fetch('../../assets/bookmark.json')
+                .then(response => response.json())
+                .then(data => {
+                    const isSaved = data.some(bookmark => bookmark.symbol === symbol);
+                    setSaved(isSaved);
+                })
+                .catch(error => {
+                    console.log('Error fetching bookmarks:', error.message);
+                });
+        }, [symbol]);
+
+        const handleSaveToWatchlist = () => {
+            if (saved) {
+                // Remove from bookmarks
+                fetch(`${endpoint}/bookmarks/${symbol}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    console.log('Bookmark removed successfully');
+                })
+                .catch(error => {
+                    console.log('Error removing bookmark:', error.message);
+                });
+            }
+            setSaved(!saved);
+
+        }
+    
 
     return (
         <div className="container py-4">
@@ -106,17 +113,24 @@ const Asset = () => {
                 <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center bg-white">
                     <div>
-                    <h6 className="text-uppercase text-muted mb-1" style={{ letterSpacing: '1px' }}>
+                    <h6 className="text-uppercase text-muted mb-1" style={{width: 'max-content', letterSpacing: '1px' }}>
                         {assetData.name}
                     </h6>
-                    {/* ADD A SAVE TO WATCHLIST BTN */}
                     <h2 className="fw-semibold mb-0 text-dark">{assetData.symbol}</h2>
                     </div>
-                    <div className="text-end">
-                    <h3 className="text-uppercase text-success mb-1" style={{ letterSpacing: '1px' }}>
-                        US$ {assetData.current_price}
-                    </h3>
-                    <h6 className="mb-0 text-success">+4.2%</h6>
+                    <div className='container d-flex justify-content-end align-items-center' style={{paddingRight: '0'}}>
+                        <div className="text-end">
+                            <h3 className="text-uppercase text-success mb-1" style={{ letterSpacing: '1px' }}>
+                                US$ {assetData.current_price}
+                            </h3>
+                            <h6 className="mb-0 text-success">+4.2%</h6>
+                        </div>
+                        <div>
+                            {/* ADD A SAVE TO WATCHLIST BTN */}
+                            <button onClick={handleSaveToWatchlist} style={{ background: 'none', border: 'none', cursor: 'pointer', marginRight: '0'}}>
+                                <img src={saved ? require("../../assets/icons/solid_bookmark.svg").default : require("../../assets/icons/regular_bookmark.svg").default} alt="Watchlist Icon" className="ms-2" style={{width: '2.5em'}}/>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -127,7 +141,7 @@ const Asset = () => {
                 <div className="card shadow-sm">
                     <div className="card-body">
                     <h6 className="card-title">Performance Chart</h6>
-                    <LineChart chartData={portfolioPerformanceData} />
+                    <LineChart chartData={portfolioPerformanceData}/>
                     </div>
                 </div>
                 </div>
