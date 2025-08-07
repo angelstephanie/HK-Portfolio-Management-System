@@ -160,7 +160,7 @@ export default function PortfolioDashboard() {
         </div>
       </div>
       </>
-      )};
+      )}
     </div>
   );
 }

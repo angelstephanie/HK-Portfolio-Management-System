@@ -35,7 +35,7 @@ const WatchlistItem = ({item}) => {
 
 
     return (
-    <Col xs={12} className="mb-3 row" onClick={handleClick} style={{ cursor: 'pointer' }}>
+    <Col xs={12} className="mb-1 row" onClick={handleClick} style={{ cursor: 'pointer' }}>
         <div className="col-6" style={{
             padding: '15px',
             boxShadow: '0 4px 8px rgba(249, 249, 249, 0.01)',
