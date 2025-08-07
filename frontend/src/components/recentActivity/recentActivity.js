@@ -56,10 +56,10 @@ const RecentActivityFeed = () => {
                                 <div className="transaction-details">
                                     <span className="asset-name">{transaction.symbol}</span>
                                     <span className="transaction-amount">
-                                        {transaction.quantity} @ ${transaction.price_per_unit.toFixed(2)}
+                                        {transaction.quantity} @ ${transaction.price_per_unit}
                                     </span>
                                     <div className="transaction-total">
-                                        <strong>Total Value: </strong>${totalValue.toFixed(2)}
+                                        <strong>Total Value: </strong>${totalValue}
                                     </div>
                                 </div>
                             </ListGroup.Item>
