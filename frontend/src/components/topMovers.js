@@ -36,27 +36,28 @@ const TopMovers = ({holdings}) => {
   };
 
   useEffect(() => {
-
-    const enrichedData = holdings.map(item => {
-    const price_change_percentage = (item.current_price - item.opening_price) * item.quantity;
-      return {
-        ...item,
-        price_change_percentage: price_change_percentage.toFixed(2),
-      };
-    });
-
-    if (enrichedData && enrichedData.length > 0) {
-      const sortedHoldings = [...enrichedData].sort(
-        (a, b) => b.price_change_percentage - a.price_change_percentage
-      );
-
-      const gainersData = sortedHoldings.slice(0, 5);
-      const losersData = sortedHoldings.slice(-5).reverse();
-
-      setMoversData({
-        gainersData,
-        losersData
+    if (Array.isArray(holdings) && holdings.length > 0) {
+      const enrichedData = holdings.map(item => {
+      const price_change_percentage = (item.current_price - item.opening_price) * item.quantity;
+        return {
+          ...item,
+          price_change_percentage: price_change_percentage.toFixed(2),
+        };
       });
+
+      if (enrichedData && enrichedData.length > 0) {
+        const sortedHoldings = [...enrichedData].sort(
+          (a, b) => b.price_change_percentage - a.price_change_percentage
+        );
+
+        const gainersData = sortedHoldings.slice(0, 5);
+        const losersData = sortedHoldings.slice(-5).reverse();
+
+        setMoversData({
+          gainers: gainersData,
+          losers: losersData
+        });
+      }
     }
   }, [holdings]);
 
@@ -134,7 +135,7 @@ const TopMovers = ({holdings}) => {
             </div>
             <div className={`fw-medium ${item.price_change_percentage >= 0 ? 'text-success' : 'text-danger'}`}>
               {item.price_change_percentage >= 0 ? '+' : ''}
-              {item.price_change_percentage.toFixed(2)}%
+              {item.price_change_percentage}%
             </div>
           </div>
         ))}
