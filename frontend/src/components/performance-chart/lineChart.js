@@ -44,7 +44,7 @@ const getFilteredData = (selectedTime, hourlyData, dailyData) => {
     return dailyData;
 };
 
-const LineChart = ({ hourlyData, dailyData }) => {
+const LineChart = ({ hourlyData, dailyData, timeSelection }) => {
     const [selectedTime, setSelectedTime] = useState('1D');
 
     const filteredData = useMemo(
@@ -109,6 +109,7 @@ const LineChart = ({ hourlyData, dailyData }) => {
         scales: {
             x: {
                 ticks: {
+                    display: timeSelection,
                     autoSkip: false,
                     callback: function(value, index) {
                         return labels[index] || '';
@@ -128,6 +129,7 @@ const LineChart = ({ hourlyData, dailyData }) => {
             },
             y: {
                 ticks: {
+                    display: timeSelection,
                     color: '#666',
                     font: {
                         size: 11,
@@ -141,9 +143,9 @@ const LineChart = ({ hourlyData, dailyData }) => {
     }), [labels]);
 
     return (
-        <div className="performance-chart">
+        <div className="performance-chart" style={timeSelection ? {} : {display: 'flex', alignItems: 'center', justifyContent: 'end', width: '50%'}}>
             <div className="time-options" style={{ marginBottom: '10px' }}>
-                {timeOptions.map(option => (
+                { timeSelection ? timeOptions.map(option => (
                     <button
                         key={option}
                         onClick={() => setSelectedTime(option)}
@@ -161,7 +163,7 @@ const LineChart = ({ hourlyData, dailyData }) => {
                     >
                         {option}
                     </button>
-                ))}
+                )) : null}
             </div>
             <Line data={data} options={options}/>
         </div>

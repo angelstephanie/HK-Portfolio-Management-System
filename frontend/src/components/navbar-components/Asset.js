@@ -84,74 +84,85 @@ const Asset = () => {
             });
         }, [symbol, endpoint, holdings]);
 
-        // Fetch asset price for linechart
-        useEffect(() => {
-            fetch(`${endpoint}/assets/${symbol}/historicprice/5`)
-            .then(response => response.json())
-            .then(data => { 
-                const priceData = [];
-                Object.entries(data).forEach(([key, value]) => {
-                    priceData.push({
-                        date: key,
-                        price: value
-                    });
+    // Fetch asset price for linechart
+    useEffect(() => {
+        fetch(`${endpoint}/assets/${symbol}/historicprice/5`)
+        .then(response => response.json())
+        .then(data => { 
+            const priceData = [];
+            Object.entries(data).forEach(([key, value]) => {
+                priceData.push({
+                    date: key,
+                    price: value
                 });
-                setHourlyPrice(priceData);
-            })
-            .catch(error => {
-                console.log('Error fetching hourly price data:', error.message);
             });
+            setHourlyPrice(priceData);
+        })
+        .catch(error => {
+            console.log('Error fetching hourly price data:', error.message);
+        });
 
-            fetch(`${endpoint}/assets/${symbol}/historicprice/${formatDate(threeYearsAgo)}`)
+        fetch(`${endpoint}/assets/${symbol}/historicprice/${formatDate(threeYearsAgo)}`)
+        .then(response => response.json())
+        .then(data => {
+            const priceData = [];
+            Object.entries(data).forEach(([key, value]) => {
+                priceData.push({
+                    date: key,
+                    price: value
+                });
+            });
+            setDailyPrice(priceData);
+        })
+        .catch(error => {
+            console.log('Error fetching daily price data:', error.message);
+        });
+    }, [endpoint, symbol, threeYearsAgo]);
+
+
+    // Check if the asset is already saved in bookmarks
+    useEffect(() => {
+        fetch(`${endpoint}/watchlist`)
             .then(response => response.json())
             .then(data => {
-                const priceData = [];
-                Object.entries(data).forEach(([key, value]) => {
-                    priceData.push({
-                        date: key,
-                        price: value
-                    });
-                });
-                setDailyPrice(priceData);
+                const isSaved = data.some(bookmark => bookmark.symbol === symbol);
+                setSaved(isSaved);
             })
             .catch(error => {
-                console.log('Error fetching daily price data:', error.message);
+                console.log('Error fetching bookmarks:', error.message);
             });
-        }, [endpoint, symbol, threeYearsAgo]);
+    }, [endpoint, symbol]);
 
-
-        // Check if the asset is already saved in bookmarks
-        // useEffect(() => {
-        //     fetch('../../assets/bookmark.json')
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             const isSaved = data.some(bookmark => bookmark.symbol === symbol);
-        //             setSaved(isSaved);
-        //         })
-        //         .catch(error => {
-        //             console.log('Error fetching bookmarks:', error.message);
-        //         });
-        // }, [symbol]);
-
-        
-        const handleSaveToWatchlist = () => {
-            // if (saved) {
-            //     // Remove from bookmarks
-            //     fetch(`${endpoint}/bookmarks/${symbol}`, {
-            //         method: 'DELETE',
-            //     })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error(`HTTP error! status: ${response.status}`);
-            //         }
-            //         console.log('Bookmark removed successfully');
-            //     })
-            //     .catch(error => {
-            //         console.log('Error removing bookmark:', error.message);
-            //     });
-            // }
-            setSaved(!saved);
+    
+    const handleSaveToWatchlist = () => {
+        if (saved) {
+            //Remove from watchlist
+            fetch(`${endpoint}/watchlist/${symbol}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Asset removed from watchlist');
+            })
+        } else {
+            //Add to watchlist
+            fetch(`${endpoint}/watchlist`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({symbol: symbol}),
+            }).then(response => {
+                if (!response.ok) { 
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Asset added to watchlist');
+            })
         }
+        setSaved(!saved);
+    }
     
     return (
         <div className="container py-4">
@@ -190,7 +201,7 @@ const Asset = () => {
                     <h6 className="card-title">Performance Chart</h6>
                     {(hourlyPrice.length === 0 || dailyPrice.length === 0)
                         ? <p className="card-text">Loading chart data...</p>
-                        : <LineChart hourlyData={hourlyPrice} dailyData={dailyPrice}/>
+                        : <LineChart hourlyData={hourlyPrice} dailyData={dailyPrice} timeSelection={true}/>
                     }
                     </div>
                 </div>
