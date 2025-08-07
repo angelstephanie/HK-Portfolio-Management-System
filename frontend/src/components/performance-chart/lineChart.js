@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -8,9 +8,8 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js';
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import portfolioPerformanceData from '../../assets/portfolio_performance.json';
 
 ChartJS.register(
     CategoryScale,
@@ -20,42 +19,74 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-  );
+);
 
-export const options = {
-responsive: true, 
-plugins: {
-    legend: {
-    position: 'top',
-    display: false,
-    },
-    title: {
-    display: false,
-    },
-},
+const timeOptions = ['1D', '5D', '1M', '3M', '1Y', 'Max'];
+
+// Helper to format DD/MM
+const formatDayMonth = (dateStr) => {
+    const date = new Date(dateStr);
+    return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`;
+};
+// Helper to format hour:minute
+const formatHourMinute = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-// Timeline options
-const timeOptions = ['5D', '1M', '3M', '1Y', 'Max'];
+const getFilteredData = (selectedTime, hourlyData, dailyData) => {
+    if (selectedTime === '1D') return hourlyData.slice(-13);
+    if (selectedTime === '5D') return hourlyData.slice(-45);
+    if (selectedTime === '1M') return dailyData.slice(-30);
+    if (selectedTime === '3M') return dailyData.slice(-90);
+    if (selectedTime === '1Y') return dailyData.slice(-365);
+    if (selectedTime === 'Max') return dailyData;
+    return dailyData;
+};
 
-const LineChart = ({chartData}) => {
-    const [selectedTime, setSelectedTime] = useState('1Y');
+const LineChart = ({ hourlyData, dailyData }) => {
+    const [selectedTime, setSelectedTime] = useState('1D');
 
-    // Filter data based on the selected time range
-    const filteredData = portfolioPerformanceData.slice(
-        selectedTime === '5D' ? -5 :
-        selectedTime === '1M' ? -30 :
-        selectedTime === '3M' ? -90 :
-        selectedTime === '1Y' ? -365 : 0
+    const filteredData = useMemo(
+        () => getFilteredData(selectedTime, hourlyData, dailyData),
+        [selectedTime, hourlyData, dailyData]
     );
 
-    const labels = filteredData.map(entry => entry.date);
+    // Neat, non-overlapping labels formatting
+    const labels = useMemo(() => {
+        const arrLen = filteredData.length;
+        // For 1D: show all hour:minute
+        if (selectedTime === '1D') {
+            return filteredData.map(entry => formatHourMinute(entry.date));
+        }
+        // For 5D: show day/month for first, last, and every 10th
+        if (selectedTime === '5D') {
+            return filteredData.map((entry, i) =>
+                (i === 0 || i % 10 === 0)
+                    ? formatDayMonth(entry.date)
+                    : ''
+            );
+        }
+        // For >= 1M: show DD/MM for first, last, and every Nth to reduce clutter
+        let interval = 7; // default every 7th for 1M, 3M
+        if (selectedTime === '1Y') interval = 31;
+        if (selectedTime === 'Max') interval = Math.ceil(arrLen / 12); // max 12 labels for Max
+
+        return filteredData.map((entry, i) =>
+            (i === 0 || i % interval === 0)
+                ? formatDayMonth(entry.date)
+                : ''
+        );
+    }, [filteredData, selectedTime]);
+
+    console.log("Labels: ", labels);
+
     const data = {
         labels,
         datasets: [
             {
                 label: 'Total Asset Value',
-                data: filteredData.map(entry => entry.totalAssetValue),
+                data: filteredData.map(entry => entry.price),
                 borderColor: '#3E5EBD',
                 backgroundColor: 'rgba(83, 120, 199, 0.2)',
                 radius: 0
@@ -63,9 +94,55 @@ const LineChart = ({chartData}) => {
         ],
     };
 
+    // Chart options with dynamic ticks and reduced overlapping
+    const options = useMemo(() => ({
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    callback: function(value, index) {
+                        return labels[index] || '';
+                    },
+                    color: '#666',
+                    font: {
+                        size: 10,
+                        weight: 'bold'
+                    },
+                    maxRotation: 0,
+                    minRotation: 0,
+                },
+                grid: {
+                    display: false,
+                    drawBorder: false
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#666',
+                    font: {
+                        size: 11,
+                    }
+                },
+                grid: {
+                    color: '#eee'
+                }
+            }
+        }
+    }), [labels]);
+
     return (
         <div className="performance-chart">
-            <div className="time-options">
+            <div className="time-options" style={{ marginBottom: '10px' }}>
                 {timeOptions.map(option => (
                     <button
                         key={option}
@@ -79,13 +156,14 @@ const LineChart = ({chartData}) => {
                             borderRadius: '4px',
                             fontWeight: selectedTime === option ? 500 : 'normal',
                             fontSize: '0.9rem',
+                            minWidth: '48px'
                         }}
                     >
                         {option}
                     </button>
                 ))}
             </div>
-            <Line data={data} options={options} />
+            <Line data={data} options={options}/>
         </div>
     );
 };

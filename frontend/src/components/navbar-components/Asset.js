@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import portfolioPerformanceData from '../../assets/portfolio_performance.json';
 import LineChart from '../performance-chart/lineChart';
 import BuySellAsset from './BuySellAsset';
-import bookmarks from '../../assets/bookmark.json';
 
 const Asset = () => {
     const {symbol} = useParams();
@@ -23,10 +21,26 @@ const Asset = () => {
         "totalHoldings": 0
     });
 
+    const [hourlyPrice, setHourlyPrice] = useState([]);
+    const [dailyPrice, setDailyPrice] = useState([]);
+    const threeYearsAgo = useMemo(() => {
+        const today = new Date();
+        const date = new Date();
+        date.setFullYear(today.getFullYear() - 3);
+        return date;
+    }, []);
+
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     const [saved, setSaved] = useState(false);
 
+    // Fetch asset data based on the symbol
     useEffect(() => {
-        // Fetch asset data based on the symbol
         fetch(`${endpoint}/assets/${symbol}`)
             .then(response => {
                 if (!response.ok) {
@@ -42,8 +56,8 @@ const Asset = () => {
             });
         }, [symbol, endpoint]);
 
+    // Fetch total holdings data
     useEffect(() => {
-        // Fetch total holdings data
         fetch(`${endpoint}/holdings/1`)
             .then(response => {
                 if (response.ok && holdings.totalHoldings === 0) {
@@ -64,48 +78,81 @@ const Asset = () => {
                         }
                     });
                 }
-                console.log('Asset Data:', assetData);
-                console.log('Holdings Data:', holdings);
             })
             .catch(error => {
                 console.log('Error fetching asset data:', error.message);
             });
         }, [symbol, endpoint, holdings]);
 
+        // Fetch asset price for linechart
         useEffect(() => {
-            // Check if the asset is already saved in bookmarks
-            fetch('../../assets/bookmark.json')
-                .then(response => response.json())
-                .then(data => {
-                    const isSaved = data.some(bookmark => bookmark.symbol === symbol);
-                    setSaved(isSaved);
-                })
-                .catch(error => {
-                    console.log('Error fetching bookmarks:', error.message);
+            fetch(`${endpoint}/assets/${symbol}/historicprice/5`)
+            .then(response => response.json())
+            .then(data => { 
+                const priceData = [];
+                Object.entries(data).forEach(([key, value]) => {
+                    priceData.push({
+                        date: key,
+                        price: value
+                    });
                 });
-        }, [symbol]);
+                setHourlyPrice(priceData);
+            })
+            .catch(error => {
+                console.log('Error fetching hourly price data:', error.message);
+            });
 
+            fetch(`${endpoint}/assets/${symbol}/historicprice/${formatDate(threeYearsAgo)}`)
+            .then(response => response.json())
+            .then(data => {
+                const priceData = [];
+                Object.entries(data).forEach(([key, value]) => {
+                    priceData.push({
+                        date: key,
+                        price: value
+                    });
+                });
+                setDailyPrice(priceData);
+            })
+            .catch(error => {
+                console.log('Error fetching daily price data:', error.message);
+            });
+        }, [endpoint, symbol, threeYearsAgo]);
+
+
+        // Check if the asset is already saved in bookmarks
+        // useEffect(() => {
+        //     fetch('../../assets/bookmark.json')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             const isSaved = data.some(bookmark => bookmark.symbol === symbol);
+        //             setSaved(isSaved);
+        //         })
+        //         .catch(error => {
+        //             console.log('Error fetching bookmarks:', error.message);
+        //         });
+        // }, [symbol]);
+
+        
         const handleSaveToWatchlist = () => {
-            if (saved) {
-                // Remove from bookmarks
-                fetch(`${endpoint}/bookmarks/${symbol}`, {
-                    method: 'DELETE',
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    console.log('Bookmark removed successfully');
-                })
-                .catch(error => {
-                    console.log('Error removing bookmark:', error.message);
-                });
-            }
+            // if (saved) {
+            //     // Remove from bookmarks
+            //     fetch(`${endpoint}/bookmarks/${symbol}`, {
+            //         method: 'DELETE',
+            //     })
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`HTTP error! status: ${response.status}`);
+            //         }
+            //         console.log('Bookmark removed successfully');
+            //     })
+            //     .catch(error => {
+            //         console.log('Error removing bookmark:', error.message);
+            //     });
+            // }
             setSaved(!saved);
-
         }
     
-
     return (
         <div className="container py-4">
             {/* Header */}
@@ -141,7 +188,10 @@ const Asset = () => {
                 <div className="card shadow-sm">
                     <div className="card-body">
                     <h6 className="card-title">Performance Chart</h6>
-                    <LineChart chartData={portfolioPerformanceData}/>
+                    {(hourlyPrice.length === 0 || dailyPrice.length === 0)
+                        ? <p className="card-text">Loading chart data...</p>
+                        : <LineChart hourlyData={hourlyPrice} dailyData={dailyPrice}/>
+                    }
                     </div>
                 </div>
                 </div>
