@@ -6,19 +6,19 @@ class Watchlist_repo:
     def __init__(self):
         self.connection = get_database_connection()
     
-    def add_asset2watchlist(self, symbol :str):
+    def add_asset2watchlist(self, watchlist_element :Watchlist):
         """Add a new asset symbol to the watchlist."""
         try:
             cursor = self.connection.cursor()
             cursor.execute("""
                             INSERT INTO Watchlist (symbol)
                             VALUES (%s)
-                            """, (symbol,))
+                            """, (watchlist_element.symbol,))
 
             self.connection.commit()
             affected_rows = cursor.rowcount
             cursor.close()
-            print(f"✅ Watchlist updated: {symbol}")
+            print(f"✅ Watchlist updated: {watchlist_element}")
             
             return affected_rows if affected_rows > 0 else None
         
@@ -30,7 +30,7 @@ class Watchlist_repo:
         """Retrieve all assets in the watchlist."""
         try:
             cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM Watchlist LEFT JOIN Assets USING symbol")
+            cursor.execute("SELECT * FROM Watchlist LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()
             
