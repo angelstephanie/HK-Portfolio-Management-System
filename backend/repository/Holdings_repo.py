@@ -115,24 +115,55 @@ class Holdings_repo:
             print(f"❌ Error retrieving Holding: {e}")
             return None
         
-
-    def get_all_holdings(self) -> list[Holdings]:
-        """Retrieve all holdings from the database."""
+    def get_holdings_by_symbol(self, symbol: str) -> Holdings:
+        """Retrieve holdings by symbol."""
         try:
             cursor = self.connection.cursor()
-            cursor.execute("SELECT * FROM Holdings")
-            rows = cursor.fetchall()
+            cursor.execute("SELECT * FROM Holdings WHERE symbol = %s", (symbol,))
+            row = cursor.fetchone()
             cursor.close()
             
-            holdings_list = []
-            for row in rows:
-                holdings_list.append(Holdings(
+            if row:
+                holding = Holdings(
                     holding_id=row[0],
                     portfolio_id=row[1],
                     symbol=row[2],
                     quantity=row[3],
                     avg_buy_price=row[4]
-                ))
+                )
+                print(f"✅ Retrieved Holding: {holding}")
+                return holding
+            else:
+                print(f"❌ No Holding found with symbol {symbol}")
+                return None
+        except Exception as e:
+            print(f"❌ Error retrieving Holding: {e}")
+            return None
+        
+
+    def get_all_holdings(self):
+        """Retrieve all holdings from the database."""
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("SELECT * FROM Holdings LEFT JOIN Assets USING (symbol)")
+            rows = cursor.fetchall()
+            cursor.close()
+            
+            holdings_list = []
+            for row in rows:
+                holding_dict = {}
+                holding_dict['symbol'] = row[0]
+                holding_dict['holding_id'] = row[1]
+                holding_dict['portfolio_id'] = row[2]
+                holding_dict['quantity'] = row[3]
+                holding_dict['avg_buy_price'] = row[4]
+                holding_dict['name'] = row[5]
+                holding_dict['type'] = row[6]
+                holding_dict['current_price'] = row[7]
+                holding_dict['opening_price'] = row[8]
+                holding_dict['last_updated'] = row[9]
+                holdings_list.append(holding_dict)
+                
             print(f"✅ Retrieved {len(holdings_list)} Holdings")
             return holdings_list
         except Exception as e:
