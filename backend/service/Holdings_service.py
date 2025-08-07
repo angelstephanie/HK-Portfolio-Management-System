@@ -31,19 +31,19 @@ class HoldingsService:
             raise TypeError("Holding must be a Holdings object")
         
         # Calculate the new average buying price
-        existing_holding = self.holdings_repo.get_holdings_by_holding_id(holding.holding_id)
-        if not existing_holding:
-            raise ValueError("Holding does not exist")
+        # existing_holding = self.holdings_repo.get_holdings_by_holding_id(holding.holding_id)
+        # if not existing_holding:
+        #     raise ValueError("Holding does not exist")
 
-        total_quantity = existing_holding.quantity + holding.quantity
-        if total_quantity == 0:
-            raise ValueError("Total quantity cannot be zero")
+        # total_quantity = existing_holding.quantity + holding.quantity
+        # if total_quantity == 0:
+        #     raise ValueError("Total quantity cannot be zero")
         
-        holding.avg_buy_price = (
-        (Decimal(existing_holding.avg_buy_price) * existing_holding.quantity) +
-        (Decimal(holding.avg_buy_price) * holding.quantity)
-        ) / total_quantity
-        holding.quantity = total_quantity
+        # holding.avg_buy_price = (
+        # (Decimal(existing_holding.avg_buy_price) * existing_holding.quantity) +
+        # (Decimal(holding.avg_buy_price) * holding.quantity)
+        # ) / total_quantity
+        # holding.quantity = total_quantity
         
         return self.holdings_repo.update_holding(holding)
     
