@@ -1,5 +1,4 @@
 import DataTable from './dataTable';
-import transactionsDataJSON from '../assets/transactions.json';
 import { Card, Container, Spinner, Alert } from 'react-bootstrap';
 import DataFilterBar from './dataFilter';
 import { useState, useEffect } from 'react';
