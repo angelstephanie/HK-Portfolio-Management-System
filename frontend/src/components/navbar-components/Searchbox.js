@@ -41,6 +41,10 @@ const Searchbox = () => {
           placeholder="Search"
           isClearable
           isSearchable
+          menuPortalTarget={document.body}
+          styles={{
+            menuPortal: base => ({ ...base, zIndex: 9999 }) 
+          }}
         />
     );
 }
