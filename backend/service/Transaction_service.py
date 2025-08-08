@@ -32,9 +32,11 @@ class TransactionService:
             if current_quantity < transaction.quantity:
                 raise ValueError("Insufficient quantity to sell")
             
-            updated_quantity = current_quantity - transaction.quantity
             current_total_price = current_holdings.avg_buy_price * current_quantity - transaction.price_per_unit * transaction.quantity
-            sell_updated_avg_buy_price = current_total_price / updated_quantity
+            updated_quantity = current_quantity - transaction.quantity
+            
+            if updated_quantity != 0:
+                sell_updated_avg_buy_price = float(current_total_price) / float(updated_quantity)
             
             if updated_quantity == 0:
                 self.holdings_repo.delete_holding(current_holdings.holding_id)
