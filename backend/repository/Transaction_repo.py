@@ -101,6 +101,7 @@ class Transaction_repo:
         """Retrieve all transactions from the database."""
         try:
             cursor = self.connection.cursor()
+            self.connection.commit()
             cursor.execute("SELECT * FROM Transactions LEFT JOIN Assets USING (symbol)")
             rows = cursor.fetchall()
             cursor.close()
