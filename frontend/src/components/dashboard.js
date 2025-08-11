@@ -90,7 +90,7 @@ export default function PortfolioDashboard() {
                       Total Portfolio Value
                     </h6>
                     <h2 className="fw-semibold mb-0 text-dark">
-                      {totalValue.toLocaleString(undefined, {
+                      US${totalValue.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2
                       })}

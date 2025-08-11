@@ -78,6 +78,7 @@ class PortfolioSnap_repo:
             cursor = self.connection.cursor()
             cursor.execute("SELECT * FROM PortfolioSnaps")
             results = cursor.fetchall()
+            self.connection.commit()
             cursor.close()
             portfolio_snaps = []
             for row in results:
